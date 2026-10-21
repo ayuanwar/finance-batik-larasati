@@ -99,12 +99,10 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
   return (
     <div className="space-y-8">
       {/* 1. Header Banner Sambutan Khusus Staf Nuansa Keraton */}
-      <div className="bg-[#0b2419] rounded-2xl p-6 sm:p-8 text-white shadow-xl border border-[#d4af37]/30 relative overflow-hidden">
-        <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#d4af37]/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#0b2419] rounded-2xl p-6 sm:p-8 text-white border border-[#d4af37]/25 shadow-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#d4af37]/15 text-[#f3c853] border border-[#d4af37]/35 mb-2.5">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#123524] text-[#f3c853] border border-[#d4af37]/35 mb-2.5">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Dasbor Operasional Karyawan</span>
             </div>

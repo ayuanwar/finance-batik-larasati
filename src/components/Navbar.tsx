@@ -39,9 +39,9 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
       : pathname === href || (href !== '/' && pathname.startsWith(href));
 
     if (isActive) {
-      return 'px-3.5 py-2 rounded-xl bg-[#123524] text-[#d4af37] border border-[#d4af37]/40 font-bold transition-all';
+      return 'px-2.5 xl:px-3 py-1.5 rounded-xl bg-[#123524] text-[#d4af37] border border-[#d4af37]/40 font-bold whitespace-nowrap transition-all shadow-xs';
     }
-    return 'px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all';
+    return 'px-2.5 xl:px-3 py-1.5 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] whitespace-nowrap transition-all';
   };
 
   const getMobileLinkClasses = (href: string, exact: boolean = false) => {
@@ -57,26 +57,26 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
 
   return (
     <header className="bg-[#081c15]/95 backdrop-blur-md border-b border-[#d4af37]/25 sticky top-0 z-30 shadow-lg shadow-[#081c15]/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-3 sm:gap-6">
           {/* Logo & Brand Keraton */}
-          <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-[#0f2d1e] text-[#d4af37] flex items-center justify-center shadow-md border border-[#d4af37]/40 group-hover:border-[#d4af37] transition-all">
+          <div className="flex items-center gap-4 xl:gap-8 shrink-0">
+            <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0f2d1e] text-[#d4af37] flex items-center justify-center border border-[#d4af37]/40 group-hover:border-[#d4af37] transition-all shrink-0 shadow-xs">
                 <Sparkles className="w-5 h-5 text-[#d4af37]" />
               </div>
-              <div>
-                <span className="font-extrabold text-[#fdfbf7] tracking-tight text-base sm:text-lg block leading-tight font-serif">
+              <div className="flex flex-col justify-center">
+                <span className="font-serif font-bold text-[#fdfbf7] text-sm sm:text-base leading-tight tracking-tight whitespace-nowrap">
                   CV Batik Larasati
                 </span>
-                <span className="text-[11px] text-[#d4af37]/90 font-medium tracking-wide">
+                <span className="text-[10px] sm:text-[11px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight whitespace-nowrap mt-0.5">
                   Keuangan & Akuntansi
                 </span>
               </div>
             </Link>
 
             {/* Menu Navigasi Desktop Berdasarkan Peran */}
-            <nav className="hidden md:flex items-center gap-1.5 text-xs font-semibold">
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs font-semibold shrink-0">
               <Link href="/" className={getLinkClasses('/', true)}>
                 Dashboard
               </Link>
@@ -112,16 +112,16 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
           </div>
 
           {/* User Info, Tombol Keluar, & Mobile Hamburger */}
-          <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3 xl:gap-4 shrink-0">
             {/* Kolom Pencarian Global (Desktop / Tablet) */}
-            <form onSubmit={handleSearchSubmit} className="relative hidden sm:block">
+            <form onSubmit={handleSearchSubmit} className="relative hidden md:block shrink-0">
               <Search className="w-3.5 h-3.5 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari transaksi, nomor..."
-                className="w-36 md:w-48 lg:w-60 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#06150f] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all"
+                className="w-36 lg:w-48 xl:w-56 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#06150f] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all"
               />
             </form>
 
@@ -129,30 +129,30 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             <button
               type="button"
               onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-              className="p-2 rounded-xl border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] sm:hidden cursor-pointer"
+              className="p-2 rounded-xl border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] md:hidden cursor-pointer shrink-0"
               title="Buka Pencarian Global"
               aria-label="Buka Pencarian Global"
             >
               <Search className="w-4 h-4" />
             </button>
 
-            <div className="text-right hidden sm:block">
-              <div className="text-sm font-bold text-[#fdfbf7] leading-snug">
+            <div className="text-right hidden sm:flex flex-col justify-center shrink-0">
+              <div className="text-xs sm:text-sm font-bold text-[#fdfbf7] leading-tight whitespace-nowrap">
                 {profile.nama_lengkap}
               </div>
-              <div className="text-xs text-[#d4af37]/80 capitalize">
+              <div className="text-[10px] sm:text-xs text-[#d4af37] capitalize leading-tight whitespace-nowrap mt-0.5">
                 {profile.jabatan || profile.peran}
               </div>
             </div>
 
-            <span className={`text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border ${roleBadgeStyle}`}>
+            <span className={`text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border shrink-0 whitespace-nowrap ${roleBadgeStyle}`}>
               {profile.peran}
             </span>
 
-            <form action={onLogout}>
+            <form action={onLogout} className="shrink-0">
               <button
                 type="submit"
-                className="p-2 sm:px-3 sm:py-1.5 rounded-xl border border-[#d4af37]/25 text-slate-300 hover:text-rose-300 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+                className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl border border-[#d4af37]/25 text-slate-300 hover:text-rose-300 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
                 title="Keluar dari Akun"
               >
                 <LogOut className="w-4 h-4" />
@@ -164,7 +164,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] md:hidden cursor-pointer"
+              className="p-2 rounded-xl border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] lg:hidden cursor-pointer shrink-0"
               aria-label="Buka Menu Navigasi"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -174,7 +174,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
 
         {/* Mobile Global Search Dropdown / Input Bar */}
         {mobileSearchOpen && (
-          <div className="sm:hidden py-2.5 px-2 border-t border-[#d4af37]/20 bg-[#06150f]">
+          <div className="md:hidden py-2.5 px-2 border-t border-[#d4af37]/20 bg-[#06150f]">
             <form onSubmit={handleSearchSubmit} className="relative">
               <Search className="w-4 h-4 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
@@ -191,7 +191,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-3 border-t border-[#d4af37]/20 space-y-1 pb-4">
+          <div className="lg:hidden py-3 border-t border-[#d4af37]/20 space-y-1 pb-4">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
