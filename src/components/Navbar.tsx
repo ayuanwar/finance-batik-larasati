@@ -1,6 +1,9 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, LogOut } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Sparkles, LogOut, Menu, X } from 'lucide-react';
 import { Profile } from '@/types/database';
 
 interface NavbarProps {
@@ -9,6 +12,9 @@ interface NavbarProps {
 }
 
 export function Navbar({ profile, onLogout }: NavbarProps) {
+  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const isFinance = profile.peran === 'direktur' || profile.peran === 'akuntan';
 
   const roleBadgeStyle = {
@@ -17,8 +23,30 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
     staf: 'bg-[#123524] text-emerald-200 border-emerald-400/40 shadow-xs',
   }[profile.peran] || 'bg-[#0c2419] text-slate-300 border-slate-700';
 
+  const getLinkClasses = (href: string, exact: boolean = false) => {
+    const isActive = exact
+      ? pathname === href
+      : pathname === href || (href !== '/' && pathname.startsWith(href));
+
+    if (isActive) {
+      return 'px-3.5 py-2 rounded-xl bg-[#123524] text-[#d4af37] border border-[#d4af37]/40 font-bold transition-all';
+    }
+    return 'px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all';
+  };
+
+  const getMobileLinkClasses = (href: string, exact: boolean = false) => {
+    const isActive = exact
+      ? pathname === href
+      : pathname === href || (href !== '/' && pathname.startsWith(href));
+
+    if (isActive) {
+      return 'block px-4 py-2.5 rounded-xl bg-[#123524] text-[#d4af37] border border-[#d4af37]/40 font-bold text-sm';
+    }
+    return 'block px-4 py-2.5 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] text-sm';
+  };
+
   return (
-    <header className="bg-[#081c15]/95 backdrop-blur-md border-b border-[#d4af37]/25 sticky top-0 z-20 shadow-lg shadow-[#081c15]/50">
+    <header className="bg-[#081c15]/95 backdrop-blur-md border-b border-[#d4af37]/25 sticky top-0 z-30 shadow-lg shadow-[#081c15]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Brand Keraton */}
@@ -37,64 +65,43 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
               </div>
             </Link>
 
-            {/* Menu Navigasi Desktop Berdasarkan Peran (BR-11) */}
+            {/* Menu Navigasi Desktop Berdasarkan Peran */}
             <nav className="hidden md:flex items-center gap-1.5 text-xs font-semibold">
-              <Link
-                href="/"
-                className="px-3.5 py-2 rounded-xl bg-[#123524] text-[#d4af37] border border-[#d4af37]/40 font-bold"
-              >
+              <Link href="/" className={getLinkClasses('/', true)}>
                 Dashboard
               </Link>
-              <Link
-                href="/pengajuan"
-                className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all"
-              >
+              <Link href="/pengajuan" className={getLinkClasses('/pengajuan')}>
                 Pengajuan
               </Link>
 
-              {/* Menu Khusus Akuntan & Direktur (BR-11) */}
+              {/* Menu Khusus Akuntan & Direktur */}
               {isFinance && (
                 <>
-                  <Link
-                    href="/jurnal"
-                    className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all"
-                  >
+                  <Link href="/jurnal" className={getLinkClasses('/jurnal')}>
                     Jurnal Umum
                   </Link>
-                  <Link
-                    href="/buku-besar"
-                    className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all"
-                  >
+                  <Link href="/buku-besar" className={getLinkClasses('/buku-besar')}>
                     Buku Besar
                   </Link>
-                  <Link
-                    href="/laporan"
-                    className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all"
-                  >
+                  <Link href="/laporan" className={getLinkClasses('/laporan')}>
                     Laporan Keuangan
                   </Link>
-                  <Link
-                    href="/akun-periode"
-                    className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all"
-                  >
+                  <Link href="/akun-periode" className={getLinkClasses('/akun-periode')}>
                     Akun & Periode
                   </Link>
                 </>
               )}
 
-              {/* Menu Khusus Direktur (BR-12) */}
+              {/* Menu Khusus Direktur */}
               {profile.peran === 'direktur' && (
-                <Link
-                  href="/pengguna-audit"
-                  className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] transition-all"
-                >
+                <Link href="/pengguna-audit" className={getLinkClasses('/pengguna-audit')}>
                   Pengguna & Audit Log
                 </Link>
               )}
             </nav>
           </div>
 
-          {/* User Info & Tombol Keluar */}
+          {/* User Info, Tombol Keluar, & Mobile Hamburger */}
           <div className="flex items-center gap-3 sm:gap-4">
             <div className="text-right hidden sm:block">
               <div className="text-sm font-bold text-[#fdfbf7] leading-snug">
@@ -119,8 +126,81 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                 <span className="hidden sm:inline">Keluar</span>
               </button>
             </form>
+
+            {/* Mobile Hamburger Toggle Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-xl border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] md:hidden cursor-pointer"
+              aria-label="Buka Menu Navigasi"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-3 border-t border-[#d4af37]/20 space-y-1 pb-4">
+            <Link
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className={getMobileLinkClasses('/', true)}
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/pengajuan"
+              onClick={() => setMobileMenuOpen(false)}
+              className={getMobileLinkClasses('/pengajuan')}
+            >
+              Pengajuan
+            </Link>
+
+            {isFinance && (
+              <>
+                <Link
+                  href="/jurnal"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={getMobileLinkClasses('/jurnal')}
+                >
+                  Jurnal Umum
+                </Link>
+                <Link
+                  href="/buku-besar"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={getMobileLinkClasses('/buku-besar')}
+                >
+                  Buku Besar
+                </Link>
+                <Link
+                  href="/laporan"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={getMobileLinkClasses('/laporan')}
+                >
+                  Laporan Keuangan
+                </Link>
+                <Link
+                  href="/akun-periode"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={getMobileLinkClasses('/akun-periode')}
+                >
+                  Akun & Periode
+                </Link>
+              </>
+            )}
+
+            {profile.peran === 'direktur' && (
+              <Link
+                href="/pengguna-audit"
+                onClick={() => setMobileMenuOpen(false)}
+                className={getMobileLinkClasses('/pengguna-audit')}
+              >
+                Pengguna & Audit Log
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

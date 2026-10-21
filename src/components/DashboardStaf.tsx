@@ -35,6 +35,7 @@ interface DashboardStafProps {
 export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
   const totalPengajuan = pengajuanList.length;
   const totalNominal = pengajuanList.reduce((acc, curr) => acc + Number(curr.jumlah), 0);
+  const drafList = pengajuanList.filter((p) => p.status === 'draf');
 
   const dalamProsesList = pengajuanList.filter((p) =>
     ['diajukan', 'menunggu_direktur', 'disetujui'].includes(p.status)
@@ -75,12 +76,12 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
       </div>
 
       {/* 2. Kartu Statistik Pengajuan Pribadi */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Total Pengajuan */}
         <div className="bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-[#d4af37]">
-              Total Pengajuan Anda
+              Total Dokumen
             </span>
             <div className="w-9 h-9 rounded-xl bg-[#123524] text-[#d4af37] flex items-center justify-center border border-[#d4af37]/30">
               <FileText className="w-5 h-5" />
@@ -92,6 +93,26 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
             </div>
             <p className="text-[11px] text-slate-400 mt-1 font-medium">
               Total nilai: <span className="text-[#f3c853] font-bold">{formatRupiah(totalNominal)}</span>
+            </p>
+          </div>
+        </div>
+
+        {/* Draf Tersimpan */}
+        <div className="bg-[#0b2419] p-5 rounded-2xl border border-slate-700/60 shadow-lg flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              Draf Tersimpan
+            </span>
+            <div className="w-9 h-9 rounded-xl bg-[#18231e] text-slate-300 flex items-center justify-center border border-slate-700">
+              <Receipt className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-4">
+            <div className="text-2xl font-extrabold text-slate-200 tracking-tight">
+              {drafList.length} <span className="text-xs font-normal text-slate-400">draf</span>
+            </div>
+            <p className="text-[11px] text-slate-400 mt-1">
+              {drafList.length > 0 ? 'Siap dilengkapi & dikirim' : 'Belum ada draf'}
             </p>
           </div>
         </div>
@@ -157,11 +178,11 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
         </div>
       </div>
 
-      {/* 3. Banner Panduan Aturan Pengajuan (BR-07) Nuansa Keraton */}
+      {/* 3. Banner Panduan Aturan Pengajuan Nuansa Keraton */}
       <div className="bg-[#0b2419] border border-[#d4af37]/35 rounded-2xl p-4 sm:p-5 text-slate-200 flex items-start gap-3.5 shadow-md">
         <Info className="w-5 h-5 shrink-0 text-[#d4af37] mt-0.5" />
         <div className="text-xs leading-relaxed">
-          <span className="font-bold text-[#d4af37]">Ketentuan Pengajuan Biaya (BR-07):</span>
+          <span className="font-bold text-[#d4af37]">Ketentuan Pengajuan Biaya:</span>
           <ul className="list-disc list-inside mt-1 space-y-0.5 text-slate-300">
             <li>Nominal pengajuan antara <strong className="text-[#fdfbf7]">Rp10.000</strong> sampai <strong className="text-[#fdfbf7]">Rp25.000.000</strong> (rupiah bulat).</li>
             <li>Wajib mengunggah foto nota fisik asli (format JPG, PNG, atau PDF, maksimal 5 MB).</li>
@@ -178,7 +199,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
               Riwayat Pengajuan Pribadi Anda
             </h3>
             <p className="text-xs text-slate-400">
-              Daftar seluruh klaim reimburse & pengeluaran yang pernah Anda buat (BR-11)
+              Daftar seluruh klaim reimburse & pengeluaran yang pernah Anda buat
             </p>
           </div>
 
@@ -273,7 +294,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
                       </td>
                       <td className="py-3 px-3 text-right whitespace-nowrap">
                         <Link
-                          href={`/pengajuan?id=${item.id}`}
+                          href={`/pengajuan/${item.id}`}
                           className="inline-flex items-center gap-1 text-[11px] font-bold text-[#d4af37] hover:text-[#f3c853] hover:underline"
                         >
                           <span>Detail</span>
