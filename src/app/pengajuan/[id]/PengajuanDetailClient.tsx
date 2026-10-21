@@ -696,7 +696,7 @@ export function PengajuanDetailClient({
                   type="button"
                   disabled={loadingAction}
                   onClick={handleKirimUlang}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#f3c853] text-[#081c15] text-xs font-extrabold flex items-center justify-center gap-2 shadow-md hover:brightness-110 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold flex items-center justify-center gap-2 shadow-md hover:bg-[#e0bc46] transition-all cursor-pointer disabled:opacity-50"
                 >
                   {loadingAction ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                   <span>Kirimkan Pengajuan Sekarang</span>
@@ -729,7 +729,7 @@ export function PengajuanDetailClient({
                   type="button"
                   disabled={loadingAction}
                   onClick={handleVerifikasiAkuntan}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#f3c853] text-[#081c15] text-xs font-extrabold flex items-center justify-center gap-2 shadow-md hover:brightness-110 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold flex items-center justify-center gap-2 shadow-md hover:bg-[#e0bc46] transition-all cursor-pointer disabled:opacity-50"
                 >
                   {loadingAction ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -778,7 +778,7 @@ export function PengajuanDetailClient({
                   type="button"
                   disabled={loadingAction}
                   onClick={handleSetujuiDirektur}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#f3c853] text-[#081c15] text-xs font-extrabold flex items-center justify-center gap-2 shadow-md hover:brightness-110 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold flex items-center justify-center gap-2 shadow-md hover:bg-[#e0bc46] transition-all cursor-pointer disabled:opacity-50"
                 >
                   {loadingAction ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4 stroke-[3]" />}
                   <span>Setujui Pengajuan</span>
@@ -876,7 +876,7 @@ export function PengajuanDetailClient({
                   type="button"
                   disabled={loadingAction}
                   onClick={handleBayarPengajuan}
-                  className="w-full mt-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-xs font-extrabold flex items-center justify-center gap-2 shadow-lg shadow-emerald-700/30 hover:brightness-110 active:brightness-95 transition-all cursor-pointer disabled:opacity-50"
+                  className="w-full mt-2 py-2.5 px-4 rounded-xl bg-emerald-600 text-white text-xs font-extrabold flex items-center justify-center gap-2 shadow-md hover:bg-emerald-500 active:bg-emerald-700 transition-all cursor-pointer disabled:opacity-50"
                 >
                   {loadingAction ? (
                     <Loader2 className="w-4 h-4 animate-spin text-white" />
@@ -974,7 +974,7 @@ export function PengajuanDetailClient({
                 type="button"
                 disabled={loadingAction || catatanText.trim().length < 10}
                 onClick={handleSubmitCatatan}
-                className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#f3c853] text-[#081c15] text-xs font-extrabold disabled:opacity-50 hover:brightness-110 cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold disabled:opacity-50 hover:bg-[#e0bc46] cursor-pointer"
               >
                 {loadingAction ? 'Menyimpan...' : 'Kirim Catatan'}
               </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Plus,
@@ -13,6 +13,8 @@ import {
   XCircle,
   Calendar,
   ChevronRight,
+  ChevronLeft,
+  RotateCcw,
   Eye,
   ArrowUpDown,
   User,
@@ -78,19 +80,26 @@ export function PengajuanListClient({
 
   const [search, setSearch] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('semua');
-  const [selectedBulan, setSelectedBulan] = useState('semua');
   const [selectedJenis, setSelectedJenis] = useState('semua');
+  const [tanggalMulai, setTanggalMulai] = useState('');
+  const [tanggalSelesai, setTanggalSelesai] = useState('');
+
+  // Konfigurasi Paginasi (Maksimal 10 Baris per Halaman)
+  const ITEMS_PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Filter Data
   const filteredData = useMemo(() => {
     return initialPengajuan.filter((item) => {
-      // 1. Filter Pencarian
+      // 1. Filter Pencarian (Nomor Dokumen, Nama Pengaju, Keperluan, Akun Beban)
       if (search.trim()) {
         const query = search.toLowerCase();
         const matchNomor = item.nomor?.toLowerCase().includes(query);
         const matchKet = item.keterangan?.toLowerCase().includes(query);
         const matchNama = item.pengaju?.nama_lengkap?.toLowerCase().includes(query);
-        const matchBeban = item.akun_beban?.nama?.toLowerCase().includes(query);
+        const matchBeban =
+          item.akun_beban?.nama?.toLowerCase().includes(query) ||
+          item.akun_beban?.kode?.toLowerCase().includes(query);
         if (!matchNomor && !matchKet && !matchNama && !matchBeban) return false;
       }
 
@@ -104,15 +113,30 @@ export function PengajuanListClient({
         return false;
       }
 
-      // 4. Filter Bulan/Tahun (berdasarkan tanggal_transaksi)
-      if (selectedBulan !== 'semua') {
-        const itemMonth = item.tanggal_transaksi ? item.tanggal_transaksi.slice(0, 7) : '';
-        if (itemMonth !== selectedBulan) return false;
+      // 4. Filter Rentang Tanggal Transaksi (Date Picker)
+      if (tanggalMulai && item.tanggal_transaksi < tanggalMulai) {
+        return false;
+      }
+      if (tanggalSelesai && item.tanggal_transaksi > tanggalSelesai) {
+        return false;
       }
 
       return true;
     });
-  }, [initialPengajuan, search, selectedStatus, selectedBulan, selectedJenis]);
+  }, [initialPengajuan, search, selectedStatus, selectedJenis, tanggalMulai, tanggalSelesai]);
+
+  // Reset nomor halaman ke halaman 1 saat filter berubah
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedStatus, selectedJenis, tanggalMulai, tanggalSelesai]);
+
+  // Hitung Data Halaman Terpilih
+  const totalPages = Math.max(1, Math.ceil(filteredData.length / ITEMS_PER_PAGE));
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData.length);
+  const paginatedData = useMemo(() => {
+    return filteredData.slice(startIndex, endIndex);
+  }, [filteredData, startIndex, endIndex]);
 
   // Statistik Ringkas
   const stats = useMemo(() => {
@@ -128,42 +152,6 @@ export function PengajuanListClient({
 
     return { total, nominal, draf, pending, siapBayar, dibayar, perluRevisi };
   }, [filteredData]);
-
-  // Daftar nama bulan Bahasa Indonesia
-  const NAMA_BULAN = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-  ];
-
-  // Format opsi bulan deskriptif (misal: "Oktober 2026", "September 2026")
-  const bulanOptions = useMemo(() => {
-    const monthsMap = new Map<string, string>();
-
-    // 1. Dari periode akuntansi
-    periodeList.forEach((p) => {
-      const val = `${p.tahun}-${String(p.bulan).padStart(2, '0')}`;
-      const namaBulan = NAMA_BULAN[p.bulan - 1] || `Bulan ${p.bulan}`;
-      monthsMap.set(val, `${namaBulan} ${p.tahun}`);
-    });
-
-    // 2. Dari transaksi pengajuan yang ada
-    initialPengajuan.forEach((item) => {
-      if (item.tanggal_transaksi) {
-        const val = item.tanggal_transaksi.slice(0, 7); // YYYY-MM
-        if (!monthsMap.has(val)) {
-          const [tahunStr, bulanStr] = val.split('-');
-          const bIdx = parseInt(bulanStr, 10) - 1;
-          const namaBulan = NAMA_BULAN[bIdx] || bulanStr;
-          monthsMap.set(val, `${namaBulan} ${tahunStr}`);
-        }
-      }
-    });
-
-    // Urutkan dari bulan terbaru ke terlama
-    return Array.from(monthsMap.entries())
-      .map(([val, label]) => ({ val, label }))
-      .sort((a, b) => b.val.localeCompare(a.val));
-  }, [periodeList, initialPengajuan]);
 
   return (
     <div className="space-y-6">
@@ -189,7 +177,7 @@ export function PengajuanListClient({
           <div>
             <Link
               href="/pengajuan/baru"
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f3c853] to-[#d4af37] text-[#081c15] text-xs sm:text-sm font-extrabold shadow-lg shadow-[#d4af37]/20 hover:brightness-110 active:brightness-95 transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap"
+              className="px-4 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs sm:text-sm font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Buat Pengajuan Baru</span>
@@ -295,34 +283,35 @@ export function PengajuanListClient({
 
       {/* 3. Panel Filter & Pencarian */}
       <div className="bg-[#0b2419] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-md space-y-3.5">
-        <div className="flex flex-col md:flex-row items-center gap-3">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
           {/* Input Pencarian */}
-          <div className="relative flex-1 w-full">
+          <div className="relative flex-1">
             <Search className="w-4 h-4 text-[#d4af37]/70 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
-              placeholder="Cari nomor pengajuan (PG-...), keperluan, atau nama pengaju..."
+              placeholder="Cari nomor dokumen (PG-...), keperluan, akun, atau nama pengaju..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all"
+              className="w-full pl-10 pr-9 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1"
+                title="Hapus pencarian"
               >
                 ✕
               </button>
             )}
           </div>
 
-          {/* Filter Status Dropdown */}
-          <div className="flex items-center gap-2 w-full md:w-auto">
+          {/* Filter Status & Jenis */}
+          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="px-3 py-2 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all w-full md:w-auto cursor-pointer"
+              className="px-3 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all cursor-pointer flex-1 sm:flex-initial"
             >
               <option value="semua">Semua Status</option>
               <option value="diajukan">Diajukan</option>
@@ -335,31 +324,77 @@ export function PengajuanListClient({
               <option value="dibatalkan">Dibatalkan</option>
             </select>
 
-            {/* Filter Bulan */}
-            <select
-              value={selectedBulan}
-              onChange={(e) => setSelectedBulan(e.target.value)}
-              className="px-3 py-2 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all w-full md:w-auto cursor-pointer"
-            >
-              <option value="semua">Semua Bulan</option>
-              {bulanOptions.map((b) => (
-                <option key={b.val} value={b.val}>
-                  {b.label}
-                </option>
-              ))}
-            </select>
-
-            {/* Filter Jenis */}
             <select
               value={selectedJenis}
               onChange={(e) => setSelectedJenis(e.target.value)}
-              className="px-3 py-2 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all w-full md:w-auto cursor-pointer"
+              className="px-3 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all cursor-pointer flex-1 sm:flex-initial"
             >
               <option value="semua">Semua Jenis</option>
               <option value="reimburse">Reimburse</option>
               <option value="pengeluaran">Pengeluaran</option>
             </select>
           </div>
+        </div>
+
+        {/* Baris Kedua: Date Picker (Pemilih Rentang Tanggal) */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2.5 border-t border-[#d4af37]/15 text-xs">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[#d4af37] font-bold text-[11px] uppercase tracking-wider flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Filter Tanggal Nota:</span>
+            </span>
+
+            <div className="flex items-center gap-1.5 bg-[#06150f] px-3 py-1.5 rounded-xl border border-[#d4af37]/25 text-xs">
+              <span className="text-slate-400 text-[11px]">Dari:</span>
+              <input
+                type="date"
+                value={tanggalMulai}
+                onChange={(e) => setTanggalMulai(e.target.value)}
+                className="bg-transparent text-slate-100 text-xs focus:outline-none cursor-pointer [color-scheme:dark]"
+                title="Pilih tanggal awal"
+              />
+              <span className="text-slate-500 text-xs mx-0.5">s/d</span>
+              <span className="text-slate-400 text-[11px]">Sampai:</span>
+              <input
+                type="date"
+                value={tanggalSelesai}
+                onChange={(e) => setTanggalSelesai(e.target.value)}
+                className="bg-transparent text-slate-100 text-xs focus:outline-none cursor-pointer [color-scheme:dark]"
+                title="Pilih tanggal akhir"
+              />
+            </div>
+
+            {(tanggalMulai || tanggalSelesai) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setTanggalMulai('');
+                  setTanggalSelesai('');
+                }}
+                className="px-2.5 py-1.5 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-300 hover:text-white text-xs font-semibold flex items-center gap-1 cursor-pointer transition-colors"
+                title="Hapus filter rentang tanggal"
+              >
+                ✕ Hapus Tanggal
+              </button>
+            )}
+          </div>
+
+          {(search || selectedStatus !== 'semua' || selectedJenis !== 'semua' || tanggalMulai || tanggalSelesai) && (
+            <button
+              type="button"
+              onClick={() => {
+                setSearch('');
+                setSelectedStatus('semua');
+                setSelectedJenis('semua');
+                setTanggalMulai('');
+                setTanggalSelesai('');
+              }}
+              className="text-xs text-amber-300 hover:text-amber-200 underline flex items-center gap-1 cursor-pointer w-fit self-end sm:self-auto"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Reset Semua Filter</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -370,7 +405,7 @@ export function PengajuanListClient({
             <FileText className="w-12 h-12 mx-auto text-[#d4af37]/40 mb-3" />
             <p className="text-base font-bold text-slate-200">Tidak ada pengajuan ditemukan</p>
             <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-              {search || selectedStatus !== 'semua' || selectedBulan !== 'semua'
+              {search || selectedStatus !== 'semua' || tanggalMulai || tanggalSelesai
                 ? 'Coba atur ulang filter atau kata kunci pencarian Anda.'
                 : 'Belum ada dokumen pengajuan yang tercatat.'}
             </p>
@@ -392,7 +427,7 @@ export function PengajuanListClient({
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#d4af37]/10 text-slate-200">
-                {filteredData.map((item) => {
+                {paginatedData.map((item) => {
                   const badgeStatus = {
                     draf: 'bg-[#18231e] text-slate-400 border-slate-700',
                     diajukan: 'bg-blue-950/80 text-blue-300 border-blue-500/40 font-semibold',
@@ -497,6 +532,42 @@ export function PengajuanListClient({
                 })}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Paginasi Kontrol (Maksimal 10 Baris per Halaman) */}
+        {filteredData.length > 0 && (
+          <div className="bg-[#081c15] px-4 py-3 border-t border-[#d4af37]/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-300">
+            <div>
+              Menampilkan <span className="font-bold text-[#fdfbf7]">{startIndex + 1}</span>–<span className="font-bold text-[#fdfbf7]">{endIndex}</span> dari{' '}
+              <span className="font-bold text-[#d4af37]">{filteredData.length}</span> pengajuan
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-200 hover:border-[#d4af37] hover:text-[#d4af37] disabled:opacity-35 disabled:hover:border-[#d4af37]/30 disabled:hover:text-slate-200 transition-all font-semibold cursor-pointer disabled:cursor-not-allowed flex items-center gap-1"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>Sebelumnya</span>
+              </button>
+
+              <span className="px-3 py-1.5 rounded-xl bg-[#123524] border border-[#d4af37]/40 text-[#d4af37] font-bold">
+                Halaman {currentPage} dari {totalPages}
+              </span>
+
+              <button
+                type="button"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-200 hover:border-[#d4af37] hover:text-[#d4af37] disabled:opacity-35 disabled:hover:border-[#d4af37]/30 disabled:hover:text-slate-200 transition-all font-semibold cursor-pointer disabled:cursor-not-allowed flex items-center gap-1"
+              >
+                <span>Selanjutnya</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
       </div>

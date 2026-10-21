@@ -449,7 +449,7 @@ export function PengajuanFormClient({ profile, akunBebanList }: PengajuanFormCli
             type="button"
             disabled={loading}
             onClick={() => handleSubmit('kirim')}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f3c853] to-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-lg shadow-[#d4af37]/20 hover:brightness-110 active:brightness-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
           >
             {loading ? (
               <>

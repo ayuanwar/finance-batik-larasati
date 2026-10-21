@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Wallet,
@@ -9,7 +11,11 @@ import {
   Clock,
   ArrowUpRight,
   FileText,
-  ChevronRight
+  ChevronRight,
+  ChevronLeft,
+  Search,
+  Calendar,
+  RotateCcw
 } from 'lucide-react';
 import { formatRupiah, formatTanggalIndo } from '@/lib/utils';
 import { Profile } from '@/types/database';
@@ -69,6 +75,49 @@ export function DashboardFinance({
 }: DashboardFinanceProps) {
   const isDirektur = profile.peran === 'direktur';
 
+  // Filter & Paginasi untuk Pengajuan Menunggu
+  const [search, setSearch] = useState('');
+  const [tanggalMulai, setTanggalMulai] = useState('');
+  const [tanggalSelesai, setTanggalSelesai] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
+
+  // Filter Data
+  const filteredMenunggu = useMemo(() => {
+    return pengajuanMenunggu.filter((item) => {
+      // 1. Pencarian (Nomor Dokumen, Nama Pengaju, Keperluan)
+      if (search.trim()) {
+        const q = search.toLowerCase();
+        const matchNomor = item.nomor?.toLowerCase().includes(q);
+        const matchNama = item.profiles?.nama_lengkap?.toLowerCase().includes(q);
+        const matchKet = item.keterangan?.toLowerCase().includes(q);
+        if (!matchNomor && !matchNama && !matchKet) return false;
+      }
+
+      // 2. Rentang Tanggal Nota
+      if (tanggalMulai && item.tanggal_transaksi < tanggalMulai) {
+        return false;
+      }
+      if (tanggalSelesai && item.tanggal_transaksi > tanggalSelesai) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [pengajuanMenunggu, search, tanggalMulai, tanggalSelesai]);
+
+  // Reset nomor halaman saat filter berubah
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, tanggalMulai, tanggalSelesai]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredMenunggu.length / ITEMS_PER_PAGE));
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredMenunggu.length);
+  const paginatedMenunggu = useMemo(() => {
+    return filteredMenunggu.slice(startIndex, endIndex);
+  }, [filteredMenunggu, startIndex, endIndex]);
+
   // Hitung pengajuan yang relevan dengan peran yang masuk (PRD Bagian 9.1)
   const jumlahMenungguPeran = isDirektur
     ? pengajuanMenunggu.filter((p) => p.status === 'menunggu_direktur').length
@@ -77,7 +126,7 @@ export function DashboardFinance({
   return (
     <div className="space-y-8">
       {/* 1. Header Banner Sambutan Nuansa Keraton */}
-      <div className="bg-gradient-to-r from-[#0b2419] via-[#0e2c1e] to-[#081c15] rounded-2xl p-6 sm:p-8 text-white shadow-xl border border-[#d4af37]/30 relative overflow-hidden">
+      <div className="bg-[#0b2419] rounded-2xl p-6 sm:p-8 text-white shadow-xl border border-[#d4af37]/30 relative overflow-hidden">
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#d4af37]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -96,7 +145,7 @@ export function DashboardFinance({
           <div className="flex items-center gap-2">
             <Link
               href="/pengajuan"
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#f3c853] to-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:brightness-110 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <FileText className="w-4 h-4 stroke-[2.5]" />
               <span>Daftar Pengajuan ({pengajuanMenunggu.length})</span>
@@ -210,7 +259,7 @@ export function DashboardFinance({
         {/* Kolom Kiri: Tabel Pengajuan Menunggu Tindakan (2 Kolom) */}
         <div className="lg:col-span-2 bg-[#0b2419] rounded-2xl border border-[#d4af37]/25 shadow-lg p-6 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between pb-4 border-b border-[#d4af37]/15">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#d4af37]/15 gap-2">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-[#123524] text-[#d4af37] flex items-center justify-center border border-[#d4af37]/30">
                   <Clock className="w-4 h-4" />
@@ -227,18 +276,98 @@ export function DashboardFinance({
                 </div>
               </div>
 
-              <span className="text-xs font-bold bg-[#d4af37]/15 text-[#f3c853] px-2.5 py-1 rounded-full border border-[#d4af37]/35">
+              <span className="text-xs font-bold bg-[#d4af37]/15 text-[#f3c853] px-2.5 py-1 rounded-full border border-[#d4af37]/35 w-fit">
                 {jumlahMenungguPeran} Perlu Tindakan
               </span>
             </div>
 
+            {/* Filter & Kolom Pencarian Dasbor */}
+            <div className="my-3 space-y-2.5">
+              <div className="relative">
+                <Search className="w-4 h-4 text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Cari nomor dokumen, keperluan, atau nama pengaju..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all"
+                />
+                {search && (
+                  <button
+                    type="button"
+                    onClick={() => setSearch('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1"
+                    title="Hapus pencarian"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              {/* Date Picker Rentang Tanggal */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <div className="flex items-center gap-1.5 bg-[#06150f] px-2.5 py-1 rounded-lg border border-[#d4af37]/20 text-[11px]">
+                    <Calendar className="w-3.5 h-3.5 text-[#d4af37]" />
+                    <span className="text-slate-400">Dari:</span>
+                    <input
+                      type="date"
+                      value={tanggalMulai}
+                      onChange={(e) => setTanggalMulai(e.target.value)}
+                      className="bg-transparent text-slate-200 text-xs focus:outline-none cursor-pointer [color-scheme:dark]"
+                      title="Tanggal Mulai"
+                    />
+                    <span className="text-slate-500">s/d</span>
+                    <span className="text-slate-400">Sampai:</span>
+                    <input
+                      type="date"
+                      value={tanggalSelesai}
+                      onChange={(e) => setTanggalSelesai(e.target.value)}
+                      className="bg-transparent text-slate-200 text-xs focus:outline-none cursor-pointer [color-scheme:dark]"
+                      title="Tanggal Selesai"
+                    />
+                  </div>
+
+                  {(tanggalMulai || tanggalSelesai) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTanggalMulai('');
+                        setTanggalSelesai('');
+                      }}
+                      className="px-2 py-1 rounded-lg bg-rose-950/40 border border-rose-500/40 text-rose-300 hover:text-white text-[11px] font-semibold cursor-pointer"
+                    >
+                      ✕ Hapus Tanggal
+                    </button>
+                  )}
+                </div>
+
+                {(search || tanggalMulai || tanggalSelesai) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearch('');
+                      setTanggalMulai('');
+                      setTanggalSelesai('');
+                    }}
+                    className="text-[11px] text-amber-300 hover:text-amber-200 underline flex items-center gap-1 cursor-pointer self-end sm:self-auto"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Reset Filter</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
             {/* List Tabel */}
-            {pengajuanMenunggu.length === 0 ? (
+            {filteredMenunggu.length === 0 ? (
               <div className="py-12 text-center text-slate-400 text-xs">
-                Tidak ada pengajuan yang sedang menunggu saat ini.
+                {search || tanggalMulai || tanggalSelesai
+                  ? 'Tidak ada pengajuan yang cocok dengan filter atau kata kunci.'
+                  : 'Tidak ada pengajuan yang sedang menunggu saat ini.'}
               </div>
             ) : (
-              <div className="divide-y divide-[#d4af37]/10 mt-2 overflow-x-auto">
+              <div className="divide-y divide-[#d4af37]/10 mt-1 overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
                     <tr className="text-[#d4af37]/80 uppercase text-[10px] font-bold tracking-wider">
@@ -251,7 +380,7 @@ export function DashboardFinance({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#d4af37]/10 text-slate-200">
-                    {pengajuanMenunggu.map((item) => {
+                    {paginatedMenunggu.map((item) => {
                       const badgeStatus = {
                         diajukan: 'bg-blue-950/80 text-blue-300 border-blue-500/40',
                         menunggu_direktur: 'bg-purple-950/80 text-purple-300 border-purple-500/40 font-bold',
@@ -267,12 +396,14 @@ export function DashboardFinance({
                       return (
                         <tr key={item.id} className="hover:bg-[#102d20]/60 transition-colors">
                           <td className="py-3 px-2 font-mono font-bold text-[#fdfbf7]">
-                            {item.nomor}
+                            <Link href={`/pengajuan/${item.id}`} className="hover:text-[#d4af37]">
+                              {item.nomor}
+                            </Link>
                           </td>
                           <td className="py-3 px-2 font-medium">
                             {item.profiles?.nama_lengkap || '-'}
                           </td>
-                          <td className="py-3 px-2 max-w-[200px] truncate text-slate-300" title={item.keterangan}>
+                          <td className="py-3 px-2 max-w-[180px] truncate text-slate-300" title={item.keterangan}>
                             {item.keterangan}
                           </td>
                           <td className="py-3 px-2 text-right font-bold text-[#fdfbf7]">
@@ -285,7 +416,7 @@ export function DashboardFinance({
                           </td>
                           <td className="py-3 px-2 text-right">
                             <Link
-                              href={`/pengajuan?id=${item.id}`}
+                              href={`/pengajuan/${item.id}`}
                               className="inline-flex items-center gap-1 text-[11px] font-bold text-[#d4af37] hover:text-[#f3c853] hover:underline"
                             >
                               <span>Tinjau</span>
@@ -301,15 +432,49 @@ export function DashboardFinance({
             )}
           </div>
 
-          <div className="mt-4 pt-3 border-t border-[#d4af37]/15 text-right">
-            <Link
-              href="/pengajuan"
-              className="text-xs font-bold text-[#d4af37] hover:text-[#f3c853] inline-flex items-center gap-1"
-            >
-              <span>Lihat Seluruh 35 Pengajuan</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+          {/* Kontrol Paginasi Tabel Dasbor (Maks. 10 baris per halaman) */}
+          {filteredMenunggu.length > 0 && (
+            <div className="mt-4 pt-3 border-t border-[#d4af37]/15 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-300">
+              <div>
+                Menampilkan <span className="font-bold text-[#fdfbf7]">{startIndex + 1}</span>–<span className="font-bold text-[#fdfbf7]">{endIndex}</span> dari{' '}
+                <span className="font-bold text-[#d4af37]">{filteredMenunggu.length}</span> pengajuan
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  className="px-2.5 py-1 rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-200 hover:border-[#d4af37] hover:text-[#d4af37] disabled:opacity-35 disabled:hover:border-[#d4af37]/30 disabled:hover:text-slate-200 transition-all font-semibold cursor-pointer disabled:cursor-not-allowed flex items-center gap-0.5"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Sebelumnya</span>
+                </button>
+
+                <span className="px-2.5 py-1 rounded-lg bg-[#123524] border border-[#d4af37]/40 text-[#d4af37] font-bold">
+                  {currentPage} / {totalPages}
+                </span>
+
+                <button
+                  type="button"
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  className="px-2.5 py-1 rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-200 hover:border-[#d4af37] hover:text-[#d4af37] disabled:opacity-35 disabled:hover:border-[#d4af37]/30 disabled:hover:text-slate-200 transition-all font-semibold cursor-pointer disabled:cursor-not-allowed flex items-center gap-0.5"
+                >
+                  <span>Selanjutnya</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <Link
+                href="/pengajuan"
+                className="text-xs font-bold text-[#d4af37] hover:text-[#f3c853] inline-flex items-center gap-1"
+              >
+                <span>Buka Modul Pengajuan</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Kolom Kanan: Status Periode Akuntansi (1 Kolom) */}

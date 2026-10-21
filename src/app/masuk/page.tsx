@@ -232,7 +232,7 @@ export default function HalamanMasuk() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-3 py-2.5 px-4 rounded-xl font-bold text-sm text-[#081c15] bg-gradient-to-r from-[#d4af37] via-[#f3c853] to-[#d4af37] hover:brightness-110 active:brightness-95 shadow-lg shadow-[#d4af37]/20 focus:outline-none focus:ring-2 focus:ring-[#d4af37] transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              className="w-full mt-3 py-2.5 px-4 rounded-xl font-bold text-sm text-[#081c15] bg-[#d4af37] hover:bg-[#e0bc46] active:bg-[#c49f2e] shadow-md focus:outline-none focus:ring-2 focus:ring-[#d4af37] transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               {loading ? (
                 <>
