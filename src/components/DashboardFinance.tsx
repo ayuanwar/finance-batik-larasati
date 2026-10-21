@@ -15,7 +15,8 @@ import {
   ChevronLeft,
   Search,
   Calendar,
-  RotateCcw
+  RotateCcw,
+  Eye,
 } from 'lucide-react';
 import { formatRupiah, formatTanggalIndo } from '@/lib/utils';
 import { Profile } from '@/types/database';
@@ -374,7 +375,7 @@ export function DashboardFinance({
                       <th className="py-3 px-2">Keperluan</th>
                       <th className="py-3 px-2 text-right">Jumlah</th>
                       <th className="py-3 px-2 text-center">Status</th>
-                      <th className="py-3 px-2 text-right">Aksi</th>
+                      <th className="py-3 px-2 text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#d4af37]/10 text-slate-200">
@@ -412,14 +413,16 @@ export function DashboardFinance({
                               {labelStatus}
                             </span>
                           </td>
-                          <td className="py-3 px-2 text-right">
-                            <Link
-                              href={`/pengajuan/${item.id}`}
-                              className="inline-flex items-center gap-1 text-[11px] font-bold text-[#d4af37] hover:text-[#f3c853] hover:underline"
-                            >
-                              <span>Tinjau</span>
-                              <ChevronRight className="w-3.5 h-3.5" />
-                            </Link>
+                          <td className="py-3 px-2 text-center whitespace-nowrap">
+                            <div className="flex items-center justify-center">
+                              <Link
+                                href={`/pengajuan/${item.id}`}
+                                className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
+                                title="Tinjau Pengajuan"
+                              >
+                                <Eye className="w-4 h-4 text-[#d4af37]" />
+                              </Link>
+                            </div>
                           </td>
                         </tr>
                       );

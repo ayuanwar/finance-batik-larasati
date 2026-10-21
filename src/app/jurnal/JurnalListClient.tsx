@@ -11,7 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Eye,
-  Edit,
+  SquarePen,
   RotateCcw,
   CheckCircle2,
   Clock,
@@ -490,22 +490,22 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
 
                       {/* Aksi */}
                       <td className="py-3.5 px-4 text-center whitespace-nowrap">
-                        <div className="flex items-center justify-center gap-1.5">
+                        <div className="flex items-center justify-center gap-2">
                           <Link
                             href={`/jurnal/${item.id}`}
-                            className="p-1.5 rounded-lg border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] hover:border-[#d4af37] transition-all"
+                            className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
                             title="Lihat Rincian Jurnal"
                           >
-                            <Eye className="w-3.5 h-3.5" />
+                            <Eye className="w-4 h-4 text-[#d4af37]" />
                           </Link>
 
                           {isAkuntan && item.status === 'draf' && (
                             <Link
                               href={`/jurnal/${item.id}/ubah`}
-                              className="p-1.5 rounded-lg border border-amber-500/30 text-[#f3c853] hover:bg-amber-950/40 hover:border-amber-500 transition-all"
+                              className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
                               title="Ubah Jurnal Draf"
                             >
-                              <Edit className="w-3.5 h-3.5" />
+                              <SquarePen className="w-4 h-4 text-[#d4af37]" />
                             </Link>
                           )}
                         </div>

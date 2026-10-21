@@ -175,6 +175,40 @@ export async function simpanJurnalAction(
         };
       }
 
+      // LANGKAH 1: Hapus seluruh baris lama milik jurnal ini SEBELUM insert baris baru (saat status masih draf)
+      const { error: deleteOldErr } = await adminSupabase
+        .from('jurnal_baris')
+        .delete()
+        .eq('jurnal_id', payload.id);
+
+      if (deleteOldErr) {
+        return {
+          success: false,
+          error: 'Gagal membersihkan baris jurnal lama: ' + deleteOldErr.message,
+        };
+      }
+
+      // LANGKAH 2: Masukkan baris-baris baru yang telah divalidasi
+      const rowsToInsert = payload.baris.map((b, idx) => ({
+        jurnal_id: payload.id!,
+        urutan: idx + 1,
+        akun_id: b.akun_id,
+        debit: Math.round(Number(b.debit || 0)),
+        kredit: Math.round(Number(b.kredit || 0)),
+        keterangan: b.keterangan?.trim() || null,
+      }));
+
+      const { error: insertRowsErr } = await adminSupabase
+        .from('jurnal_baris')
+        .insert(rowsToInsert);
+
+      if (insertRowsErr) {
+        return {
+          success: false,
+          error: 'Gagal memperbarui rincian baris jurnal baru: ' + insertRowsErr.message,
+        };
+      }
+
       let nomorJurnal = existingJurnal.nomor;
 
       // Jika berpindah dari draf ke diposting, generate nomor dokumen gapless (BR-03)
@@ -190,7 +224,7 @@ export async function simpanJurnalAction(
         nomorJurnal = generatedNo;
       }
 
-      // Update Header Jurnal
+      // LANGKAH 3: Perbarui data kepala jurnal (termasuk status diposting setelah baris berhasil tersimpan seimbang)
       const updateData: Record<string, unknown> = {
         tanggal: payload.tanggal,
         periode_id: periodeData.id,
@@ -211,27 +245,7 @@ export async function simpanJurnalAction(
         .eq('id', payload.id);
 
       if (updateErr) {
-        return { success: false, error: 'Gagal memperbarui jurnal: ' + updateErr.message };
-      }
-
-      // Hapus baris lama & masukkan baris baru
-      await adminSupabase.from('jurnal_baris').delete().eq('jurnal_id', payload.id);
-
-      const rowsToInsert = payload.baris.map((b, idx) => ({
-        jurnal_id: payload.id!,
-        urutan: idx + 1,
-        akun_id: b.akun_id,
-        debit: Number(b.debit || 0),
-        kredit: Number(b.kredit || 0),
-        keterangan: b.keterangan?.trim() || null,
-      }));
-
-      const { error: insertRowsErr } = await adminSupabase
-        .from('jurnal_baris')
-        .insert(rowsToInsert);
-
-      if (insertRowsErr) {
-        return { success: false, error: 'Gagal memperbarui baris jurnal: ' + insertRowsErr.message };
+        return { success: false, error: 'Gagal memperbarui status kepala jurnal: ' + updateErr.message };
       }
 
       revalidatePath('/jurnal');

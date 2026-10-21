@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   RotateCcw,
   Eye,
+  SquarePen,
   ArrowUpDown,
   User,
   Sparkles
@@ -423,7 +424,7 @@ export function PengajuanListClient({
                   <th className="py-3.5 px-3">Keperluan</th>
                   <th className="py-3.5 px-4 text-right">Jumlah</th>
                   <th className="py-3.5 px-3 text-center">Status</th>
-                  <th className="py-3.5 px-4 text-right">Aksi</th>
+                  <th className="py-3.5 px-4 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#d4af37]/10 text-slate-200">
@@ -518,14 +519,26 @@ export function PengajuanListClient({
                       </td>
 
                       {/* Aksi */}
-                      <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                        <Link
-                          href={`/pengajuan/${item.id}`}
-                          className="inline-flex items-center gap-1 text-[11px] font-bold text-[#d4af37] hover:text-[#f3c853] hover:underline"
-                        >
-                          <span>Buka</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </Link>
+                      <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                        <div className="flex items-center justify-center gap-2">
+                          <Link
+                            href={`/pengajuan/${item.id}`}
+                            className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
+                            title="Lihat Detail Pengajuan"
+                          >
+                            <Eye className="w-4 h-4 text-[#d4af37]" />
+                          </Link>
+
+                          {(item.status === 'draf' || item.status === 'perlu_revisi') && (item.pengaju_id === profile.id || profile.peran === 'staf') && (
+                            <Link
+                              href={`/pengajuan/${item.id}/ubah`}
+                              className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
+                              title="Ubah Formulir Pengajuan"
+                            >
+                              <SquarePen className="w-4 h-4 text-[#d4af37]" />
+                            </Link>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );

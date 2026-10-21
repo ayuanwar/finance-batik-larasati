@@ -15,7 +15,9 @@ import {
   Sparkles,
   Search,
   Calendar,
-  RotateCcw
+  RotateCcw,
+  Eye,
+  SquarePen,
 } from 'lucide-react';
 import { formatRupiah, formatTanggalIndo } from '@/lib/utils';
 import { Profile } from '@/types/database';
@@ -366,7 +368,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
                       <th className="py-3 px-3 text-right">Jumlah</th>
                       <th className="py-3 px-3 text-center">Status</th>
                       <th className="py-3 px-3 text-center">Catatan Peninjau</th>
-                      <th className="py-3 px-3 text-right">Aksi</th>
+                      <th className="py-3 px-3 text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#d4af37]/10 text-slate-200">
@@ -428,14 +430,26 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
                               <span className="text-slate-500">-</span>
                             )}
                           </td>
-                          <td className="py-3 px-3 text-right whitespace-nowrap">
-                            <Link
-                              href={`/pengajuan/${item.id}`}
-                              className="inline-flex items-center gap-1 text-[11px] font-bold text-[#d4af37] hover:text-[#f3c853] hover:underline"
-                            >
-                              <span>Detail</span>
-                              <ChevronRight className="w-3.5 h-3.5" />
-                            </Link>
+                          <td className="py-3 px-3 text-center whitespace-nowrap">
+                            <div className="flex items-center justify-center gap-2">
+                              <Link
+                                href={`/pengajuan/${item.id}`}
+                                className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
+                                title="Lihat Detail Pengajuan"
+                              >
+                                <Eye className="w-4 h-4 text-[#d4af37]" />
+                              </Link>
+
+                              {(item.status === 'draf' || item.status === 'perlu_revisi') && (
+                                <Link
+                                  href={`/pengajuan/${item.id}/ubah`}
+                                  className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
+                                  title="Ubah Pengajuan"
+                                >
+                                  <SquarePen className="w-4 h-4 text-[#d4af37]" />
+                                </Link>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       );

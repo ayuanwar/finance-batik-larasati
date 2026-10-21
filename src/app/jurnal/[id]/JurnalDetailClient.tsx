@@ -10,7 +10,7 @@ import {
   Clock,
   ArrowRightLeft,
   BookOpen,
-  Edit,
+  SquarePen,
   Trash2,
   RotateCcw,
   Loader2,
@@ -267,7 +267,7 @@ export function JurnalDetailClient({
                 href={`/jurnal/${jurnal.id}/ubah`}
                 className="px-4 py-2 rounded-xl border border-amber-500/40 text-[#f3c853] hover:bg-amber-950/40 text-xs font-bold transition-all flex items-center gap-1.5"
               >
-                <Edit className="w-3.5 h-3.5" />
+                <SquarePen className="w-3.5 h-3.5" />
                 <span>Ubah Draf</span>
               </Link>
 
