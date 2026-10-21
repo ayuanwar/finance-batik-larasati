@@ -93,7 +93,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                   <Link href="/buku-besar" className={getLinkClasses('/buku-besar')}>
                     Buku Besar
                   </Link>
-                  <Link href="/laporan" className={getLinkClasses('/laporan')}>
+                  <Link href="/laporan-keuangan" className={getLinkClasses('/laporan-keuangan')}>
                     Laporan Keuangan
                   </Link>
                   <Link href="/akun-periode" className={getLinkClasses('/akun-periode')}>
@@ -224,9 +224,9 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                   Buku Besar
                 </Link>
                 <Link
-                  href="/laporan"
+                  href="/laporan-keuangan"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={getMobileLinkClasses('/laporan')}
+                  className={getMobileLinkClasses('/laporan-keuangan')}
                 >
                   Laporan Keuangan
                 </Link>
