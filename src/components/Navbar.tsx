@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Sparkles, LogOut, Menu, X } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Sparkles, LogOut, Menu, X, Search } from 'lucide-react';
 import { Profile } from '@/types/database';
 
 interface NavbarProps {
@@ -13,7 +13,17 @@ interface NavbarProps {
 
 export function Navbar({ profile, onLogout }: NavbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    router.push(`/cari?q=${encodeURIComponent(searchQuery.trim())}`);
+    setMobileSearchOpen(false);
+  };
 
   const isFinance = profile.peran === 'direktur' || profile.peran === 'akuntan';
 
@@ -102,7 +112,30 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
           </div>
 
           {/* User Info, Tombol Keluar, & Mobile Hamburger */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+            {/* Kolom Pencarian Global (Desktop / Tablet) */}
+            <form onSubmit={handleSearchSubmit} className="relative hidden sm:block">
+              <Search className="w-3.5 h-3.5 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Cari transaksi, nomor..."
+                className="w-36 md:w-48 lg:w-60 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#06150f] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all"
+              />
+            </form>
+
+            {/* Ikon Pencarian Mobile */}
+            <button
+              type="button"
+              onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+              className="p-2 rounded-xl border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] sm:hidden cursor-pointer"
+              title="Buka Pencarian Global"
+              aria-label="Buka Pencarian Global"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
             <div className="text-right hidden sm:block">
               <div className="text-sm font-bold text-[#fdfbf7] leading-snug">
                 {profile.nama_lengkap}
@@ -138,6 +171,23 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             </button>
           </div>
         </div>
+
+        {/* Mobile Global Search Dropdown / Input Bar */}
+        {mobileSearchOpen && (
+          <div className="sm:hidden py-2.5 px-2 border-t border-[#d4af37]/20 bg-[#06150f]">
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <Search className="w-4 h-4 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Cari transaksi, pengajuan, nomor..."
+                autoFocus
+                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-[#081c15] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37]"
+              />
+            </form>
+          </div>
+        )}
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
