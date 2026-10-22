@@ -163,9 +163,19 @@ export async function simpanAkunAction(
         return { success: false, error: `Kode akun ${kodeClean} sudah digunakan. Harap gunakan kode lain.` };
       }
 
+      // Hitung ID berikutnya secara aman dari database untuk mencegah bentrok sequence identity
+      const { data: maxRows } = await adminSupabase
+        .from('akun')
+        .select('id')
+        .order('id', { ascending: false })
+        .limit(1);
+
+      const nextId = (Number(maxRows?.[0]?.id) || 0) + 1;
+
       const { data: inserted, error: insertErr } = await adminSupabase
         .from('akun')
         .insert({
+          id: nextId,
           kode: kodeClean,
           nama: namaClean,
           tipe: payload.tipe,
@@ -467,9 +477,19 @@ export async function tambahPeriodeAction(
     const padBulan = String(bulan).padStart(2, '0');
     const tanggalMulai = `${tahun}-${padBulan}-01`;
 
+    // Hitung ID berikutnya secara aman dari database untuk mencegah bentrok sequence identity
+    const { data: maxPeriode } = await adminSupabase
+      .from('periode')
+      .select('id')
+      .order('id', { ascending: false })
+      .limit(1);
+
+    const nextPeriodeId = (Number(maxPeriode?.[0]?.id) || 0) + 1;
+
     const { data: inserted, error: insertErr } = await adminSupabase
       .from('periode')
       .insert({
+        id: nextPeriodeId,
         tahun,
         bulan,
         tanggal_mulai: tanggalMulai,
