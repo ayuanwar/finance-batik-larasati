@@ -530,7 +530,7 @@ export function ImportMutasiClient({
 
   const handleHapusBaris = (index: number) => {
     if (barisJurnal.length <= 2) {
-      setJurnalModalError('Jurnal minimal harus memiliki 2 baris akun (BR-02).');
+      setJurnalModalError('Jurnal minimal harus memiliki 2 baris akun.');
       return;
     }
     setBarisJurnal((prev) => prev.filter((_, idx) => idx !== index));

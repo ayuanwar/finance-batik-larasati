@@ -197,7 +197,7 @@ export function JurnalFormClient({
 
     if (!statusPeriodeTanggal || statusPeriodeTanggal.status !== 'terbuka') {
       setErrorMessage(
-        'Tanggal transaksi berada pada periode akuntansi yang belum dibuka atau sudah ditutup (BR-05).'
+        'Tanggal transaksi berada pada periode akuntansi yang belum dibuka atau sudah ditutup.'
       );
       return;
     }
@@ -231,7 +231,7 @@ export function JurnalFormClient({
     if (targetStatus === 'diposting') {
       if (!isBalanced) {
         setErrorMessage(
-          `Jurnal tidak seimbang. Total Debit (${formatRupiah(totalDebit)}) harus sama persis dengan Total Kredit (${formatRupiah(totalKredit)}) untuk dapat diposting (BR-02).`
+          `Jurnal tidak seimbang. Total Debit (${formatRupiah(totalDebit)}) harus sama persis dengan Total Kredit (${formatRupiah(totalKredit)}) untuk dapat diposting.`
         );
         return;
       }
@@ -562,7 +562,7 @@ export function JurnalFormClient({
         </Link>
 
         <div className="w-full sm:w-auto flex flex-col sm:flex-row items-center gap-2.5">
-          {/* Tombol Simpan sebagai Draf (Selalu diperbolehkan walau belum seimbang - BR-02) */}
+          {/* Tombol Simpan sebagai Draf (Selalu diperbolehkan walau belum seimbang) */}
           <button
             type="button"
             disabled={loading}
@@ -573,7 +573,7 @@ export function JurnalFormClient({
             <span>Simpan sebagai Draf</span>
           </button>
 
-          {/* Tombol Posting Jurnal (HANYA BISA jika seimbang - BR-02) */}
+          {/* Tombol Posting Jurnal (HANYA BISA jika seimbang) */}
           <button
             type="button"
             disabled={loading || !isBalanced}
@@ -581,7 +581,7 @@ export function JurnalFormClient({
             className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
             title={
               !isBalanced
-                ? 'Jurnal harus seimbang (Total Debit = Total Kredit) untuk diposting (BR-02)'
+                ? 'Jurnal harus seimbang (Total Debit = Total Kredit) untuk diposting'
                 : 'Posting jurnal resmi ke Buku Besar'
             }
           >

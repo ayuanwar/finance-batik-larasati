@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { BatikParangBackground } from "@/components/BatikParangBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,15 @@ export default function RootLayout({
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#081c15] text-slate-100">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#06130D] text-slate-100 relative selection:bg-[#C79F4B] selection:text-[#06130D] overflow-x-hidden">
+        {/* Background Batik Parang Wireframe Watermark */}
+        <BatikParangBackground />
+        
+        {/* Konten Utama */}
+        <div className="relative z-10 flex-1 flex flex-col w-full">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

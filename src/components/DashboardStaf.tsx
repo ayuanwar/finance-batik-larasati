@@ -99,32 +99,26 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
   const dibayarList = pengajuanList.filter((p) => p.status === 'dibayar');
 
   return (
-    <div className="space-y-8">
-      {/* 1. Header Banner Sambutan Khusus Staf Nuansa Keraton */}
-      <div className="bg-[#0b2419] rounded-2xl p-6 sm:p-8 text-white border border-[#d4af37]/25 shadow-lg">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#123524] text-[#f3c853] border border-[#d4af37]/35 mb-2.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Dasbor Operasional Karyawan</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#fdfbf7] font-serif">
-              Halo, {profile.nama_lengkap}! 👋
-            </h1>
-            <p className="text-slate-300 text-xs sm:text-sm mt-1 max-w-xl leading-relaxed">
-              Ajukan klaim penggantian biaya (*reimburse*) atau pengeluaran operasional toko dan pantau status persetujuan secara mandiri.
-            </p>
-          </div>
+    <div className="space-y-6">
+      {/* 1. Header Ringkas Dasbor Staf */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#d4af37]/20">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#fdfbf7] font-serif">
+            Operasional & Klaim Biaya
+          </h1>
+          <p className="text-slate-400 text-xs mt-0.5">
+            Daftar pengeluaran dan status persetujuan klaim operasional Anda
+          </p>
+        </div>
 
-          <div>
-            <Link
-              href="/pengajuan/baru"
-              className="px-5 py-3 rounded-xl bg-[#d4af37] text-[#081c15] text-sm font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Plus className="w-4 h-4 stroke-[3]" />
-              <span>Buat Pengajuan Baru</span>
-            </Link>
-          </div>
+        <div>
+          <Link
+            href="/pengajuan/baru"
+            className="px-4 py-2 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-bold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+          >
+            <Plus className="w-3.5 h-3.5 stroke-[3]" />
+            <span>Buat Pengajuan Baru</span>
+          </Link>
         </div>
       </div>
 

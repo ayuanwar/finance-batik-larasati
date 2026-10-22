@@ -40,7 +40,7 @@ export default async function JurnalBaruPage() {
     redirect('/masuk');
   }
 
-  // 3. Ambil Daftar Seluruh Akun yang Aktif (BR-01)
+  // 3. Ambil Daftar Seluruh Akun yang Aktif
   const { data: akunData } = await supabase
     .from('akun')
     .select('id, kode, nama, tipe, saldo_normal')
@@ -70,10 +70,10 @@ export default async function JurnalBaruPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <JurnalFormClient akunList={akunList} openPeriods={openPeriods} />
       </main>
     </div>

@@ -50,7 +50,7 @@ export interface BukuBesarFilterPayload {
 
 /**
  * Server Action untuk mengambil data Buku Besar (General Ledger)
- * Sesuai PRD BR-11: Hanya Akuntan dan Direktur yang berhak mengakses data keuangan ini.
+ * Hanya Akuntan dan Direktur yang berhak mengakses data keuangan ini.
  */
 export async function getBukuBesarDataAction(
   payload: BukuBesarFilterPayload
@@ -67,7 +67,7 @@ export async function getBukuBesarDataAction(
       return { success: false, error: 'Sesi Anda telah berakhir. Silakan masuk kembali.' };
     }
 
-    // 2. Verifikasi Hak Akses Profil (BR-11: Staf DILARANG mengakses data keuangan rahasia)
+    // 2. Verifikasi Hak Akses Profil (Staf DILARANG mengakses data keuangan rahasia)
     const { data: profile } = await supabase
       .from('profiles')
       .select('id, peran, aktif')
@@ -81,7 +81,7 @@ export async function getBukuBesarDataAction(
     if (profile.peran === 'staf') {
       return {
         success: false,
-        error: 'Akses Ditolak: Staf dilarang melihat buku besar (BR-11).',
+        error: 'Akses Ditolak: Anda tidak memiliki izin untuk melihat buku besar.',
       };
     }
 

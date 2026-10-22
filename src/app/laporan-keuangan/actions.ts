@@ -69,7 +69,7 @@ export interface ActionResponse<T = unknown> {
 }
 
 /**
- * Validasi otorisasi: Hanya Akuntan dan Direktur yang boleh mengakses laporan keuangan (BR-11)
+ * Validasi otorisasi: Hanya Akuntan dan Direktur yang boleh mengakses laporan keuangan
  */
 async function verifyFinanceUser() {
   const supabase = await createClient();
@@ -95,7 +95,7 @@ async function verifyFinanceUser() {
   if (profile.peran === 'staf') {
     return {
       authorized: false,
-      error: 'Akses Ditolak: Staf dilarang mengakses laporan keuangan (BR-11).',
+      error: 'Akses Ditolak: Anda tidak memiliki izin untuk mengakses laporan keuangan.',
     };
   }
 

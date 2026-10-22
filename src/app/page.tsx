@@ -149,9 +149,9 @@ export default async function BerandaPage() {
       .order('bulan', { ascending: true });
 
     return (
-      <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col">
+      <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
         <Navbar profile={profile} onLogout={handleKeluar} />
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
           <DashboardFinance
             profile={profile}
             totalKasBank={totalKasBank}
@@ -164,7 +164,7 @@ export default async function BerandaPage() {
             periodeList={(rawPeriodeList as unknown as PeriodeItem[]) || []}
           />
         </main>
-        <footer className="bg-[#06150f] border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
+        <footer className="bg-[#06130D]/80 border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
           CV Batik Larasati · Sistem Keuangan Internal UMKM Surakarta
         </footer>
       </div>
@@ -192,15 +192,15 @@ export default async function BerandaPage() {
     .order('dibuat_pada', { ascending: false });
 
   return (
-    <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
       <Navbar profile={profile} onLogout={handleKeluar} />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <DashboardStaf
           profile={profile}
           pengajuanList={(stafPengajuanRaw as unknown as StafPengajuanItem[]) || []}
         />
       </main>
-      <footer className="bg-[#06150f] border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
+      <footer className="bg-[#06130D]/80 border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
         CV Batik Larasati · Sistem Keuangan Internal UMKM Surakarta
       </footer>
     </div>

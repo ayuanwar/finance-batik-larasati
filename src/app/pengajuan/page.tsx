@@ -85,10 +85,10 @@ export default async function PengajuanPage() {
     .order('bulan', { ascending: false });
 
   return (
-    <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <PengajuanListClient
           profile={profile}
           initialPengajuan={(pengajuanList as unknown as PengajuanRow[]) || []}
@@ -96,7 +96,7 @@ export default async function PengajuanPage() {
         />
       </main>
 
-      <footer className="bg-[#06150f] border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
+      <footer className="bg-[#06130D]/80 border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
         CV Batik Larasati · Sistem Keuangan Internal UMKM Surakarta
       </footer>
     </div>

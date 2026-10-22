@@ -64,7 +64,7 @@ export async function simpanJurnalAction(
       };
     }
 
-    // 3. Validasi Tanggal & Periode Akuntansi (BR-05)
+    // 3. Validasi Tanggal & Periode Akuntansi
     if (!payload.tanggal) {
       return { success: false, error: 'Tanggal transaksi jurnal wajib diisi.' };
     }
@@ -88,14 +88,14 @@ export async function simpanJurnalAction(
     if (periodeErr || !periodeData) {
       return {
         success: false,
-        error: `Periode akuntansi untuk bulan ${bulan}/${tahun} belum dibuat dalam sistem (BR-05).`,
+        error: `Periode akuntansi untuk bulan ${bulan}/${tahun} belum dibuat dalam sistem.`,
       };
     }
 
     if (periodeData.status !== 'terbuka') {
       return {
         success: false,
-        error: `Periode akuntansi ${bulan}/${tahun} telah ditutup. Jurnal hanya dapat dibuat pada periode terbuka (BR-05).`,
+        error: `Periode akuntansi ${bulan}/${tahun} telah ditutup. Jurnal hanya dapat dibuat pada periode terbuka.`,
       };
     }
 
@@ -107,11 +107,11 @@ export async function simpanJurnalAction(
       };
     }
 
-    // 5. Validasi Baris Jurnal (BR-02)
+    // 5. Validasi Baris Jurnal
     if (!payload.baris || payload.baris.length < 2) {
       return {
         success: false,
-        error: 'Jurnal minimal harus terdiri dari 2 baris transaksi (BR-02).',
+        error: 'Jurnal minimal harus terdiri dari 2 baris transaksi.',
       };
     }
 
@@ -134,7 +134,7 @@ export async function simpanJurnalAction(
       if ((debitVal > 0 && kreditVal > 0) || (debitVal === 0 && kreditVal === 0)) {
         return {
           success: false,
-          error: `Baris ke-${i + 1}: Setiap baris harus diisi salah satu antara Debit saja atau Kredit saja (BR-02).`,
+          error: `Baris ke-${i + 1}: Setiap baris harus diisi salah satu antara Debit saja atau Kredit saja.`,
         };
       }
 
@@ -142,13 +142,13 @@ export async function simpanJurnalAction(
       totalKredit += kreditVal;
     }
 
-    // 6. Validasi Keseimbangan untuk Status Posting (BR-02)
+    // 6. Validasi Keseimbangan untuk Status Posting
     const isDiposting = payload.target_status === 'diposting';
     if (isDiposting) {
       if (totalDebit !== totalKredit || totalDebit <= 0) {
         return {
           success: false,
-          error: `Jurnal tidak seimbang. Total Debit (Rp${totalDebit.toLocaleString('id-ID')}) harus sama dengan Total Kredit (Rp${totalKredit.toLocaleString('id-ID')}) untuk dapat diposting (BR-02).`,
+          error: `Jurnal tidak seimbang. Total Debit (Rp${totalDebit.toLocaleString('id-ID')}) harus sama dengan Total Kredit (Rp${totalKredit.toLocaleString('id-ID')}) untuk dapat diposting.`,
         };
       }
     }
@@ -171,7 +171,7 @@ export async function simpanJurnalAction(
       if (existingJurnal.status !== 'draf') {
         return {
           success: false,
-          error: `Jurnal berstatus '${existingJurnal.status}' tidak dapat diubah (BR-04).`,
+          error: `Jurnal berstatus '${existingJurnal.status}' tidak dapat diubah.`,
         };
       }
 
@@ -211,7 +211,7 @@ export async function simpanJurnalAction(
 
       let nomorJurnal = existingJurnal.nomor;
 
-      // Jika berpindah dari draf ke diposting, generate nomor dokumen gapless (BR-03)
+      // Jika berpindah dari draf ke diposting, generate nomor dokumen gapless
       if (isDiposting && !nomorJurnal) {
         const { data: generatedNo, error: rpcErr } = await adminSupabase.rpc('generate_document_number', {
           p_jenis: 'JU',
@@ -337,7 +337,7 @@ export async function simpanJurnalAction(
 }
 
 /**
- * Server Action untuk menghapus Jurnal Draf (BR-04)
+ * Server Action untuk menghapus Jurnal Draf
  */
 export async function hapusJurnalAction(jurnalId: number): Promise<ActionResponse> {
   try {
@@ -374,7 +374,7 @@ export async function hapusJurnalAction(jurnalId: number): Promise<ActionRespons
     if (jurnal.status !== 'draf') {
       return {
         success: false,
-        error: `Jurnal berstatus '${jurnal.status}' tidak dapat dihapus. Koreksi harus lewat Jurnal Pembalik (BR-04).`,
+        error: `Jurnal berstatus '${jurnal.status}' tidak dapat dihapus. Koreksi harus lewat Jurnal Pembalik.`,
       };
     }
 
@@ -402,7 +402,7 @@ export interface BuatJurnalPembalikPayload {
 }
 
 /**
- * Server Action untuk membuat Jurnal Pembalik sesuai aturan PRD BR-04 & BR-05
+ * Server Action untuk membuat Jurnal Pembalik sesuai aturan sistem akuntansi
  */
 export async function buatJurnalPembalikAction(
   payload: BuatJurnalPembalikPayload
@@ -425,7 +425,7 @@ export async function buatJurnalPembalikAction(
       .single();
 
     if (!profile || profile.peran !== 'akuntan') {
-      return { success: false, error: 'Hanya peran Akuntan yang dapat membuat jurnal pembalik (BR-04).' };
+      return { success: false, error: 'Hanya peran Akuntan yang dapat membuat jurnal pembalik.' };
     }
 
     // 1. Ambil Jurnal Asal beserta baris-barisnya
@@ -439,7 +439,7 @@ export async function buatJurnalPembalikAction(
       return { success: false, error: 'Jurnal sumber yang ingin dibalik tidak ditemukan.' };
     }
 
-    // 2. Validasi Kelayakan Jurnal untuk Dibalik (BR-04)
+    // 2. Validasi Kelayakan Jurnal untuk Dibalik
     if (original.status !== 'diposting') {
       return {
         success: false,
@@ -450,18 +450,18 @@ export async function buatJurnalPembalikAction(
     if (original.sumber === 'pembalik') {
       return {
         success: false,
-        error: 'Jurnal pembalik tidak dapat dibalik kembali (BR-04).',
+        error: 'Jurnal pembalik tidak dapat dibalik kembali.',
       };
     }
 
     if (original.sumber === 'pengajuan' || original.pengajuan_id !== null) {
       return {
         success: false,
-        error: 'Jurnal otomatis dari pembayaran pengajuan tidak dapat dibalik (BR-04).',
+        error: 'Jurnal otomatis dari pembayaran pengajuan tidak dapat dibalik.',
       };
     }
 
-    // Cek apakah sudah pernah dibalik sebelumnya (BR-04: satu jurnal hanya bisa dibalik satu kali)
+    // Cek apakah sudah pernah dibalik sebelumnya (satu jurnal hanya bisa dibalik satu kali)
     const { data: existingPembalik } = await supabase
       .from('jurnal')
       .select('id, nomor')
@@ -471,11 +471,11 @@ export async function buatJurnalPembalikAction(
     if (existingPembalik && existingPembalik.length > 0) {
       return {
         success: false,
-        error: `Jurnal ini telah dibalik sebelumnya oleh jurnal nomor ${existingPembalik[0].nomor || existingPembalik[0].id} (BR-04).`,
+        error: `Jurnal ini telah dibalik sebelumnya oleh jurnal nomor ${existingPembalik[0].nomor || existingPembalik[0].id}.`,
       };
     }
 
-    // 3. Validasi Tanggal Pembalik & Periode Terbuka (BR-05)
+    // 3. Validasi Tanggal Pembalik & Periode Terbuka
     if (!payload.tanggal_pembalik) {
       return { success: false, error: 'Tanggal jurnal pembalik wajib diisi.' };
     }
@@ -505,7 +505,7 @@ export async function buatJurnalPembalikAction(
     if (periodeData.status !== 'terbuka') {
       return {
         success: false,
-        error: `Periode akuntansi ${bulan}/${tahun} telah ditutup. Jurnal pembalik hanya dapat diposting pada periode terbuka (BR-04, BR-05).`,
+        error: `Periode akuntansi ${bulan}/${tahun} telah ditutup. Jurnal pembalik hanya dapat diposting pada periode terbuka.`,
       };
     }
 
@@ -553,7 +553,7 @@ export async function buatJurnalPembalikAction(
       };
     }
 
-    // 6. Buat Baris Jurnal dengan Membalikkan Posisi Debit dan Kredit (BR-04)
+    // 6. Buat Baris Jurnal dengan Membalikkan Posisi Debit dan Kredit
     const reversedRows = original.jurnal_baris.map((b: { id: number; urutan: number; akun_id: number; debit: number; kredit: number; keterangan: string | null }, idx: number) => ({
       jurnal_id: pembalikHeader.id,
       urutan: idx + 1,
@@ -573,7 +573,7 @@ export async function buatJurnalPembalikAction(
       return { success: false, error: 'Gagal menyisipkan baris jurnal pembalik: ' + insertRowsErr.message };
     }
 
-    // 7. Ubah Status Jurnal Asal menjadi 'dibalik' (diizinkan oleh trigger BR-04)
+    // 7. Ubah Status Jurnal Asal menjadi 'dibalik'
     const { error: updateOriginalErr } = await adminSupabase
       .from('jurnal')
       .update({ status: 'dibalik' })

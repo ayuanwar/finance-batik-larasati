@@ -46,7 +46,7 @@ export default async function CariPage({ searchParams }: CariPageProps) {
   const kataKunci = (resolvedParams.q || '').trim();
 
   return (
-    <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">

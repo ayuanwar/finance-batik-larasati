@@ -36,7 +36,7 @@ export default async function LaporanKeuanganPage() {
     redirect('/masuk');
   }
 
-  // 3. Keamanan BR-11: Data keuangan rahasia, Staf DILARANG mengakses -> dialihkan ke Dasbor
+  // 3. Keamanan: Data keuangan rahasia, Staf DILARANG mengakses -> dialihkan ke Dasbor
   if (profile.peran === 'staf') {
     redirect('/');
   }
@@ -112,12 +112,12 @@ export default async function LaporanKeuanganPage() {
         };
 
   return (
-    <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col font-sans print:bg-white print:text-black">
+    <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans print:bg-white print:text-black">
       <div className="print:hidden">
         <Navbar profile={profile} onLogout={handleKeluar} />
       </div>
 
-      <main className="flex-1 max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10 print:py-0 print:px-0 print:max-w-none">
+      <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10 print:py-0 print:px-0 print:max-w-none">
         <LaporanKeuanganClient
           initialLabaRugi={initialLabaRugi}
           initialNeraca={initialNeraca}

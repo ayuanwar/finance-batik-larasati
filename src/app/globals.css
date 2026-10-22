@@ -1,13 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #081c15;
+  --background: #06130D;
   --foreground: #f8fafc;
+  --keraton-bg: #06130D;
+  --keraton-card: #0A1A12;
+  --keraton-gold: #C79F4B;
+  --keraton-gold-hover: #DAB565;
+  --keraton-border: #153022;
   --gold: #d4af37;
   --gold-light: #f3c853;
-  --forest-dark: #081c15;
+  --forest-dark: #06130D;
   --forest-card: #0c2419;
-  --forest-border: rgba(212, 175, 55, 0.25);
+  --forest-border: rgba(199, 159, 75, 0.25);
 }
 
 body {

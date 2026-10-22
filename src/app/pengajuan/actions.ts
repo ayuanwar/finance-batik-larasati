@@ -53,7 +53,7 @@ export async function simpanPengajuanAction(
       return { success: false, error: 'Peran Direktur tidak memiliki izin membuat pengajuan biaya.' };
     }
 
-    // 3. Validasi Aturan Bisnis Input (BR-07)
+    // 3. Validasi Aturan Bisnis Input
     const today = new Date();
     const todayStr = today.toISOString().split('T')[0];
     const thirtyDaysAgo = new Date();

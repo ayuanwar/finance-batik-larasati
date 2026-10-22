@@ -322,7 +322,7 @@ export async function buatDrafJurnalDariMutasiAction(
       };
     }
 
-    // 2. Validasi Periode Akuntansi Berdasarkan Tanggal Mutasi (BR-05)
+    // 2. Validasi Periode Akuntansi Berdasarkan Tanggal Mutasi
     const tglDate = new Date(payload.tanggal);
     if (isNaN(tglDate.getTime())) {
       return { success: false, error: 'Format tanggal mutasi tidak valid.' };
@@ -341,18 +341,18 @@ export async function buatDrafJurnalDariMutasiAction(
     if (periodeErr || !periodeData) {
       return {
         success: false,
-        error: `Periode akuntansi ${bulan}/${tahun} belum dibuka di sistem. Pembuatan draf jurnal memerlukan periode yang valid (BR-05).`,
+        error: `Periode akuntansi ${bulan}/${tahun} belum dibuka di sistem. Pembuatan draf jurnal memerlukan periode yang valid.`,
       };
     }
 
     if (periodeData.status !== 'terbuka') {
       return {
         success: false,
-        error: `Periode akuntansi ${bulan}/${tahun} telah ditutup. Tidak dapat membuat jurnal pada periode tertutup (BR-05).`,
+        error: `Periode akuntansi ${bulan}/${tahun} telah ditutup. Tidak dapat membuat jurnal pada periode tertutup.`,
       };
     }
 
-    // 3. Validasi Baris Jurnal (BR-02: Min 2 baris, seimbang)
+    // 3. Validasi Baris Jurnal (Min 2 baris, seimbang)
     if (!payload.baris || payload.baris.length < 2) {
       return {
         success: false,

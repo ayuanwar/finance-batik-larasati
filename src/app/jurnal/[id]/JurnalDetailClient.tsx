@@ -150,7 +150,7 @@ export function JurnalDetailClient({
   const totalKredit = jurnal.jurnal_baris.reduce((acc, b) => acc + Number(b.kredit || 0), 0);
   const isBalanced = totalDebit === totalKredit && totalDebit > 0;
 
-  // Cek apakah jurnal ini memenuhi syarat untuk dibalik (BR-04)
+  // Cek apakah jurnal ini memenuhi syarat untuk dibalik
   const canBeReversed =
     isAkuntan &&
     jurnal.status === 'diposting' &&
@@ -282,7 +282,7 @@ export function JurnalDetailClient({
             </>
           )}
 
-          {/* Aksi Jurnal Diposting: Buat Jurnal Pembalik (BR-04) */}
+          {/* Aksi Jurnal Diposting: Buat Jurnal Pembalik */}
           {canBeReversed && (
             <button
               type="button"
@@ -354,7 +354,7 @@ export function JurnalDetailClient({
               >
                 {jurnal.pengajuan.nomor}
               </Link>{' '}
-              sebesar {formatRupiah(jurnal.pengajuan.jumlah)} ({jurnal.pengajuan.keterangan}). Sesuai aturan PRD BR-04, jurnal pembayaran pengajuan tidak dapat dibalik.
+              sebesar {formatRupiah(jurnal.pengajuan.jumlah)} ({jurnal.pengajuan.keterangan}). Sesuai aturan sistem akuntansi, jurnal pembayaran pengajuan tidak dapat dibalik.
             </p>
           </div>
         </div>
@@ -581,19 +581,19 @@ export function JurnalDetailClient({
         </div>
       )}
 
-      {/* MODAL 2: Buat Jurnal Pembalik (BR-04) */}
+      {/* MODAL 2: Buat Jurnal Pembalik */}
       {showPembalikModal && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
           <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/40 p-6 max-w-lg w-full shadow-2xl space-y-4">
             <div className="flex items-center gap-3 text-[#d4af37]">
               <RotateCcw className="w-6 h-6 shrink-0" />
               <h3 className="text-base font-bold text-slate-100">
-                Buat Jurnal Pembalik (BR-04)
+                Buat Jurnal Pembalik
               </h3>
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed">
-              Sesuai aturan pembukuan (BR-04), jurnal yang sudah diposting tidak dapat diubah atau dihapus. Kesalahan dikoreksi dengan menerbitkan <strong>Jurnal Pembalik</strong> yang menukar posisi Debit dan Kredit dari jurnal ini, serta mengubah status jurnal ini menjadi <em>Dibalik</em>.
+              Sesuai aturan standar pembukuan akuntansi, jurnal yang sudah diposting tidak dapat diubah atau dihapus. Kesalahan dikoreksi dengan menerbitkan <strong>Jurnal Pembalik</strong> yang menukar posisi Debit dan Kredit dari jurnal ini, serta mengubah status jurnal ini menjadi <em>Dibalik</em>.
             </p>
 
             <div className="space-y-3 pt-1">
@@ -616,7 +616,7 @@ export function JurnalDetailClient({
                   <Calendar className="w-4 h-4 text-[#d4af37] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
                 <span className="text-[10px] text-slate-400 mt-1 block">
-                  Tanggal harus berada pada periode akuntansi yang berstatus terbuka (BR-05).
+                  Tanggal harus berada pada periode akuntansi yang berstatus terbuka.
                 </span>
               </div>
 
