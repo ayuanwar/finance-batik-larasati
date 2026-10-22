@@ -166,7 +166,20 @@ export async function importMutasiAction(
       );
     });
 
+    // Hitung safe nextId dari max(id) untuk mencegah tabrakan sequence pkey
+    const { data: maxRows } = await adminSupabase
+      .from('mutasi_bank')
+      .select('id')
+      .order('id', { ascending: false })
+      .limit(1);
+
+    let nextId =
+      maxRows && maxRows.length > 0 && typeof maxRows[0].id === 'number'
+        ? Number(maxRows[0].id) + 1
+        : 1;
+
     const newRowsToInsert: Array<{
+      id: number;
       akun_bank_id: number;
       tanggal: string;
       deskripsi: string;
@@ -196,6 +209,7 @@ export async function importMutasiAction(
 
       currentBatchHashSet.add(hash);
       newRowsToInsert.push({
+        id: nextId++,
         akun_bank_id: payload.akunId,
         tanggal: r.tanggal,
         deskripsi: r.deskripsi.trim(),
@@ -209,12 +223,12 @@ export async function importMutasiAction(
 
     if (newRowsToInsert.length === 0) {
       return {
-        success: true,
-        data: { totalInserted: 0, totalDuplicate: duplicateCount },
+        success: false,
         error:
           duplicateCount > 0
-            ? `Seluruh ${duplicateCount} transaksi dalam file ini sudah pernah diimpor sebelumnya (duplikat terdeteksi).`
-            : 'Tidak ada baris data mutasi baru yang valid untuk disimpan.',
+            ? `Seluruh ${duplicateCount} transaksi dalam file ini sudah pernah diimpor sebelumnya (duplikat terdeteksi). Tidak ada data baru yang ditambahkan.`
+            : 'Tidak ada baris data transaksi yang valid untuk diimpor.',
+        data: { totalInserted: 0, totalDuplicate: duplicateCount },
       };
     }
 
@@ -228,7 +242,9 @@ export async function importMutasiAction(
       if (insertErr.code === '23505') {
         return {
           success: false,
-          error: 'Sebagian transaksi gagal diimpor karena melanggar batasan keunikan data mutasi di database.',
+          error:
+            'Transaksi gagal disimpan karena terdeteksi sebagai data duplikat di database.',
+          data: { totalInserted: 0, totalDuplicate: duplicateCount + newRowsToInsert.length },
         };
       }
       return { success: false, error: 'Gagal menyimpan mutasi bank: ' + insertErr.message };

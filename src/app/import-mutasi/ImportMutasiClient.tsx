@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useTransition, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import {
   UploadCloud,
   FileSpreadsheet,
@@ -25,6 +25,10 @@ import {
   Layers,
   ArrowRight,
   ShieldCheck,
+  Loader2,
+  AlertCircle,
+  Upload,
+  Save,
 } from 'lucide-react';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
@@ -84,7 +88,6 @@ export function ImportMutasiClient({
 }: ImportMutasiClientProps) {
   const [mutasiList, setMutasiList] = useState<MutasiBankItem[]>(initialMutasi);
   const [activeTab, setActiveTab] = useState<'belum' | 'semua' | 'sudah'>('belum');
-  const [isPending, startTransition] = useTransition();
 
   // Filter state
   const [filterAkun, setFilterAkun] = useState<string>('semua');
@@ -107,6 +110,9 @@ export function ImportMutasiClient({
     kasBankList[0]?.id || 0
   );
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [modalImportError, setModalImportError] = useState<string | null>(null);
+  const [isSubmittingImport, setIsSubmittingImport] = useState(false);
+  const [isSubmittingJurnal, setIsSubmittingJurnal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [previewRows, setPreviewRows] = useState<MutasiRowInput[]>([]);
   const [previewFileName, setPreviewFileName] = useState('');
@@ -367,6 +373,8 @@ export function ImportMutasiClient({
 
     setPreviewRows(parsedRows);
     setPreviewFileName(fileName);
+    setModalImportError(null);
+    setIsSubmittingImport(false);
     setPreviewModalOpen(true);
   };
 
@@ -383,21 +391,40 @@ export function ImportMutasiClient({
     if (file) parseFileContent(file);
   };
 
-  // Konfirmasi & Eksekusi Simpan Impor ke Database
-  const handleConfirmImport = () => {
+  // Konfirmasi & Eksekusi Simpan Impor ke Database dengan try-catch-finally yang aman
+  const handleConfirmImport = async () => {
     if (!selectedAkunId) {
-      setUploadError('Silakan pilih Akun Kas/Bank tujuan terlebih dahulu.');
+      setModalImportError('Silakan pilih Akun Kas/Bank tujuan terlebih dahulu.');
       return;
     }
 
-    startTransition(async () => {
+    if (!previewRows || previewRows.length === 0) {
+      setModalImportError('Tidak ada baris data transaksi yang valid untuk diimpor.');
+      return;
+    }
+
+    setIsSubmittingImport(true);
+    setModalImportError(null);
+
+    try {
+      // 1. Validasi baris data di sisi client sebelum pengiriman
+      const validRows = previewRows.filter(
+        (r) => r.tanggal && r.deskripsi && !isNaN(r.jumlah) && r.jumlah !== 0
+      );
+
+      if (validRows.length === 0) {
+        setModalImportError('Tidak ada baris data transaksi yang valid untuk dikirim.');
+        return;
+      }
+
+      // 2. Panggil Server Action
       const res = await importMutasiAction({
         akunId: selectedAkunId,
         namaFile: previewFileName,
-        rows: previewRows,
+        rows: validRows,
       });
 
-      if (res.success && res.data) {
+      if (res.success && res.data && res.data.totalInserted > 0) {
         const { totalInserted, totalDuplicate } = res.data;
         let msg = `Berhasil mengimpor ${totalInserted} baris mutasi bank baru.`;
         if (totalDuplicate > 0) {
@@ -407,10 +434,11 @@ export function ImportMutasiClient({
         setNotification({ type: 'success', message: msg });
         setPreviewModalOpen(false);
         setPreviewRows([]);
+        setPreviewFileName('');
 
-        // Refresh mutasi list dari database
+        // Refresh mutasi list dari database secara lokal
         const selectedAkunObj = kasBankList.find((a) => a.id === selectedAkunId);
-        const newInsertedItems: MutasiBankItem[] = previewRows.slice(0, totalInserted).map((r, i) => ({
+        const newInsertedItems: MutasiBankItem[] = validRows.slice(0, totalInserted).map((r, i) => ({
           id: Date.now() + i,
           akun_bank_id: selectedAkunId,
           tanggal: r.tanggal,
@@ -421,15 +449,28 @@ export function ImportMutasiClient({
           jurnal_id: null,
           diimpor_oleh: profile.id,
           diimpor_pada: new Date().toISOString(),
-          akun: selectedAkunObj ? { id: selectedAkunObj.id, kode: selectedAkunObj.kode, nama: selectedAkunObj.nama } : null,
+          akun: selectedAkunObj
+            ? { id: selectedAkunObj.id, kode: selectedAkunObj.kode, nama: selectedAkunObj.nama }
+            : null,
         }));
 
         setMutasiList((prev) => [...newInsertedItems, ...prev]);
         setActiveTab('belum');
       } else {
-        setUploadError(res.error || 'Gagal menyimpan mutasi bank.');
+        // Tampilkan pesan kegagalan / duplikasi di dalam modal
+        setModalImportError(
+          res.error || 'Gagal menyimpan mutasi bank ke database.'
+        );
       }
-    });
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error
+          ? err.message
+          : 'Terjadi kendala jaringan atau server saat memproses impor.';
+      setModalImportError(msg);
+    } finally {
+      setIsSubmittingImport(false);
+    }
   };
 
   // ============================================================================
@@ -532,7 +573,7 @@ export function ImportMutasiClient({
     totalDebitJurnal === totalKreditJurnal;
 
   // Simpan Draf Jurnal dari Mutasi
-  const handleSaveDrafJurnal = () => {
+  const handleSaveDrafJurnal = async () => {
     if (!selectedMutasiForJurnal) return;
     setJurnalModalError(null);
 
@@ -559,7 +600,8 @@ export function ImportMutasiClient({
       return;
     }
 
-    startTransition(async () => {
+    setIsSubmittingJurnal(true);
+    try {
       const res = await buatDrafJurnalDariMutasiAction({
         mutasiId: selectedMutasiForJurnal.id,
         tanggal: formTanggalJurnal,
@@ -599,7 +641,15 @@ export function ImportMutasiClient({
       } else {
         setJurnalModalError(res.error || 'Gagal menyimpan draf jurnal.');
       }
-    });
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error
+          ? err.message
+          : 'Terjadi kesalahan sistem saat membuat draf jurnal.';
+      setJurnalModalError(msg);
+    } finally {
+      setIsSubmittingJurnal(false);
+    }
   };
 
   // ============================================================================
@@ -1209,6 +1259,17 @@ export function ImportMutasiClient({
             </div>
 
             <div className="p-4 sm:p-6 space-y-4">
+              {/* Notifikasi Error Impor */}
+              {modalImportError && (
+                <div className="p-3.5 rounded-xl bg-rose-950/70 border border-rose-500/50 flex items-start gap-2.5 text-xs text-rose-200 animate-fadeIn">
+                  <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-rose-100">Gagal Memproses Impor</p>
+                    <p className="mt-0.5 text-rose-300">{modalImportError}</p>
+                  </div>
+                </div>
+              )}
+
               {/* Ringkasan File */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded-xl bg-[#06150f] border border-[#d4af37]/20">
@@ -1277,18 +1338,29 @@ export function ImportMutasiClient({
             <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
               <button
                 type="button"
+                disabled={isSubmittingImport}
                 onClick={() => setPreviewModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer disabled:opacity-50"
               >
                 Batal
               </button>
               <button
                 type="button"
-                disabled={isPending}
+                disabled={isSubmittingImport}
                 onClick={handleConfirmImport}
-                className="px-5 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-md disabled:opacity-50"
+                className="px-5 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-md disabled:opacity-50 flex items-center gap-2"
               >
-                {isPending ? 'Mengimpor Data...' : 'Konfirmasi & Simpan Mutasi'}
+                {isSubmittingImport ? (
+                  <>
+                    <Loader2 className="w-4 h-4 text-[#d4af37] animate-spin" />
+                    <span>Mengimpor Data...</span>
+                  </>
+                ) : (
+                  <>
+                    <Upload className="w-4 h-4 text-[#d4af37]" />
+                    <span>Konfirmasi & Simpan Mutasi</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -1552,18 +1624,29 @@ export function ImportMutasiClient({
             <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
               <button
                 type="button"
+                disabled={isSubmittingJurnal}
                 onClick={() => setModalJurnalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer disabled:opacity-50"
               >
                 Batal
               </button>
               <button
                 type="button"
-                disabled={isPending || !isJurnalBalanced}
+                disabled={isSubmittingJurnal || !isJurnalBalanced}
                 onClick={handleSaveDrafJurnal}
-                className="px-5 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-5 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
               >
-                {isPending ? 'Menyimpan Draf...' : 'Simpan Draf Jurnal'}
+                {isSubmittingJurnal ? (
+                  <>
+                    <Loader2 className="w-4 h-4 text-[#d4af37] animate-spin" />
+                    <span>Menyimpan Draf...</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4 text-[#d4af37]" />
+                    <span>Simpan Draf Jurnal</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
