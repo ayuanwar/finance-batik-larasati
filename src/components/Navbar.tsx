@@ -125,6 +125,9 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                   <Link href="/akun-periode" className={getLinkClasses('/akun-periode')}>
                     Akun & Periode
                   </Link>
+                  <Link href="/import-mutasi" className={getLinkClasses('/import-mutasi')}>
+                    Import Mutasi
+                  </Link>
                 </>
               )}
 
@@ -269,6 +272,13 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                   className={getMobileLinkClasses('/akun-periode')}
                 >
                   Akun & Periode
+                </Link>
+                <Link
+                  href="/import-mutasi"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={getMobileLinkClasses('/import-mutasi')}
+                >
+                  Import Mutasi
                 </Link>
               </>
             )}
