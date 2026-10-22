@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
+import { keluarAction } from '@/lib/actions/auth';
 import { AkunPeriodeClient, AkunItem, PeriodeItem } from './AkunPeriodeClient';
 
 export const dynamic = 'force-dynamic';
@@ -31,14 +32,6 @@ export default async function AkunPeriodePage() {
   // 3. Hak Akses: Staf DIBLOKIR TOTAL dan dialihkan ke Dasbor
   if (profile.peran === 'staf') {
     redirect('/');
-  }
-
-  // Server Action untuk Keluar
-  async function handleKeluar() {
-    'use server';
-    const supabaseServer = await createClient();
-    await supabaseServer.auth.signOut();
-    redirect('/masuk');
   }
 
   // 4. Ambil Seluruh Data Akun (Bagan Akun)
@@ -105,7 +98,7 @@ export default async function AkunPeriodePage() {
 
   return (
     <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col font-sans">
-      <Navbar profile={profile} onLogout={handleKeluar} />
+      <Navbar profile={profile} onLogout={keluarAction} />
 
       {/* Kontainer Terpusat: max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 */}
       <main className="flex-1 max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">

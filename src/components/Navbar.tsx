@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Sparkles, LogOut, Menu, X, Search } from 'lucide-react';
+import { Sparkles, LogOut, Menu, X, Search, Loader2 } from 'lucide-react';
 import { Profile } from '@/types/database';
+import { createClient } from '@/lib/supabase/client';
+import { keluarAction } from '@/lib/actions/auth';
 
 interface NavbarProps {
   profile: Profile;
-  onLogout: () => Promise<void>;
+  onLogout?: () => Promise<void>;
 }
 
 export function Navbar({ profile, onLogout }: NavbarProps) {
@@ -17,6 +19,30 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
+
+    try {
+      if (onLogout) {
+        await onLogout();
+      } else {
+        await keluarAction();
+      }
+    } catch {
+      // Fallback aman jika terjadi error serialized response di server action
+      try {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+      } catch {
+        // Abaikan error client signout
+      }
+      window.location.href = '/masuk';
+    }
+  };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,14 +175,21 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
               {profile.peran}
             </span>
 
-            <form action={onLogout} className="shrink-0">
+            <form onSubmit={handleLogout} className="shrink-0">
               <button
                 type="submit"
-                className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl border border-[#d4af37]/25 text-slate-300 hover:text-rose-300 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+                disabled={isLoggingOut}
+                className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl border border-[#d4af37]/25 text-slate-300 hover:text-rose-300 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap disabled:opacity-50"
                 title="Keluar dari Akun"
               >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden sm:inline">Keluar</span>
+                {isLoggingOut ? (
+                  <Loader2 className="w-4 h-4 animate-spin text-[#d4af37]" />
+                ) : (
+                  <LogOut className="w-4 h-4" />
+                )}
+                <span className="hidden sm:inline">
+                  {isLoggingOut ? 'Keluar...' : 'Keluar'}
+                </span>
               </button>
             </form>
 
@@ -249,6 +282,23 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                 Pengguna & Audit Log
               </Link>
             )}
+
+            {/* Mobile Logout Option */}
+            <div className="pt-2 border-t border-[#d4af37]/20 mt-2">
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="w-full text-left px-2.5 py-2 rounded-xl text-rose-300 hover:bg-rose-950/40 flex items-center gap-2 text-xs font-semibold cursor-pointer disabled:opacity-50"
+              >
+                {isLoggingOut ? (
+                  <Loader2 className="w-4 h-4 animate-spin text-rose-400" />
+                ) : (
+                  <LogOut className="w-4 h-4" />
+                )}
+                <span>{isLoggingOut ? 'Sedang Keluar...' : 'Keluar dari Akun'}</span>
+              </button>
+            </div>
           </div>
         )}
       </div>

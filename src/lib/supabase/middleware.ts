@@ -33,9 +33,17 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const isAuthPage = request.nextUrl.pathname.startsWith('/masuk');
+  const isServerAction = request.headers.has('next-action');
 
   // If user is not authenticated and trying to access protected route
-  if (!user && !isAuthPage && !request.nextUrl.pathname.startsWith('/_next') && !request.nextUrl.pathname.startsWith('/api')) {
+  // Do NOT redirect Server Actions in middleware (they expect Flight protocol responses, not 307 HTML)
+  if (
+    !user &&
+    !isAuthPage &&
+    !isServerAction &&
+    !request.nextUrl.pathname.startsWith('/_next') &&
+    !request.nextUrl.pathname.startsWith('/api')
+  ) {
     const url = request.nextUrl.clone();
     url.pathname = '/masuk';
     return NextResponse.redirect(url);
