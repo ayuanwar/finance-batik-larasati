@@ -14,6 +14,7 @@ export interface UpdateUserPayload {
   userId: string;
   peran: 'staf' | 'akuntan' | 'direktur';
   aktif: boolean;
+  jabatan: string;
 }
 
 export interface AuditLogItem {
@@ -75,7 +76,7 @@ async function verifyDirektur() {
 }
 
 /**
- * 1. Server Action: Mengubah Peran dan Status Aktif Pengguna
+ * 1. Server Action: Mengubah Peran, Status Aktif, dan Jabatan Pengguna
  * Hak Akses: Eksklusif Direktur
  */
 export async function updateUserAction(
@@ -85,6 +86,10 @@ export async function updateUserAction(
     const auth = await verifyDirektur();
     if (!auth.authorized || !auth.user) {
       return { success: false, error: auth.error };
+    }
+
+    if (!payload.jabatan || !payload.jabatan.trim()) {
+      return { success: false, error: 'Jabatan wajib diisi.' };
     }
 
     // Perlindungan Diri: Direktur dilarang menonaktifkan atau mengubah perannya sendiri
@@ -102,7 +107,7 @@ export async function updateUserAction(
     // Pastikan target pengguna ada
     const { data: targetUser, error: getErr } = await adminSupabase
       .from('profiles')
-      .select('id, nama_lengkap, email, peran, aktif')
+      .select('id, nama_lengkap, email, peran, jabatan, aktif')
       .eq('id', payload.userId)
       .single();
 
@@ -110,12 +115,13 @@ export async function updateUserAction(
       return { success: false, error: 'Pengguna yang dimaksud tidak ditemukan.' };
     }
 
-    // Update profil pengguna
+    // Update profil pengguna (peran, aktif, dan jabatan)
     const { error: updateErr } = await adminSupabase
       .from('profiles')
       .update({
         peran: payload.peran,
         aktif: payload.aktif,
+        jabatan: payload.jabatan.trim(),
       })
       .eq('id', payload.userId);
 

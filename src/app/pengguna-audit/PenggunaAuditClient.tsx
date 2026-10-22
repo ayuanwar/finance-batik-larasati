@@ -70,6 +70,7 @@ export function PenggunaAuditClient({
   const [selectedUser, setSelectedUser] = useState<UserProfileItem | null>(null);
   const [modalUserOpen, setModalUserOpen] = useState(false);
   const [formPeran, setFormPeran] = useState<'staf' | 'akuntan' | 'direktur'>('staf');
+  const [formJabatan, setFormJabatan] = useState('');
   const [formAktif, setFormAktif] = useState(true);
   const [userModalError, setUserModalError] = useState<string | null>(null);
 
@@ -94,6 +95,7 @@ export function PenggunaAuditClient({
   const handleOpenEditUser = (u: UserProfileItem) => {
     setSelectedUser(u);
     setFormPeran(u.peran);
+    setFormJabatan(u.jabatan || '');
     setFormAktif(u.aktif);
     setUserModalError(null);
     setModalUserOpen(true);
@@ -102,6 +104,10 @@ export function PenggunaAuditClient({
   // Simpan Perubahan Pengguna
   const handleSaveUser = () => {
     if (!selectedUser) return;
+    if (!formJabatan.trim()) {
+      setUserModalError('Jabatan wajib diisi.');
+      return;
+    }
     setUserModalError(null);
 
     startTransition(async () => {
@@ -109,18 +115,19 @@ export function PenggunaAuditClient({
         userId: selectedUser.id,
         peran: formPeran,
         aktif: formAktif,
+        jabatan: formJabatan.trim(),
       });
 
       if (res.success) {
         setNotification({
           type: 'success',
-          message: `Hak akses pengguna ${selectedUser.nama_lengkap} berhasil diperbarui.`,
+          message: `Data pengguna ${selectedUser.nama_lengkap} berhasil diperbarui.`,
         });
         setModalUserOpen(false);
         setUserList((prev) =>
           prev.map((item) =>
             item.id === selectedUser.id
-              ? { ...item, peran: formPeran, aktif: formAktif }
+              ? { ...item, peran: formPeran, aktif: formAktif, jabatan: formJabatan.trim() }
               : item
           )
         );
@@ -864,11 +871,23 @@ export function PenggunaAuditClient({
                 </div>
               )}
 
-              {userModalError && (
-                <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-500/50 text-rose-200 text-xs">
-                  {userModalError}
-                </div>
-              )}
+              {/* Input Teks Jabatan (Wajib Diisi) */}
+              <div>
+                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                  Jabatan <span className="text-rose-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={formJabatan}
+                  onChange={(e) => setFormJabatan(e.target.value)}
+                  placeholder="Contoh: Staf Gudang, Akuntan Senior, Direktur Utama"
+                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/40 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all"
+                  required
+                />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Nama jabatan fungsional atau divisi kerja operasional pengguna.
+                </p>
+              </div>
 
               {/* Pilihan Peran */}
               <div>

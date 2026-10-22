@@ -12,41 +12,7 @@ import {
   Loader2,
   Sparkles,
   ShieldCheck,
-  CheckCircle2
 } from 'lucide-react';
-
-const AKUN_UJI_PRESET = [
-  {
-    peran: 'Direktur',
-    nama: 'Laras Prameswari',
-    email: 'laras@larasati.test',
-    warna: 'bg-[#123524] text-amber-200 border-[#d4af37]/40 hover:border-[#d4af37]',
-    icon: '👑'
-  },
-  {
-    peran: 'Akuntan',
-    nama: 'Dimas Arya Nugroho',
-    email: 'dimas@larasati.test',
-    warna: 'bg-[#0f2d1e] text-blue-200 border-blue-500/30 hover:border-blue-400',
-    icon: '💼'
-  },
-  {
-    peran: 'Staf',
-    nama: 'Rina Anggraini',
-    email: 'rina@larasati.test',
-    warna: 'bg-[#0f2d1e] text-emerald-200 border-emerald-500/30 hover:border-emerald-400',
-    icon: '🧵'
-  },
-  {
-    peran: 'Nonaktif',
-    nama: 'Yoga Pratama',
-    email: 'yoga@larasati.test',
-    warna: 'bg-[#2a1318] text-rose-300 border-rose-500/30 hover:border-rose-400',
-    icon: '🚫'
-  }
-];
-
-const DEFAULT_TEST_PASSWORD = 'Latihan#2026';
 
 export default function HalamanMasuk() {
   const router = useRouter();
@@ -57,12 +23,6 @@ export default function HalamanMasuk() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const handlePilihAkunUji = (emailUji: string) => {
-    setEmail(emailUji);
-    setPassword(DEFAULT_TEST_PASSWORD);
-    setErrorMessage(null);
-  };
 
   const handleMasuk = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +73,7 @@ export default function HalamanMasuk() {
         return;
       }
 
-      // Jika akun dinonaktifkan (seperti Yoga Pratama)
+      // Jika akun dinonaktifkan
       if (!profile.aktif) {
         await supabase.auth.signOut();
         setErrorMessage('Akun Anda saat ini berstatus NONAKTIF. Silakan hubungi Direktur untuk mengaktifkan kembali akun Anda.');
@@ -228,7 +188,7 @@ export default function HalamanMasuk() {
               </div>
             </div>
 
-            {/* Tombol Emas Mewah */}
+            {/* Tombol Masuk */}
             <button
               type="submit"
               disabled={loading}
@@ -247,40 +207,6 @@ export default function HalamanMasuk() {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Preset: Memudahkan Evaluasi Mentor */}
-          <div className="mt-8 pt-5 border-t border-[#d4af37]/15">
-            <div className="flex items-center justify-between mb-2.5">
-              <span className="text-[11px] font-bold tracking-wider text-[#d4af37] uppercase">
-                Uji Cepat (Pilih Akun Uji)
-              </span>
-              <span className="text-[10px] text-[#d4af37] font-semibold bg-[#d4af37]/10 px-2 py-0.5 rounded-full border border-[#d4af37]/30">
-                Data Capstone
-              </span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {AKUN_UJI_PRESET.map((akun) => (
-                <button
-                  key={akun.email}
-                  type="button"
-                  onClick={() => handlePilihAkunUji(akun.email)}
-                  className={`text-left p-2.5 rounded-xl border text-xs transition-all flex flex-col justify-between cursor-pointer ${akun.warna}`}
-                >
-                  <div className="flex items-center gap-1.5 font-bold">
-                    <span>{akun.icon}</span>
-                    <span>{akun.peran}</span>
-                  </div>
-                  <div className="text-[11px] opacity-80 truncate mt-0.5 font-normal">
-                    {akun.nama}
-                  </div>
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center gap-1.5 mt-3 text-[11px] text-slate-300">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-              <span>Kata sandi bawaan terisi: <code className="font-mono bg-[#06150f] px-1.5 py-0.5 rounded text-[#d4af37] border border-[#d4af37]/25 font-bold">{DEFAULT_TEST_PASSWORD}</code></span>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
