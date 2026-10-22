@@ -1,0 +1,120 @@
+import { redirect } from 'next/navigation';
+import { createClient } from '@/lib/supabase/server';
+import { Navbar } from '@/components/Navbar';
+import { AkunPeriodeClient, AkunItem, PeriodeItem } from './AkunPeriodeClient';
+
+export const dynamic = 'force-dynamic';
+
+export default async function AkunPeriodePage() {
+  const supabase = await createClient();
+
+  // 1. Verifikasi Sesi Pengguna
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect('/masuk');
+  }
+
+  // 2. Ambil Profil Pengguna
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  if (!profile || !profile.aktif) {
+    redirect('/masuk');
+  }
+
+  // 3. Hak Akses: Staf DIBLOKIR TOTAL dan dialihkan ke Dasbor
+  if (profile.peran === 'staf') {
+    redirect('/');
+  }
+
+  // Server Action untuk Keluar
+  async function handleKeluar() {
+    'use server';
+    const supabaseServer = await createClient();
+    await supabaseServer.auth.signOut();
+    redirect('/masuk');
+  }
+
+  // 4. Ambil Seluruh Data Akun (Bagan Akun)
+  const { data: rawAkun, error: akunErr } = await supabase
+    .from('akun')
+    .select('id, kode, nama, tipe, saldo_normal, is_kas_bank, aktif, keterangan')
+    .order('kode', { ascending: true });
+
+  if (akunErr) {
+    console.error('Error fetching akun list:', akunErr);
+  }
+
+  const akunList: AkunItem[] = (rawAkun || []).map((ak) => ({
+    id: ak.id,
+    kode: ak.kode,
+    nama: ak.nama,
+    tipe: ak.tipe,
+    saldo_normal: ak.saldo_normal,
+    is_kas_bank: ak.is_kas_bank,
+    aktif: ak.aktif,
+    keterangan: ak.keterangan,
+  }));
+
+  // 5. Ambil Seluruh Data Periode Akuntansi
+  const { data: rawPeriode, error: periodeErr } = await supabase
+    .from('periode')
+    .select(`
+      id,
+      tahun,
+      bulan,
+      tanggal_mulai,
+      status,
+      ditutup_oleh,
+      ditutup_pada,
+      alasan_buka_ulang,
+      penutup:profiles!ditutup_oleh (
+        id,
+        nama_lengkap
+      )
+    `)
+    .order('tahun', { ascending: false })
+    .order('bulan', { ascending: false });
+
+  if (periodeErr) {
+    console.error('Error fetching periode list:', periodeErr);
+  }
+
+  const unwrapSingle = <T,>(item: T | T[] | null | undefined): T | null => {
+    if (Array.isArray(item)) return (item[0] as T) || null;
+    return (item as T) || null;
+  };
+
+  const periodeList: PeriodeItem[] = (rawPeriode || []).map((p: any) => ({
+    id: p.id,
+    tahun: p.tahun,
+    bulan: p.bulan,
+    tanggal_mulai: p.tanggal_mulai,
+    status: p.status,
+    ditutup_oleh: p.ditutup_oleh,
+    ditutup_pada: p.ditutup_pada,
+    alasan_buka_ulang: p.alasan_buka_ulang,
+    penutup: unwrapSingle(p.penutup),
+  }));
+
+  return (
+    <div className="min-h-screen bg-[#081c15] text-slate-100 flex flex-col font-sans">
+      <Navbar profile={profile} onLogout={handleKeluar} />
+
+      {/* Kontainer Terpusat: max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 */}
+      <main className="flex-1 max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <AkunPeriodeClient
+          initialAkun={akunList}
+          initialPeriode={periodeList}
+          profile={profile}
+        />
+      </main>
+    </div>
+  );
+}
