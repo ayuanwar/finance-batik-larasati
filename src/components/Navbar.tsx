@@ -35,7 +35,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  // Kunci scroll body saat sidebar terbuka di layar sentuh / mobile
+  // Kunci scroll body dan tangani tombol Escape saat sidebar terbuka
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -94,9 +94,9 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
       : pathname === href || (href !== '/' && pathname.startsWith(href));
 
     if (isActive) {
-      return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-[#123524] text-[#d4af37] border-l-4 border-[#d4af37] font-bold text-xs transition-all shadow-xs';
+      return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-[#123524] text-[#d4af37] font-bold text-xs transition-colors';
     }
-    return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] font-medium text-xs transition-all';
+    return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] font-medium text-xs transition-colors';
   };
 
   return (
@@ -105,7 +105,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
           BILAH NAVIGASI UTAMA (NAVBAR)
          ========================================================= */}
       <header className="relative bg-[#071c15] border-b border-[#d4af37]/30 sticky top-0 z-30 shadow-md shadow-[#06130D]/80">
-        {/* Latar Belakang Motif Batik Parang Mangkunegaran (Emas #d4af37, Opasitas 12%) */}
+        {/* Latar Belakang Motif Batik Parang Mangkunegaran (Emas #d4af37, Opasitas Optimal 20%) */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{
@@ -113,7 +113,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             backgroundRepeat: 'repeat',
             backgroundPosition: 'center',
             backgroundSize: '360px auto',
-            opacity: 0.12,
+            opacity: 0.20,
           }}
           aria-hidden="true"
         />
@@ -229,7 +229,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
         }`}
         aria-label="Sidebar Navigasi"
       >
-        {/* Latar Belakang Motif Parang Halus di Sidebar */}
+        {/* Latar Belakang Motif Parang di Sidebar (Emas #d4af37, Opasitas Optimal 20%) */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{
@@ -237,7 +237,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             backgroundRepeat: 'repeat',
             backgroundPosition: 'center',
             backgroundSize: '360px auto',
-            opacity: 0.09,
+            opacity: 0.20,
           }}
           aria-hidden="true"
         />
@@ -283,7 +283,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                   onClick={() => setIsSidebarOpen(false)}
                   className={getSidebarLinkClasses('/', true)}
                 >
-                  <LayoutDashboard className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                  <LayoutDashboard className="w-4 h-4 shrink-0" />
                   <span className="flex-1">Dashboard</span>
                 </Link>
                 <Link
@@ -291,7 +291,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                   onClick={() => setIsSidebarOpen(false)}
                   className={getSidebarLinkClasses('/pengajuan')}
                 >
-                  <FileText className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                  <FileText className="w-4 h-4 shrink-0" />
                   <span className="flex-1">Pengajuan Biaya</span>
                 </Link>
               </div>
@@ -309,7 +309,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                     onClick={() => setIsSidebarOpen(false)}
                     className={getSidebarLinkClasses('/jurnal')}
                   >
-                    <BookOpen className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <BookOpen className="w-4 h-4 shrink-0" />
                     <span className="flex-1">Jurnal Umum</span>
                   </Link>
                   <Link
@@ -317,7 +317,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                     onClick={() => setIsSidebarOpen(false)}
                     className={getSidebarLinkClasses('/buku-besar')}
                   >
-                    <Layers className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <Layers className="w-4 h-4 shrink-0" />
                     <span className="flex-1">Buku Besar</span>
                   </Link>
                   <Link
@@ -325,7 +325,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                     onClick={() => setIsSidebarOpen(false)}
                     className={getSidebarLinkClasses('/laporan-keuangan')}
                   >
-                    <BarChart3 className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <BarChart3 className="w-4 h-4 shrink-0" />
                     <span className="flex-1">Laporan Keuangan</span>
                   </Link>
                   <Link
@@ -333,7 +333,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                     onClick={() => setIsSidebarOpen(false)}
                     className={getSidebarLinkClasses('/akun-periode')}
                   >
-                    <Settings2 className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <Settings2 className="w-4 h-4 shrink-0" />
                     <span className="flex-1">Akun & Periode</span>
                   </Link>
                   <Link
@@ -341,7 +341,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                     onClick={() => setIsSidebarOpen(false)}
                     className={getSidebarLinkClasses('/import-mutasi')}
                   >
-                    <UploadCloud className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <UploadCloud className="w-4 h-4 shrink-0" />
                     <span className="flex-1">Import Mutasi Bank</span>
                   </Link>
                 </div>
@@ -360,7 +360,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                     onClick={() => setIsSidebarOpen(false)}
                     className={getSidebarLinkClasses('/pengguna-audit')}
                   >
-                    <ShieldCheck className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <ShieldCheck className="w-4 h-4 shrink-0" />
                     <span className="flex-1">Pengguna & Audit Log</span>
                   </Link>
                 </div>
