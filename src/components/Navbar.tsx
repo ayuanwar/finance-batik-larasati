@@ -1,9 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Sparkles, LogOut, Menu, X, Search, Loader2 } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Search,
+  LogOut,
+  Loader2,
+  LayoutDashboard,
+  FileText,
+  BookOpen,
+  Layers,
+  BarChart3,
+  Settings2,
+  UploadCloud,
+  ShieldCheck,
+} from 'lucide-react';
 import { Profile } from '@/types/database';
 import { createClient } from '@/lib/supabase/client';
 import { keluarAction } from '@/lib/actions/auth';
@@ -17,10 +31,25 @@ interface NavbarProps {
 export function Navbar({ profile, onLogout }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // Kunci scroll body saat sidebar terbuka di layar sentuh / mobile
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    if (isSidebarOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isSidebarOpen]);
 
   const handleLogout = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +78,6 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     router.push(`/cari?q=${encodeURIComponent(searchQuery.trim())}`);
-    setMobileSearchOpen(false);
   };
 
   const isFinance = profile.peran === 'direktur' || profile.peran === 'akuntan';
@@ -60,285 +88,312 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
     staf: 'bg-[#123524] text-emerald-200 border-emerald-400/40',
   }[profile.peran] || 'bg-[#0c2419] text-slate-300 border-slate-700';
 
-  const getLinkClasses = (href: string, exact: boolean = false) => {
+  const getSidebarLinkClasses = (href: string, exact: boolean = false) => {
     const isActive = exact
       ? pathname === href
       : pathname === href || (href !== '/' && pathname.startsWith(href));
 
     if (isActive) {
-      return 'px-2 py-1 rounded-md bg-[#123524] text-[#d4af37] border border-[#d4af37]/50 font-bold whitespace-nowrap transition-all shadow-xs';
+      return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-[#123524] text-[#d4af37] border-l-4 border-[#d4af37] font-bold text-xs transition-all shadow-xs';
     }
-    return 'px-2 py-1 rounded-md text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] whitespace-nowrap transition-all font-medium';
-  };
-
-  const getMobileLinkClasses = (href: string, exact: boolean = false) => {
-    const isActive = exact
-      ? pathname === href
-      : pathname === href || (href !== '/' && pathname.startsWith(href));
-
-    if (isActive) {
-      return 'block px-3 py-2 rounded-md bg-[#123524] text-[#d4af37] border border-[#d4af37]/50 font-bold text-xs';
-    }
-    return 'block px-3 py-2 rounded-md text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] text-xs font-medium';
+    return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] font-medium text-xs transition-all';
   };
 
   return (
-    <header className="relative bg-[#071c15] border-b border-[#d4af37]/30 sticky top-0 z-30 shadow-md shadow-[#06130D]/80 overflow-hidden">
-      {/* Latar Belakang Motif Batik Parang Mangkunegaran Asli (Persis Sesuai Gambar Referensi, Emas #d4af37, Opasitas 13%) */}
+    <>
+      {/* =========================================================
+          BILAH NAVIGASI UTAMA (NAVBAR)
+         ========================================================= */}
+      <header className="relative bg-[#071c15] border-b border-[#d4af37]/30 sticky top-0 z-30 shadow-md shadow-[#06130D]/80">
+        {/* Latar Belakang Motif Batik Parang Mangkunegaran (Emas #d4af37, Opasitas 12%) */}
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
+            backgroundRepeat: 'repeat',
+            backgroundPosition: 'center',
+            backgroundSize: '360px auto',
+            opacity: 0.12,
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 w-full max-w-[1360px] mx-auto px-3 sm:px-5 lg:px-6">
+          <div className="flex items-center justify-between h-16 gap-2 sm:gap-4 lg:gap-6">
+            
+            {/* 1. SISI KIRI: TOMBOL HAMBURGER + LOGO + TEKS MEREK */}
+            <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
+              {/* Tombol Hamburger (Garis Tiga) untuk Toggle Sidebar */}
+              <button
+                type="button"
+                onClick={() => setIsSidebarOpen(true)}
+                className="p-2 rounded-lg bg-[#0b281e] border border-[#d4af37]/35 text-[#d4af37] hover:bg-[#123524] hover:border-[#d4af37] transition-all cursor-pointer shrink-0 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                title="Buka Navigasi Menu"
+                aria-label="Buka Navigasi Menu"
+              >
+                <Menu className="w-5 h-5 stroke-[2.2]" />
+              </button>
+
+              {/* Logo Brand & Teks Merek */}
+              <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-[#071c14] flex items-center justify-center border border-[#d4af37]/40 group-hover:border-[#d4af37] transition-all shrink-0 p-1 shadow-xs">
+                  <Logo variant="transparent-monogram" size="xs" className="w-full h-full" priority />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <span className="font-serif font-bold text-[#fdfbf7] text-xs sm:text-sm leading-tight tracking-tight whitespace-nowrap">
+                    CV Batik Larasati
+                  </span>
+                  <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight whitespace-nowrap">
+                    Keuangan & Akuntansi
+                  </span>
+                </div>
+              </Link>
+            </div>
+
+            {/* 2. TENGAH: KOLOM PENCARIAN (SEARCH BAR) */}
+            <div className="flex-1 min-w-0 max-w-lg mx-1 sm:mx-3 md:mx-6">
+              <form onSubmit={handleSearchSubmit} className="relative w-full m-0">
+                <Search className="w-4 h-4 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Cari transaksi, pengajuan, nomor..."
+                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg bg-[#05140e] border border-[#d4af37]/35 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all shadow-inner"
+                />
+              </form>
+            </div>
+
+            {/* 3. SISI KANAN: IDENTITAS PENGGUNA LENGKAP & RAPI HORIZONTAL SEJAJAR */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              {/* Nama Lengkap & Jabatan */}
+              <div className="flex flex-col justify-center items-end text-right shrink-0">
+                <span className="text-xs font-bold text-[#fdfbf7] leading-tight whitespace-nowrap">
+                  {profile.nama_lengkap}
+                </span>
+                <span className="text-[10px] text-[#d4af37] capitalize leading-tight whitespace-nowrap mt-0.5 font-medium">
+                  {profile.jabatan || profile.peran}
+                </span>
+              </div>
+
+              {/* Lencana Peran (Role Badge) */}
+              <span
+                className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md border shrink-0 whitespace-nowrap ${roleBadgeStyle}`}
+              >
+                {profile.peran}
+              </span>
+
+              {/* Garis Pemisah Vertikal Halus */}
+              <div className="h-6 w-px bg-[#d4af37]/25 shrink-0 hidden sm:block" />
+
+              {/* Tombol Keluar */}
+              <form onSubmit={handleLogout} className="shrink-0 flex items-center m-0">
+                <button
+                  type="submit"
+                  disabled={isLoggingOut}
+                  className="px-2.5 py-1.5 rounded-md bg-[#0b281e] border border-[#d4af37]/35 text-slate-200 hover:text-rose-300 hover:bg-rose-950/50 hover:border-rose-500/40 transition-colors text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap disabled:opacity-50 shrink-0"
+                  title="Keluar dari Akun"
+                >
+                  {isLoggingOut ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-[#d4af37]" />
+                  ) : (
+                    <LogOut className="w-3.5 h-3.5 text-[#d4af37]" />
+                  )}
+                  <span className="hidden md:inline">
+                    {isLoggingOut ? 'Keluar...' : 'Keluar'}
+                  </span>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </header>
+
+      {/* =========================================================
+          SIDEBAR KIRI TERSEMBUNYI (COLLAPSIBLE SIDEBAR)
+         ========================================================= */}
+      {/* 1. Backdrop Gelap Transparan */}
       <div
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
-          backgroundRepeat: 'repeat',
-          backgroundPosition: 'center',
-          backgroundSize: '360px auto',
-          opacity: 0.13,
-        }}
+        className={`fixed inset-0 bg-black/60 z-40 transition-opacity duration-300 backdrop-blur-xs ${
+          isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsSidebarOpen(false)}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full max-w-[1360px] mx-auto px-3 sm:px-5 lg:px-6">
-        <div className="flex items-center justify-between h-16 gap-3">
-          {/* =========================================================
-              BAGIAN KIRI: LOGO & MENU NAVIGASI
-             ========================================================= */}
-          <div className="flex items-center gap-3 xl:gap-5 min-w-0">
-            {/* Logo Brand Keraton */}
-            <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-              <div className="w-9 h-9 rounded-lg bg-[#071c14] flex items-center justify-center border border-[#d4af37]/40 group-hover:border-[#d4af37] transition-all shrink-0 p-1 shadow-xs">
+      {/* 2. Panel Sidebar Geser */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-72 sm:w-80 bg-[#071c15] border-r border-[#d4af37]/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out overflow-hidden ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        aria-label="Sidebar Navigasi"
+      >
+        {/* Latar Belakang Motif Parang Halus di Sidebar */}
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
+            backgroundRepeat: 'repeat',
+            backgroundPosition: 'center',
+            backgroundSize: '360px auto',
+            opacity: 0.09,
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col h-full">
+          {/* Header Sidebar: Brand + Tombol Tutup */}
+          <div className="flex items-center justify-between p-4 border-b border-[#d4af37]/25 bg-[#05150f]/85">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#071c14] flex items-center justify-center border border-[#d4af37]/40 p-1 shadow-xs shrink-0">
                 <Logo variant="transparent-monogram" size="xs" className="w-full h-full" priority />
               </div>
-              <div className="flex flex-col justify-center">
-                <span className="font-serif font-bold text-[#fdfbf7] text-xs sm:text-sm leading-tight tracking-tight whitespace-nowrap">
+              <div className="flex flex-col">
+                <span className="font-serif font-bold text-[#fdfbf7] text-sm leading-tight tracking-tight">
                   CV Batik Larasati
                 </span>
-                <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight whitespace-nowrap">
-                  Keuangan & Akuntansi
+                <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight">
+                  Navigasi Modul
                 </span>
               </div>
-            </Link>
-
-            {/* Menu Navigasi Desktop Rapi & Ringkas */}
-            <nav className="hidden lg:flex items-center gap-1 text-xs shrink-0">
-              <Link href="/" className={getLinkClasses('/', true)}>
-                Dashboard
-              </Link>
-              <Link href="/pengajuan" className={getLinkClasses('/pengajuan')}>
-                Pengajuan
-              </Link>
-
-              {/* Menu Khusus Akuntan & Direktur */}
-              {isFinance && (
-                <>
-                  <Link href="/jurnal" className={getLinkClasses('/jurnal')}>
-                    Jurnal
-                  </Link>
-                  <Link href="/buku-besar" className={getLinkClasses('/buku-besar')}>
-                    Buku Besar
-                  </Link>
-                  <Link href="/laporan-keuangan" className={getLinkClasses('/laporan-keuangan')}>
-                    Lap. Keuangan
-                  </Link>
-                  <Link href="/akun-periode" className={getLinkClasses('/akun-periode')}>
-                    Akun & Periode
-                  </Link>
-                  <Link href="/import-mutasi" className={getLinkClasses('/import-mutasi')}>
-                    Import Mutasi
-                  </Link>
-                </>
-              )}
-
-              {/* Menu Khusus Direktur */}
-              {profile.peran === 'direktur' && (
-                <Link href="/pengguna-audit" className={getLinkClasses('/pengguna-audit')}>
-                  Pengguna & Audit
-                </Link>
-              )}
-            </nav>
-          </div>
-
-          {/* =========================================================
-              BAGIAN KANAN: PROFIL, ROLE BADGE, KELUAR (TIDAK BERTUMPUK)
-             ========================================================= */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 ml-auto">
-            {/* Kolom Pencarian Global Ringkas */}
-            <form onSubmit={handleSearchSubmit} className="relative hidden xl:block shrink-0 m-0">
-              <Search className="w-3.5 h-3.5 text-[#d4af37] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Cari..."
-                className="w-24 focus:w-36 pl-7 pr-2.5 py-1 text-xs rounded-md bg-[#05140e] border border-[#d4af37]/35 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] transition-all"
-              />
-            </form>
-
-            {/* Tombol Pencarian untuk Layar Lebih Kecil */}
-            <button
-              type="button"
-              onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-              className="p-1.5 rounded-md border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] xl:hidden cursor-pointer shrink-0"
-              title="Pencarian"
-              aria-label="Pencarian"
-            >
-              <Search className="w-3.5 h-3.5" />
-            </button>
-
-            {/* Garis Pemisah Vertikal Halus */}
-            <div className="hidden sm:block h-6 w-px bg-[#d4af37]/25 shrink-0" />
-
-            {/* Detail Profil Pengguna (Nama & Sub-Jabatan Rapi, Sejajar, Tidak Overlap) */}
-            <div className="hidden sm:flex flex-col justify-center items-end text-right shrink-0">
-              <span className="text-xs font-bold text-[#fdfbf7] leading-tight whitespace-nowrap">
-                {profile.nama_lengkap}
-              </span>
-              <span className="text-[10px] text-[#d4af37] capitalize leading-tight whitespace-nowrap mt-0.5 font-medium">
-                {profile.jabatan || profile.peran}
-              </span>
             </div>
 
-            {/* Lencana Peran (Role Badge) */}
-            <span
-              className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md border shrink-0 whitespace-nowrap ${roleBadgeStyle}`}
-            >
-              {profile.peran}
-            </span>
-
-            {/* Tombol Keluar (Terlindungi shrink-0, Akses Cepat & Aman) */}
-            <form onSubmit={handleLogout} className="shrink-0 flex items-center m-0">
-              <button
-                type="submit"
-                disabled={isLoggingOut}
-                className="px-2.5 py-1.5 rounded-md bg-[#0b281e] border border-[#d4af37]/35 text-slate-200 hover:text-rose-300 hover:bg-rose-950/50 hover:border-rose-500/40 transition-colors text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap disabled:opacity-50 shrink-0"
-                title="Keluar dari Akun"
-              >
-                {isLoggingOut ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-[#d4af37]" />
-                ) : (
-                  <LogOut className="w-3.5 h-3.5 text-[#d4af37]" />
-                )}
-                <span className="hidden md:inline">
-                  {isLoggingOut ? 'Keluar...' : 'Keluar'}
-                </span>
-              </button>
-            </form>
-
-            {/* Tombol Hamburger Mobile */}
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 rounded-md border border-[#d4af37]/35 text-slate-300 hover:text-[#d4af37] hover:bg-[#0b281e] lg:hidden cursor-pointer shrink-0"
-              aria-label="Buka Menu Navigasi"
+              onClick={() => setIsSidebarOpen(false)}
+              className="p-1.5 rounded-lg border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:bg-[#0b281e] transition-colors cursor-pointer"
+              title="Tutup Menu"
+              aria-label="Tutup Menu Navigasi"
             >
-              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              <X className="w-5 h-5" />
             </button>
           </div>
-        </div>
 
-        {/* Bilah Pencarian Mobile Dropdown */}
-        {mobileSearchOpen && (
-          <div className="xl:hidden py-2 px-1 border-t border-[#d4af37]/20 bg-[#06150f]">
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <Search className="w-4 h-4 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Cari transaksi, pengajuan, nomor..."
-                autoFocus
-                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-md bg-[#081c15] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37]"
-              />
-            </form>
-          </div>
-        )}
+          {/* Daftar Menu Navigasi Utama */}
+          <nav className="flex-1 overflow-y-auto p-4 space-y-6">
+            {/* Kelompok Menu Utama */}
+            <div>
+              <p className="text-[10px] font-bold text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
+                Menu Utama
+              </p>
+              <div className="space-y-1">
+                <Link
+                  href="/"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className={getSidebarLinkClasses('/', true)}
+                >
+                  <LayoutDashboard className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                  <span className="flex-1">Dashboard</span>
+                </Link>
+                <Link
+                  href="/pengajuan"
+                  onClick={() => setIsSidebarOpen(false)}
+                  className={getSidebarLinkClasses('/pengajuan')}
+                >
+                  <FileText className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                  <span className="flex-1">Pengajuan Biaya</span>
+                </Link>
+              </div>
+            </div>
 
-        {/* Menu Drawer Mobile */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-2.5 border-t border-[#d4af37]/20 space-y-1 pb-3">
-            <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className={getMobileLinkClasses('/', true)}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/pengajuan"
-              onClick={() => setMobileMenuOpen(false)}
-              className={getMobileLinkClasses('/pengajuan')}
-            >
-              Pengajuan
-            </Link>
-
+            {/* Kelompok Akuntansi & Pembukuan */}
             {isFinance && (
-              <>
-                <Link
-                  href="/jurnal"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={getMobileLinkClasses('/jurnal')}
-                >
-                  Jurnal Umum
-                </Link>
-                <Link
-                  href="/buku-besar"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={getMobileLinkClasses('/buku-besar')}
-                >
-                  Buku Besar
-                </Link>
-                <Link
-                  href="/laporan-keuangan"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={getMobileLinkClasses('/laporan-keuangan')}
-                >
-                  Laporan Keuangan
-                </Link>
-                <Link
-                  href="/akun-periode"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={getMobileLinkClasses('/akun-periode')}
-                >
-                  Akun & Periode
-                </Link>
-                <Link
-                  href="/import-mutasi"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={getMobileLinkClasses('/import-mutasi')}
-                >
-                  Import Mutasi
-                </Link>
-              </>
+              <div>
+                <p className="text-[10px] font-bold text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
+                  Akuntansi & Pembukuan
+                </p>
+                <div className="space-y-1">
+                  <Link
+                    href="/jurnal"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className={getSidebarLinkClasses('/jurnal')}
+                  >
+                    <BookOpen className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <span className="flex-1">Jurnal Umum</span>
+                  </Link>
+                  <Link
+                    href="/buku-besar"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className={getSidebarLinkClasses('/buku-besar')}
+                  >
+                    <Layers className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <span className="flex-1">Buku Besar</span>
+                  </Link>
+                  <Link
+                    href="/laporan-keuangan"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className={getSidebarLinkClasses('/laporan-keuangan')}
+                  >
+                    <BarChart3 className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <span className="flex-1">Laporan Keuangan</span>
+                  </Link>
+                  <Link
+                    href="/akun-periode"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className={getSidebarLinkClasses('/akun-periode')}
+                  >
+                    <Settings2 className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <span className="flex-1">Akun & Periode</span>
+                  </Link>
+                  <Link
+                    href="/import-mutasi"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className={getSidebarLinkClasses('/import-mutasi')}
+                  >
+                    <UploadCloud className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <span className="flex-1">Import Mutasi Bank</span>
+                  </Link>
+                </div>
+              </div>
             )}
 
+            {/* Kelompok Administrasi (Khusus Direktur) */}
             {profile.peran === 'direktur' && (
-              <Link
-                href="/pengguna-audit"
-                onClick={() => setMobileMenuOpen(false)}
-                className={getMobileLinkClasses('/pengguna-audit')}
-              >
-                Pengguna & Audit Log
-              </Link>
+              <div>
+                <p className="text-[10px] font-bold text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
+                  Administrasi Sistem
+                </p>
+                <div className="space-y-1">
+                  <Link
+                    href="/pengguna-audit"
+                    onClick={() => setIsSidebarOpen(false)}
+                    className={getSidebarLinkClasses('/pengguna-audit')}
+                  >
+                    <ShieldCheck className="w-4 h-4 shrink-0 text-[#d4af37]" />
+                    <span className="flex-1">Pengguna & Audit Log</span>
+                  </Link>
+                </div>
+              </div>
             )}
+          </nav>
 
-            {/* Opsi Keluar Mobile */}
-            <div className="pt-2 border-t border-[#d4af37]/20 mt-1">
-              <button
-                type="button"
-                onClick={handleLogout}
-                disabled={isLoggingOut}
-                className="w-full text-left px-2.5 py-1.5 rounded-md text-rose-300 hover:bg-rose-950/40 flex items-center gap-2 text-xs font-semibold cursor-pointer disabled:opacity-50"
+          {/* Bagian Bawah Sidebar (Footer Sidebar: Ringkasan Pengguna Aktif) */}
+          <div className="p-4 border-t border-[#d4af37]/25 bg-[#05150f]/85">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-[#123524] border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] font-serif font-bold text-sm shrink-0">
+                {profile.nama_lengkap.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex flex-col min-w-0 flex-1">
+                <span className="text-xs font-bold text-[#fdfbf7] truncate">
+                  {profile.nama_lengkap}
+                </span>
+                <span className="text-[10px] text-[#d4af37] capitalize truncate font-medium">
+                  {profile.jabatan || profile.peran}
+                </span>
+              </div>
+              <span
+                className={`text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded border shrink-0 ${roleBadgeStyle}`}
               >
-                {isLoggingOut ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-rose-400" />
-                ) : (
-                  <LogOut className="w-3.5 h-3.5" />
-                )}
-                <span>{isLoggingOut ? 'Sedang Keluar...' : 'Keluar dari Akun'}</span>
-              </button>
+                {profile.peran}
+              </span>
             </div>
           </div>
-        )}
-      </div>
-    </header>
+
+        </div>
+      </aside>
+    </>
   );
 }
+
+export default Navbar;
