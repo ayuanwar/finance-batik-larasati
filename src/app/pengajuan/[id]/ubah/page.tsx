@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { PengajuanEditFormClient } from './PengajuanEditFormClient';
 
 export const dynamic = 'force-dynamic';
@@ -101,9 +102,7 @@ export default async function UbahPengajuanPage({ params }: PageProps) {
         />
       </main>
 
-      <footer className="bg-[#06150f] border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
-        CV Batik Larasati · Sistem Keuangan Internal UMKM Surakarta
-      </footer>
+      <Footer />
     </div>
   );
 }

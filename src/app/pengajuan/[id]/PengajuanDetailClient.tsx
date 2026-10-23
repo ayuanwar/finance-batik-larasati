@@ -4,7 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
-import { kirimPengajuanAction } from '../actions';
+import {
+  kirimPengajuanAction,
+  verifikasiPengajuanAction,
+  setujuiPengajuanDirekturAction,
+  revisiAtauTolakPengajuanAction,
+  bayarPengajuanAction,
+} from '../actions';
 import {
   ArrowLeft,
   Calendar,
@@ -164,31 +170,15 @@ export function PengajuanDetailClient({
     setLoadingAction(true);
     setErrorMessage(null);
     try {
-      const now = new Date().toISOString();
-      const isAutoApprove = Number(doc.jumlah) <= 1000000;
-      const nextStatus = isAutoApprove ? 'disetujui' : 'menunggu_direktur';
+      const res = await verifikasiPengajuanAction(doc.id);
+      if (!res.success) throw new Error(res.error || 'Gagal memverifikasi pengajuan.');
 
-      const updatePayload: Record<string, unknown> = {
-        status: nextStatus,
-        diverifikasi_oleh: profile.id,
-        diverifikasi_pada: now,
-      };
-
-      if (isAutoApprove) {
-        updatePayload.disetujui_oleh = profile.id;
-        updatePayload.disetujui_pada = now;
-      }
-
-      const { error } = await supabase
-        .from('pengajuan')
-        .update(updatePayload)
-        .eq('id', doc.id);
-
-      if (error) throw new Error(error.message);
+      const nextStatus = res.status as 'disetujui' | 'menunggu_direktur';
+      const isAutoApprove = nextStatus === 'disetujui';
 
       setDoc({
         ...doc,
-        ...updatePayload,
+        status: nextStatus,
         diverifikasi: { nama_lengkap: profile.nama_lengkap, peran: profile.peran },
         ...(isAutoApprove
           ? { disetujui: { nama_lengkap: profile.nama_lengkap, peran: profile.peran } }
@@ -198,7 +188,7 @@ export function PengajuanDetailClient({
       setSuccessMessage(
         isAutoApprove
           ? 'Pengajuan disetujui (nilai ≤ Rp1.000.000 siap dibayar).'
-          : 'Pengajuan diteruskan ke Direktur (nilai > Rp1.000.000).'
+          : 'Pengajuan diteruskan ke Direktur (notifikasi email telah dikirimkan).'
       );
       router.refresh();
     } catch (err: unknown) {
@@ -213,23 +203,14 @@ export function PengajuanDetailClient({
     setLoadingAction(true);
     setErrorMessage(null);
     try {
-      const now = new Date().toISOString();
-      const { error } = await supabase
-        .from('pengajuan')
-        .update({
-          status: 'disetujui',
-          disetujui_oleh: profile.id,
-          disetujui_pada: now,
-        })
-        .eq('id', doc.id);
-
-      if (error) throw new Error(error.message);
+      const res = await setujuiPengajuanDirekturAction(doc.id);
+      if (!res.success) throw new Error(res.error || 'Gagal menyetujui pengajuan.');
 
       setDoc({
         ...doc,
         status: 'disetujui',
         disetujui_oleh: profile.id,
-        disetujui_pada: now,
+        disetujui_pada: new Date().toISOString(),
         disetujui: { nama_lengkap: profile.nama_lengkap, peran: profile.peran },
       });
 
@@ -252,38 +233,22 @@ export function PengajuanDetailClient({
     setLoadingAction(true);
     setErrorMessage(null);
     try {
-      const nextStatus = modalMode === 'revisi' ? 'perlu_revisi' : 'ditolak';
-      const now = new Date().toISOString();
+      const mode = modalMode as 'revisi' | 'tolak';
+      const res = await revisiAtauTolakPengajuanAction(doc.id, mode, catatanText.trim());
+      if (!res.success) throw new Error(res.error || 'Gagal memperbarui status pengajuan.');
 
-      const updatePayload: Record<string, unknown> = {
-        status: nextStatus,
-        catatan_peninjau: catatanText.trim(),
-      };
-
-      if (isAkuntan) {
-        updatePayload.diverifikasi_oleh = profile.id;
-        updatePayload.diverifikasi_pada = now;
-      } else if (isDirektur) {
-        updatePayload.disetujui_oleh = profile.id;
-        updatePayload.disetujui_pada = now;
-      }
-
-      const { error } = await supabase
-        .from('pengajuan')
-        .update(updatePayload)
-        .eq('id', doc.id);
-
-      if (error) throw new Error(error.message);
+      const nextStatus = mode === 'revisi' ? 'perlu_revisi' : 'ditolak';
 
       setDoc({
         ...doc,
-        ...updatePayload,
+        status: nextStatus,
+        catatan_peninjau: catatanText.trim(),
       });
 
       setSuccessMessage(
-        modalMode === 'revisi'
-          ? 'Pengajuan dikembalikan ke pengaju dengan status Perlu Revisi.'
-          : 'Pengajuan telah ditolak.'
+        mode === 'revisi'
+          ? 'Pengajuan dikembalikan ke pengaju dengan status Perlu Revisi (email pemberitahuan telah dikirim).'
+          : 'Pengajuan telah ditolak (email pemberitahuan telah dikirim ke pengaju).'
       );
       setModalMode(null);
       setCatatanText('');
@@ -309,20 +274,8 @@ export function PengajuanDetailClient({
     setLoadingAction(true);
     setErrorMessage(null);
     try {
-      // Panggil fungsi database atomik execute_pembayaran_pengajuan
-      const { data: result, error: rpcError } = await supabase.rpc(
-        'execute_pembayaran_pengajuan',
-        {
-          p_pengajuan_id: doc.id,
-          p_akun_kas_id: Number(selectedAkunKasId),
-          p_tanggal_bayar: tanggalBayar,
-        }
-      );
-
-      if (rpcError) {
-        // Tampilkan pesan error database secara presisi (misal saldo tidak cukup atau periode ditutup)
-        throw new Error(rpcError.message);
-      }
+      const res = await bayarPengajuanAction(doc.id, Number(selectedAkunKasId), tanggalBayar);
+      if (!res.success) throw new Error(res.error || 'Gagal memproses pembayaran.');
 
       // Ambil data akun kas terpilih
       const kasTerpilih = akunKasList.find((k) => k.id === Number(selectedAkunKasId));
@@ -338,14 +291,14 @@ export function PengajuanDetailClient({
       });
 
       setJurnal({
-        id: result?.jurnal_id,
-        nomor: result?.nomor_jurnal,
+        id: res.result?.jurnal_id,
+        nomor: res.result?.nomor_jurnal,
         tanggal: tanggalBayar,
         status: 'diposting',
       });
 
       setSuccessMessage(
-        `Pembayaran berhasil! Jurnal otomatis ${result?.nomor_jurnal || ''} telah diposting ke buku besar.`
+        `Pembayaran berhasil! Jurnal otomatis ${res.result?.nomor_jurnal || ''} telah diposting & email konfirmasi dikirim ke pengaju.`
       );
       router.refresh();
     } catch (err: unknown) {

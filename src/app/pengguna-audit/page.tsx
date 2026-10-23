@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { PenggunaAuditClient, UserProfileItem } from './PenggunaAuditClient';
 import { AuditLogItem } from './actions';
 
@@ -105,14 +106,15 @@ export default async function PenggunaAuditPage() {
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
       <Navbar profile={profile} />
 
-      {/* Kontainer Terpusat: max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-8 */}
-      <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      {/* Kontainer Terpusat: max-w-[1100px] mx-auto w-full px-4 sm:px-6 */}
+      <main className="flex-1 max-w-[1100px] mx-auto w-full px-4 sm:px-6 py-8 sm:py-10">
         <PenggunaAuditClient
           initialUsers={userList}
           initialLogs={logList}
           profile={profile}
         />
       </main>
+      <Footer />
     </div>
   );
 }

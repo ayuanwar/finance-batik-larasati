@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Search, ArrowLeft, FileText, BookOpen, Clock } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 
 export const dynamic = 'force-dynamic';
 
@@ -160,6 +161,7 @@ export default async function CariPage({ searchParams }: CariPageProps) {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

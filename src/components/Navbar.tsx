@@ -7,6 +7,7 @@ import { Sparkles, LogOut, Menu, X, Search, Loader2 } from 'lucide-react';
 import { Profile } from '@/types/database';
 import { createClient } from '@/lib/supabase/client';
 import { keluarAction } from '@/lib/actions/auth';
+import { Logo } from '@/components/Logo';
 
 interface NavbarProps {
   profile: Profile;
@@ -33,7 +34,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
         await keluarAction();
       }
     } catch {
-      // Fallback aman jika terjadi error serialized response di server action
+      // Fallback aman jika terjadi kendala respon sesi server
       try {
         const supabase = createClient();
         await supabase.auth.signOut();
@@ -54,9 +55,9 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
   const isFinance = profile.peran === 'direktur' || profile.peran === 'akuntan';
 
   const roleBadgeStyle = {
-    direktur: 'bg-[#1a382b] text-[#f3c853] border-[#d4af37]/60 shadow-xs',
-    akuntan: 'bg-[#0e2c38] text-sky-200 border-sky-400/40 shadow-xs',
-    staf: 'bg-[#123524] text-emerald-200 border-emerald-400/40 shadow-xs',
+    direktur: 'bg-[#1a382b] text-[#d4af37] border-[#d4af37]/60',
+    akuntan: 'bg-[#0e2c38] text-sky-200 border-sky-400/40',
+    staf: 'bg-[#123524] text-emerald-200 border-emerald-400/40',
   }[profile.peran] || 'bg-[#0c2419] text-slate-300 border-slate-700';
 
   const getLinkClasses = (href: string, exact: boolean = false) => {
@@ -65,9 +66,9 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
       : pathname === href || (href !== '/' && pathname.startsWith(href));
 
     if (isActive) {
-      return 'px-2.5 xl:px-3 py-1.5 rounded-xl bg-[#123524] text-[#d4af37] border border-[#d4af37]/40 font-bold whitespace-nowrap transition-all shadow-xs';
+      return 'px-2 py-1 rounded-md bg-[#123524] text-[#d4af37] border border-[#d4af37]/50 font-bold whitespace-nowrap transition-all shadow-xs';
     }
-    return 'px-2.5 xl:px-3 py-1.5 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] whitespace-nowrap transition-all';
+    return 'px-2 py-1 rounded-md text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] whitespace-nowrap transition-all font-medium';
   };
 
   const getMobileLinkClasses = (href: string, exact: boolean = false) => {
@@ -76,33 +77,49 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
       : pathname === href || (href !== '/' && pathname.startsWith(href));
 
     if (isActive) {
-      return 'block px-4 py-2.5 rounded-xl bg-[#123524] text-[#d4af37] border border-[#d4af37]/40 font-bold text-sm';
+      return 'block px-3 py-2 rounded-md bg-[#123524] text-[#d4af37] border border-[#d4af37]/50 font-bold text-xs';
     }
-    return 'block px-4 py-2.5 rounded-xl text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] text-sm';
+    return 'block px-3 py-2 rounded-md text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] text-xs font-medium';
   };
 
   return (
-    <header className="bg-[#06130D]/85 backdrop-blur-lg border-b border-[#C79F4B]/20 sticky top-0 z-30 shadow-lg shadow-[#06130D]/60">
-      <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20 gap-3 sm:gap-6">
-          {/* Logo & Brand Keraton */}
-          <div className="flex items-center gap-4 xl:gap-8 shrink-0">
-            <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0f2d1e] text-[#d4af37] flex items-center justify-center border border-[#d4af37]/40 group-hover:border-[#d4af37] transition-all shrink-0 shadow-xs">
-                <Sparkles className="w-5 h-5 text-[#d4af37]" />
+    <header className="relative bg-[#071c15] border-b border-[#d4af37]/30 sticky top-0 z-30 shadow-md shadow-[#06130D]/80 overflow-hidden">
+      {/* Latar Belakang Motif Batik Parang Mangkunegaran Asli (Persis Sesuai Gambar Referensi, Emas #d4af37, Opasitas 13%) */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
+          backgroundRepeat: 'repeat',
+          backgroundPosition: 'center',
+          backgroundSize: '360px auto',
+          opacity: 0.13,
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 w-full max-w-[1360px] mx-auto px-3 sm:px-5 lg:px-6">
+        <div className="flex items-center justify-between h-16 gap-3">
+          {/* =========================================================
+              BAGIAN KIRI: LOGO & MENU NAVIGASI
+             ========================================================= */}
+          <div className="flex items-center gap-3 xl:gap-5 min-w-0">
+            {/* Logo Brand Keraton */}
+            <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+              <div className="w-9 h-9 rounded-lg bg-[#071c14] flex items-center justify-center border border-[#d4af37]/40 group-hover:border-[#d4af37] transition-all shrink-0 p-1 shadow-xs">
+                <Logo variant="transparent-monogram" size="xs" className="w-full h-full" priority />
               </div>
               <div className="flex flex-col justify-center">
-                <span className="font-serif font-bold text-[#fdfbf7] text-sm sm:text-base leading-tight tracking-tight whitespace-nowrap">
+                <span className="font-serif font-bold text-[#fdfbf7] text-xs sm:text-sm leading-tight tracking-tight whitespace-nowrap">
                   CV Batik Larasati
                 </span>
-                <span className="text-[10px] sm:text-[11px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight whitespace-nowrap mt-0.5">
+                <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight whitespace-nowrap">
                   Keuangan & Akuntansi
                 </span>
               </div>
             </Link>
 
-            {/* Menu Navigasi Desktop Berdasarkan Peran */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs font-semibold shrink-0">
+            {/* Menu Navigasi Desktop Rapi & Ringkas */}
+            <nav className="hidden lg:flex items-center gap-1 text-xs shrink-0">
               <Link href="/" className={getLinkClasses('/', true)}>
                 Dashboard
               </Link>
@@ -114,13 +131,13 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
               {isFinance && (
                 <>
                   <Link href="/jurnal" className={getLinkClasses('/jurnal')}>
-                    Jurnal Umum
+                    Jurnal
                   </Link>
                   <Link href="/buku-besar" className={getLinkClasses('/buku-besar')}>
                     Buku Besar
                   </Link>
                   <Link href="/laporan-keuangan" className={getLinkClasses('/laporan-keuangan')}>
-                    Laporan Keuangan
+                    Lap. Keuangan
                   </Link>
                   <Link href="/akun-periode" className={getLinkClasses('/akun-periode')}>
                     Akun & Periode
@@ -134,83 +151,93 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
               {/* Menu Khusus Direktur */}
               {profile.peran === 'direktur' && (
                 <Link href="/pengguna-audit" className={getLinkClasses('/pengguna-audit')}>
-                  Pengguna & Audit Log
+                  Pengguna & Audit
                 </Link>
               )}
             </nav>
           </div>
 
-          {/* User Info, Tombol Keluar, & Mobile Hamburger */}
-          <div className="flex items-center gap-2.5 sm:gap-3 xl:gap-4 shrink-0">
-            {/* Kolom Pencarian Global (Desktop / Tablet) */}
-            <form onSubmit={handleSearchSubmit} className="relative hidden md:block shrink-0">
-              <Search className="w-3.5 h-3.5 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          {/* =========================================================
+              BAGIAN KANAN: PROFIL, ROLE BADGE, KELUAR (TIDAK BERTUMPUK)
+             ========================================================= */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 ml-auto">
+            {/* Kolom Pencarian Global Ringkas */}
+            <form onSubmit={handleSearchSubmit} className="relative hidden xl:block shrink-0 m-0">
+              <Search className="w-3.5 h-3.5 text-[#d4af37] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Cari transaksi, nomor..."
-                className="w-36 lg:w-48 xl:w-56 pl-8 pr-3 py-1.5 text-xs rounded-xl bg-[#06150f] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all"
+                placeholder="Cari..."
+                className="w-24 focus:w-36 pl-7 pr-2.5 py-1 text-xs rounded-md bg-[#05140e] border border-[#d4af37]/35 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] transition-all"
               />
             </form>
 
-            {/* Ikon Pencarian Mobile */}
+            {/* Tombol Pencarian untuk Layar Lebih Kecil */}
             <button
               type="button"
               onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-              className="p-2 rounded-xl border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] md:hidden cursor-pointer shrink-0"
-              title="Buka Pencarian Global"
-              aria-label="Buka Pencarian Global"
+              className="p-1.5 rounded-md border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] xl:hidden cursor-pointer shrink-0"
+              title="Pencarian"
+              aria-label="Pencarian"
             >
-              <Search className="w-4 h-4" />
+              <Search className="w-3.5 h-3.5" />
             </button>
 
-            <div className="text-right hidden sm:flex flex-col justify-center shrink-0">
-              <div className="text-xs sm:text-sm font-bold text-[#fdfbf7] leading-tight whitespace-nowrap">
+            {/* Garis Pemisah Vertikal Halus */}
+            <div className="hidden sm:block h-6 w-px bg-[#d4af37]/25 shrink-0" />
+
+            {/* Detail Profil Pengguna (Nama & Sub-Jabatan Rapi, Sejajar, Tidak Overlap) */}
+            <div className="hidden sm:flex flex-col justify-center items-end text-right shrink-0">
+              <span className="text-xs font-bold text-[#fdfbf7] leading-tight whitespace-nowrap">
                 {profile.nama_lengkap}
-              </div>
-              <div className="text-[10px] sm:text-xs text-[#d4af37] capitalize leading-tight whitespace-nowrap mt-0.5">
+              </span>
+              <span className="text-[10px] text-[#d4af37] capitalize leading-tight whitespace-nowrap mt-0.5 font-medium">
                 {profile.jabatan || profile.peran}
-              </div>
+              </span>
             </div>
 
-            <span className={`text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full border shrink-0 whitespace-nowrap ${roleBadgeStyle}`}>
+            {/* Lencana Peran (Role Badge) */}
+            <span
+              className={`text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md border shrink-0 whitespace-nowrap ${roleBadgeStyle}`}
+            >
               {profile.peran}
             </span>
 
-            <form onSubmit={handleLogout} className="shrink-0">
+            {/* Tombol Keluar (Terlindungi shrink-0, Akses Cepat & Aman) */}
+            <form onSubmit={handleLogout} className="shrink-0 flex items-center m-0">
               <button
                 type="submit"
                 disabled={isLoggingOut}
-                className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl border border-[#d4af37]/25 text-slate-300 hover:text-rose-300 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap disabled:opacity-50"
+                className="px-2.5 py-1.5 rounded-md bg-[#0b281e] border border-[#d4af37]/35 text-slate-200 hover:text-rose-300 hover:bg-rose-950/50 hover:border-rose-500/40 transition-colors text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap disabled:opacity-50 shrink-0"
                 title="Keluar dari Akun"
               >
                 {isLoggingOut ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-[#d4af37]" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-[#d4af37]" />
                 ) : (
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-3.5 h-3.5 text-[#d4af37]" />
                 )}
-                <span className="hidden sm:inline">
+                <span className="hidden md:inline">
                   {isLoggingOut ? 'Keluar...' : 'Keluar'}
                 </span>
               </button>
             </form>
 
-            {/* Mobile Hamburger Toggle Button */}
+            {/* Tombol Hamburger Mobile */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] lg:hidden cursor-pointer shrink-0"
+              className="p-1.5 rounded-md border border-[#d4af37]/35 text-slate-300 hover:text-[#d4af37] hover:bg-[#0b281e] lg:hidden cursor-pointer shrink-0"
               aria-label="Buka Menu Navigasi"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Global Search Dropdown / Input Bar */}
+        {/* Bilah Pencarian Mobile Dropdown */}
         {mobileSearchOpen && (
-          <div className="md:hidden py-2.5 px-2 border-t border-[#d4af37]/20 bg-[#06150f]">
+          <div className="xl:hidden py-2 px-1 border-t border-[#d4af37]/20 bg-[#06150f]">
             <form onSubmit={handleSearchSubmit} className="relative">
               <Search className="w-4 h-4 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
@@ -219,15 +246,15 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari transaksi, pengajuan, nomor..."
                 autoFocus
-                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-[#081c15] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37]"
+                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-md bg-[#081c15] border border-[#d4af37]/40 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37]"
               />
             </form>
           </div>
         )}
 
-        {/* Mobile Navigation Drawer */}
+        {/* Menu Drawer Mobile */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-3 border-t border-[#d4af37]/20 space-y-1 pb-4">
+          <div className="lg:hidden py-2.5 border-t border-[#d4af37]/20 space-y-1 pb-3">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
@@ -293,18 +320,18 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
               </Link>
             )}
 
-            {/* Mobile Logout Option */}
-            <div className="pt-2 border-t border-[#d4af37]/20 mt-2">
+            {/* Opsi Keluar Mobile */}
+            <div className="pt-2 border-t border-[#d4af37]/20 mt-1">
               <button
                 type="button"
                 onClick={handleLogout}
                 disabled={isLoggingOut}
-                className="w-full text-left px-2.5 py-2 rounded-xl text-rose-300 hover:bg-rose-950/40 flex items-center gap-2 text-xs font-semibold cursor-pointer disabled:opacity-50"
+                className="w-full text-left px-2.5 py-1.5 rounded-md text-rose-300 hover:bg-rose-950/40 flex items-center gap-2 text-xs font-semibold cursor-pointer disabled:opacity-50"
               >
                 {isLoggingOut ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-rose-400" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-rose-400" />
                 ) : (
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-3.5 h-3.5" />
                 )}
                 <span>{isLoggingOut ? 'Sedang Keluar...' : 'Keluar dari Akun'}</span>
               </button>

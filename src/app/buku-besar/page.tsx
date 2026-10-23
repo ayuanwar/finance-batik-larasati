@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { BukuBesarClient, AkunOptionItem } from './BukuBesarClient';
 import { getBukuBesarDataAction, BukuBesarResponseData } from './actions';
 
@@ -61,7 +62,7 @@ export default async function BukuBesarPage({ searchParams }: BukuBesarPageProps
     return (
       <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
         <Navbar profile={profile} onLogout={handleKeluar} />
-        <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <main className="flex-1 max-w-[1100px] mx-auto w-full px-4 sm:px-6 py-8 sm:py-10">
           <div className="p-6 rounded-2xl bg-[#071c15] border border-[#d4af37]/30 text-center text-slate-300">
             Daftar akun belum tersedia. Silakan hubungi administrator.
           </div>
@@ -122,14 +123,16 @@ export default async function BukuBesarPage({ searchParams }: BukuBesarPageProps
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
-      {/* Tata Letak Utama: max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-8 terpusat */}
-      <main className="flex-1 max-w-[1200px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      {/* Tata Letak Utama: max-w-[1100px] mx-auto w-full px-4 sm:px-6 terpusat */}
+      <main className="flex-1 max-w-[1100px] mx-auto w-full px-4 sm:px-6 py-8 sm:py-10">
         <BukuBesarClient
           initialData={initialData}
           akunList={akunList}
           profile={profile}
         />
       </main>
+
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 import { PengajuanListClient, PengajuanRow } from './PengajuanListClient';
 
 export const dynamic = 'force-dynamic';
@@ -88,7 +89,7 @@ export default async function PengajuanPage() {
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
-      <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-[1100px] w-full mx-auto px-4 sm:px-6 py-8">
         <PengajuanListClient
           profile={profile}
           initialPengajuan={(pengajuanList as unknown as PengajuanRow[]) || []}
@@ -96,9 +97,7 @@ export default async function PengajuanPage() {
         />
       </main>
 
-      <footer className="bg-[#06130D]/80 border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75">
-        CV Batik Larasati · Sistem Keuangan Internal UMKM Surakarta
-      </footer>
+      <Footer />
     </div>
   );
 }

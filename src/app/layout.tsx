@@ -16,6 +16,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "CV Batik Larasati — Keuangan & Akuntansi",
   description: "Aplikasi internal pencatatan pengeluaran, jurnal umum, dan laporan keuangan CV Batik Larasati",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/logo-monogram.png",
+  },
   robots: {
     index: false,
     follow: false,

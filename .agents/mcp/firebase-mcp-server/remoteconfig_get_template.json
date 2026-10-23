@@ -1,0 +1,1 @@
+{"name":"remoteconfig_get_template","description":"Use this to retrieve the specified Firebase Remote Config template from the currently active Firebase Project.","parameters":{"properties":{"version_number":{"description":"The version number of the template to retrieve. If not provided, retrieves the active template.","type":"string"}},"type":"object"}}
