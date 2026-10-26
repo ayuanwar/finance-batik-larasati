@@ -281,21 +281,21 @@ export function JurnalFormClient({
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 w-full max-w-5xl mx-auto overflow-x-hidden">
       {/* Tombol Kembali & Judul */}
       <div className="flex items-center gap-3">
         <Link
           href="/jurnal"
-          className="p-2 rounded-xl bg-[#0b2419] border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#123524] transition-colors"
+          className="p-2 rounded-xl bg-[#0b2419] border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:border-[#d4af37] transition-all"
           title="Kembali ke Daftar Jurnal"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
             {isEdit ? 'Ubah Jurnal Draf' : 'Formulir Jurnal Umum Baru'}
           </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
             {isEdit
               ? 'Perbarui data transaksi pada draf jurnal sebelum diposting ke buku besar.'
               : 'Pencatatan ayat jurnal debit dan kredit manual atau penyesuaian akhir periode.'}
@@ -305,23 +305,23 @@ export function JurnalFormClient({
 
       {/* Alert Error jika Ada */}
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-2.5">
-          <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-          <div className="flex-1 font-medium">{errorMessage}</div>
+        <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-500/50 flex items-start gap-3 text-rose-200 text-xs sm:text-sm">
+          <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+          <div className="leading-snug">{errorMessage}</div>
         </div>
       )}
 
       {/* 1. Header Informasi Transaksi */}
-      <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/25 p-5 sm:p-6 shadow-xl space-y-4">
+      <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 shadow-2xl p-6 sm:p-8 space-y-6">
         <h2 className="text-xs font-bold uppercase tracking-wider text-[#d4af37] flex items-center gap-2">
           <BookOpen className="w-4 h-4" />
           <span>Informasi Kepala Jurnal</span>
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-5">
           {/* Tanggal Transaksi */}
           <div className="sm:col-span-4">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
               Tanggal Transaksi <span className="text-rose-400">*</span>
             </label>
             <div className="relative">
@@ -363,13 +363,13 @@ export function JurnalFormClient({
 
           {/* Jenis Sumber Transaksi */}
           <div className="sm:col-span-3">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
               Jenis Jurnal <span className="text-rose-400">*</span>
             </label>
             <select
               value={sumber}
               onChange={(e) => setSumber(e.target.value as 'manual' | 'penyesuaian')}
-              className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+              className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
             >
               <option value="manual">Jurnal Umum Manual</option>
               <option value="penyesuaian">Jurnal Penyesuaian (AJP)</option>
@@ -378,7 +378,7 @@ export function JurnalFormClient({
 
           {/* Keterangan Transaksi */}
           <div className="sm:col-span-5">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
               Keterangan Transaksi <span className="text-rose-400">*</span>
             </label>
             <input
@@ -386,7 +386,7 @@ export function JurnalFormClient({
               value={keterangan}
               onChange={(e) => setKeterangan(e.target.value)}
               placeholder="Contoh: Pengisian kas kecil toko, beban sewa..."
-              className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+              className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
             />
             <span className="text-[10px] text-slate-400 mt-1 block">Minimal 5 karakter.</span>
           </div>
@@ -394,8 +394,8 @@ export function JurnalFormClient({
       </div>
 
       {/* 2. Baris Dinamis Ayat Jurnal */}
-      <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/25 p-5 sm:p-6 shadow-xl space-y-4">
-        <div className="flex items-center justify-between pb-2 border-b border-[#d4af37]/20">
+      <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 shadow-2xl p-6 sm:p-8 space-y-6">
+        <div className="flex items-center justify-between pb-3 border-b border-[#d4af37]/20">
           <div>
             <h2 className="text-xs font-bold uppercase tracking-wider text-[#d4af37]">
               Rincian Baris Jurnal (Minimal 2 Baris)
@@ -557,8 +557,8 @@ export function JurnalFormClient({
         </div>
       </div>
 
-      {/* 4. Tombol Aksi: Simpan Draf vs Posting */}
-      <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/25 p-4 sm:p-5 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3">
+      {/* 4. Tombol Aksi: Simpan Draf vs Posting (Sticky Bottom) */}
+      <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto rounded-2xl border shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3">
         <Link
           href="/jurnal"
           className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-[#06150f] text-xs font-semibold text-center transition-all"

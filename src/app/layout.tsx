@@ -33,11 +33,11 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-[#06130D] overflow-x-hidden`}
     >
-      <body className="min-h-full flex flex-col bg-[#06130D] text-slate-100 relative selection:bg-[#d4af37] selection:text-[#06130D] overflow-x-hidden">
+      <body className="min-h-full flex flex-col bg-[#06130D] text-slate-100 relative selection:bg-[#d4af37] selection:text-[#06130D] overflow-x-hidden w-full max-w-full">
         {/* Konten Utama Aplikasi (Latar Belakang Global Murni Solid Hijau Zamrud Tanpa Motif) */}
-        <div className="relative z-10 flex-1 flex flex-col w-full">
+        <div className="relative z-10 flex-1 flex flex-col w-full overflow-x-hidden">
           {children}
         </div>
       </body>

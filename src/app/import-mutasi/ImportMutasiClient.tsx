@@ -24,6 +24,7 @@ import {
   Building2,
   Layers,
   ArrowRight,
+  ArrowLeft,
   ShieldCheck,
   Loader2,
   AlertCircle,
@@ -720,6 +721,455 @@ export function ImportMutasiClient({
     return filteredMutasi.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredMutasi, startIndex]);
 
+  // =========================================================================
+  // VIEW 1: FORMULIR DRAF JURNAL MUTASI BANK (STRUKTUR FORMULIR PENGAJUAN)
+  // =========================================================================
+  if (modalJurnalOpen && selectedMutasiForJurnal) {
+    return (
+      <div className="space-y-6">
+        {/* Tombol Kembali & Header */}
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setModalJurnalOpen(false)}
+            className="p-2 rounded-xl bg-[#0b2419] border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:border-[#d4af37] transition-all cursor-pointer"
+            title="Kembali ke Daftar Mutasi"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+              Formulir Draf Jurnal Mutasi Bank
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+              Konversi baris mutasi rekening koran menjadi ayat jurnal draf pembukuan CV Batik Larasati.
+            </p>
+          </div>
+        </div>
+
+        {/* Alert Error jika Ada */}
+        {jurnalModalError && (
+          <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-500/50 flex items-start gap-3 text-rose-200 text-xs sm:text-sm">
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
+            <div className="leading-snug">{jurnalModalError}</div>
+          </div>
+        )}
+
+        {/* Formulir Card */}
+        <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 shadow-2xl p-6 sm:p-8 space-y-6">
+          {/* Banner Informasi Mutasi Bank Asli */}
+          <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25 space-y-2 text-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <span className="text-xs font-bold text-[#d4af37] uppercase tracking-wider flex items-center gap-2">
+                <FileSpreadsheet className="w-4 h-4 text-[#d4af37]" />
+                Sumber Mutasi Bank
+              </span>
+              <span
+                className={`font-mono font-bold px-3 py-1 rounded-lg border text-xs self-start sm:self-auto ${
+                  selectedMutasiForJurnal.jumlah > 0
+                    ? 'bg-emerald-950/60 text-emerald-300 border-emerald-500/40'
+                    : 'bg-rose-950/60 text-rose-300 border-rose-500/40'
+                }`}
+              >
+                {selectedMutasiForJurnal.jumlah > 0
+                  ? `+${formatRupiah(selectedMutasiForJurnal.jumlah)} (Uang Masuk)`
+                  : `-${formatRupiah(Math.abs(selectedMutasiForJurnal.jumlah))} (Uang Keluar)`}
+              </span>
+            </div>
+            <div className="text-slate-100 font-semibold text-sm">
+              {selectedMutasiForJurnal.deskripsi}
+            </div>
+            <div className="text-xs text-slate-400">
+              Tanggal Transaksi Bank: {formatTanggalIndo(selectedMutasiForJurnal.tanggal)} · Rekening: {selectedMutasiForJurnal.akun?.nama} ({selectedMutasiForJurnal.akun?.kode})
+            </div>
+          </div>
+
+          {/* Grid Informasi Kepala Jurnal */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+                Tanggal Transaksi <span className="text-rose-400">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  value={formTanggalJurnal}
+                  onChange={(e) => setFormTanggalJurnal(e.target.value)}
+                  onClick={(e) => {
+                    try {
+                      e.currentTarget.showPicker?.();
+                    } catch {}
+                  }}
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all cursor-pointer [color-scheme:dark]"
+                  required
+                />
+                <Calendar className="w-4 h-4 text-[#d4af37] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+                Status Dokumen
+              </label>
+              <div className="px-3.5 py-2.5 rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-[#f3c853] text-xs font-bold flex items-center justify-between">
+                <span>Draf Jurnal (Wajib Draf Sesuai PRD)</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+              </div>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+                Keterangan Jurnal <span className="text-rose-400">*</span>
+              </label>
+              <input
+                type="text"
+                value={formKeteranganJurnal}
+                onChange={(e) => setFormKeteranganJurnal(e.target.value)}
+                placeholder="Keterangan lengkap transaksi..."
+                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Rincian Baris Jurnal Dinamis */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37]">
+                  Rincian Baris Jurnal (Minimal 2 Baris Seimbang)
+                </label>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  Tentukan akun lawan dan pastikan total debit sama dengan total kredit sebelum menyimpan.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleTambahBaris}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#d4af37]/40 text-[#f3c853] bg-[#06150f] hover:bg-[#123524] text-xs font-bold transition-all cursor-pointer shadow-xs"
+              >
+                <Plus className="w-3.5 h-3.5 text-[#d4af37]" />
+                <span>Tambah Baris Akun</span>
+              </button>
+            </div>
+
+            <div className="border border-[#d4af37]/25 rounded-xl overflow-x-auto">
+              <table className="w-full text-left text-xs min-w-[700px]">
+                <thead className="bg-[#071c15] text-[#d4af37] uppercase text-[10px] font-bold border-b border-[#d4af37]/20">
+                  <tr>
+                    <th className="py-3 px-3 w-64 sm:w-72">Akun Akuntansi</th>
+                    <th className="py-3 px-3">Keterangan Baris</th>
+                    <th className="py-3 px-3 text-right w-40">Debit (Rp)</th>
+                    <th className="py-3 px-3 text-right w-40">Kredit (Rp)</th>
+                    <th className="py-3 px-2 text-center w-12">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#d4af37]/15">
+                  {barisJurnal.map((baris, idx) => {
+                    const isKasBankLine = idx === 0;
+
+                    return (
+                      <tr key={baris.id} className="bg-[#071c15] hover:bg-[#0b2419]/70">
+                        {/* Dropdown Akun */}
+                        <td className="py-2.5 px-3">
+                          <select
+                            value={baris.akun_id}
+                            onChange={(e) =>
+                              handleUpdateBaris(idx, 'akun_id', Number(e.target.value))
+                            }
+                            className={`w-full p-2 text-xs rounded-lg border bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] ${
+                              !baris.akun_id
+                                ? 'border-rose-500/60'
+                                : 'border-[#d4af37]/30'
+                            }`}
+                          >
+                            <option value={0}>-- Pilih Akun --</option>
+                            {semuaAkunList.map((ak) => (
+                              <option key={ak.id} value={ak.id}>
+                                {ak.kode} - {ak.nama} ({ak.tipe})
+                              </option>
+                            ))}
+                          </select>
+                          {isKasBankLine && (
+                            <span className="text-[10px] text-[#f3c853] block mt-1">
+                              ★ Akun Kas/Bank Mutasi Asal
+                            </span>
+                          )}
+                        </td>
+
+                        {/* Keterangan Baris */}
+                        <td className="py-2.5 px-3">
+                          <input
+                            type="text"
+                            value={baris.keterangan}
+                            onChange={(e) =>
+                              handleUpdateBaris(idx, 'keterangan', e.target.value)
+                            }
+                            placeholder="Uraian baris..."
+                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                          />
+                        </td>
+
+                        {/* Debit */}
+                        <td className="py-2.5 px-3 text-right">
+                          <input
+                            type="number"
+                            min={0}
+                            value={baris.debit || ''}
+                            onChange={(e) =>
+                              handleUpdateBaris(idx, 'debit', e.target.value)
+                            }
+                            placeholder="0"
+                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 text-right font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                          />
+                        </td>
+
+                        {/* Kredit */}
+                        <td className="py-2.5 px-3 text-right">
+                          <input
+                            type="number"
+                            min={0}
+                            value={baris.kredit || ''}
+                            onChange={(e) =>
+                              handleUpdateBaris(idx, 'kredit', e.target.value)
+                            }
+                            placeholder="0"
+                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 text-right font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                          />
+                        </td>
+
+                        {/* Tombol Hapus Baris */}
+                        <td className="py-2.5 px-2 text-center">
+                          {barisJurnal.length > 2 && (
+                            <button
+                              type="button"
+                              onClick={() => handleHapusBaris(idx)}
+                              className="text-slate-400 hover:text-rose-400 p-1 cursor-pointer transition-colors"
+                              title="Hapus Baris"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Kalkulasi Ringkasan Saldo Real-Time */}
+          <div className="p-4 sm:p-5 rounded-xl bg-[#06150f] border border-[#d4af37]/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-6">
+              <div>
+                <span className="text-[11px] text-slate-400 block uppercase font-bold tracking-wider">
+                  Total Debit
+                </span>
+                <span className="font-mono font-bold text-emerald-300 text-base sm:text-lg">
+                  {formatRupiah(totalDebitJurnal)}
+                </span>
+              </div>
+              <div>
+                <span className="text-[11px] text-slate-400 block uppercase font-bold tracking-wider">
+                  Total Kredit
+                </span>
+                <span className="font-mono font-bold text-rose-300 text-base sm:text-lg">
+                  {formatRupiah(totalKreditJurnal)}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-slate-300 font-medium">Status Keseimbangan:</span>
+              {isJurnalBalanced ? (
+                <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 flex items-center gap-1.5 shadow-xs">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  Seimbang (Balance)
+                </span>
+              ) : (
+                <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-rose-950/80 text-rose-300 border border-rose-500/50 flex items-center gap-1.5 shadow-xs">
+                  <AlertTriangle className="w-4 h-4 text-rose-400" />
+                  Selisih {formatRupiah(selisihJurnal)}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Area Tombol Aksi Bawah */}
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#d4af37]/20">
+            <button
+              type="button"
+              disabled={isSubmittingJurnal}
+              onClick={() => setModalJurnalOpen(false)}
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-[#06150f] text-xs font-semibold text-center transition-all cursor-pointer"
+            >
+              Batalkan
+            </button>
+            <button
+              type="button"
+              disabled={isSubmittingJurnal || !isJurnalBalanced}
+              onClick={handleSaveDrafJurnal}
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {isSubmittingJurnal ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-[#081c15] animate-spin" />
+                  <span>Menyimpan Draf...</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4 text-[#081c15]" />
+                  <span>Simpan Draf Jurnal</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // VIEW 2: PRATINJAU IMPOR MUTASI (STRUKTUR FORMULIR PENGAJUAN)
+  // =========================================================================
+  if (previewModalOpen) {
+    return (
+      <div className="space-y-6">
+        {/* Tombol Kembali & Header */}
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setPreviewModalOpen(false)}
+            className="p-2 rounded-xl bg-[#0b2419] border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:border-[#d4af37] transition-all cursor-pointer"
+            title="Batalkan Pratinjau"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+              Pratinjau Impor Mutasi Bank
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+              Periksa daftar transaksi mutasi dari berkas ({previewFileName}) sebelum disimpan ke sistem.
+            </p>
+          </div>
+        </div>
+
+        {/* Alert Error jika Ada */}
+        {modalImportError && (
+          <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-500/50 flex items-start gap-3 text-rose-200 text-xs sm:text-sm">
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
+            <div className="leading-snug">{modalImportError}</div>
+          </div>
+        )}
+
+        {/* Formulir Card */}
+        <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 shadow-2xl p-6 sm:p-8 space-y-6">
+          {/* Ringkasan File */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25">
+              <div className="text-xs text-slate-400 font-bold uppercase tracking-wider text-[#d4af37]">
+                Total Transaksi Terbaca
+              </div>
+              <div className="text-2xl font-bold text-[#f3c853] mt-1 font-serif">
+                {previewRows.length} baris
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25">
+              <div className="text-xs text-slate-400 font-bold uppercase tracking-wider text-[#d4af37]">
+                Rekening Kas/Bank Tujuan
+              </div>
+              <div className="text-sm font-bold text-slate-100 truncate mt-1">
+                {kasBankList.find((a) => a.id === selectedAkunId)?.nama || '-'}
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25">
+              <div className="text-xs text-slate-400 font-bold uppercase tracking-wider text-[#d4af37]">
+                Validasi Anti-Duplikasi
+              </div>
+              <div className="text-sm font-bold text-emerald-400 mt-1 flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                Otomatis Dicek Sistem
+              </div>
+            </div>
+          </div>
+
+          {/* Tabel Pratinjau Baris */}
+          <div className="border border-[#d4af37]/25 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-[#071c15] text-[#d4af37] sticky top-0 font-bold uppercase text-[10px] tracking-wider border-b border-[#d4af37]/20">
+                <tr>
+                  <th className="py-3 px-3">Tanggal</th>
+                  <th className="py-3 px-3">Deskripsi Transaksi</th>
+                  <th className="py-3 px-3 text-right">Jumlah (Rp)</th>
+                  <th className="py-3 px-3 text-right">Saldo (Rp)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#d4af37]/15">
+                {previewRows.slice(0, 100).map((r, idx) => (
+                  <tr key={idx} className="hover:bg-[#123524]/40">
+                    <td className="py-2.5 px-3 whitespace-nowrap text-slate-300 font-mono">
+                      {r.tanggal}
+                    </td>
+                    <td className="py-2.5 px-3 text-slate-200">{r.deskripsi}</td>
+                    <td
+                      className={`py-2.5 px-3 text-right font-mono font-bold whitespace-nowrap ${
+                        r.jumlah > 0 ? 'text-emerald-400' : 'text-rose-400'
+                      }`}
+                    >
+                      {r.jumlah > 0 ? '+' : ''}
+                      {formatRupiah(r.jumlah)}
+                    </td>
+                    <td className="py-2.5 px-3 text-right font-mono text-slate-400 whitespace-nowrap">
+                      {r.saldo !== null ? formatRupiah(r.saldo) : '-'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {previewRows.length > 100 && (
+            <div className="text-xs text-slate-400 text-center italic">
+              Menampilkan 100 baris pertama dari total {previewRows.length} baris.
+            </div>
+          )}
+
+          {/* Tombol Aksi Bawah */}
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#d4af37]/20">
+            <button
+              type="button"
+              disabled={isSubmittingImport}
+              onClick={() => setPreviewModalOpen(false)}
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-[#06150f] text-xs font-semibold text-center transition-all cursor-pointer"
+            >
+              Batalkan
+            </button>
+            <button
+              type="button"
+              disabled={isSubmittingImport}
+              onClick={handleConfirmImport}
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {isSubmittingImport ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-[#081c15] animate-spin" />
+                  <span>Mengimpor Data...</span>
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4 text-[#081c15]" />
+                  <span>Konfirmasi & Simpan Mutasi</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* 1. Header Judul & Deskripsi Nuansa Keraton */}
@@ -1227,423 +1677,6 @@ export function ImportMutasiClient({
           </div>
         )}
       </div>
-
-      {/* ========================================================================= */}
-      {/* MODAL 1: PREVIEW IMPOR MUTASI SEBELUM TERSIMPAN                            */}
-      {/* ========================================================================= */}
-      {previewModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-4xl bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-8">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <FileSpreadsheet className="w-5 h-5 text-[#d4af37]" />
-                <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
-                  Pratinjau Impor Mutasi ({previewFileName})
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setPreviewModalOpen(false)}
-                className="text-slate-400 hover:text-white"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="p-4 sm:p-6 space-y-4">
-              {/* Notifikasi Error Impor */}
-              {modalImportError && (
-                <div className="p-3.5 rounded-xl bg-rose-950/70 border border-rose-500/50 flex items-start gap-2.5 text-xs text-rose-200 animate-fadeIn">
-                  <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="font-semibold text-rose-100">Gagal Memproses Impor</p>
-                    <p className="mt-0.5 text-rose-300">{modalImportError}</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Ringkasan File */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3 rounded-xl bg-[#06150f] border border-[#d4af37]/20">
-                  <div className="text-[11px] text-slate-400">Total Transaksi Terbaca</div>
-                  <div className="text-lg font-bold text-[#f3c853]">
-                    {previewRows.length} baris
-                  </div>
-                </div>
-                <div className="p-3 rounded-xl bg-[#06150f] border border-[#d4af37]/20">
-                  <div className="text-[11px] text-slate-400">Rekening Kas/Bank Tujuan</div>
-                  <div className="text-xs font-bold text-slate-100 truncate mt-1">
-                    {kasBankList.find((a) => a.id === selectedAkunId)?.nama || '-'}
-                  </div>
-                </div>
-                <div className="p-3 rounded-xl bg-[#06150f] border border-[#d4af37]/20">
-                  <div className="text-[11px] text-slate-400">Validasi Anti-Duplikasi</div>
-                  <div className="text-xs font-bold text-emerald-400 mt-1 flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    Otomatis Dicek Sistem
-                  </div>
-                </div>
-              </div>
-
-              {/* Tabel Pratinjau Baris */}
-              <div className="border border-[#d4af37]/25 rounded-xl overflow-hidden max-h-72 overflow-y-auto">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-[#0b2419] text-[#d4af37] sticky top-0 font-bold">
-                    <tr>
-                      <th className="py-2.5 px-3">Tanggal</th>
-                      <th className="py-2.5 px-3">Deskripsi Transaksi</th>
-                      <th className="py-2.5 px-3 text-right">Jumlah (Rp)</th>
-                      <th className="py-2.5 px-3 text-right">Saldo (Rp)</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#d4af37]/15">
-                    {previewRows.slice(0, 50).map((r, idx) => (
-                      <tr key={idx} className="hover:bg-[#0b2419]/40">
-                        <td className="py-2 px-3 whitespace-nowrap text-slate-300">
-                          {r.tanggal}
-                        </td>
-                        <td className="py-2 px-3 text-slate-200">{r.deskripsi}</td>
-                        <td
-                          className={`py-2 px-3 text-right font-mono font-bold whitespace-nowrap ${
-                            r.jumlah > 0 ? 'text-emerald-400' : 'text-rose-400'
-                          }`}
-                        >
-                          {r.jumlah > 0 ? '+' : ''}
-                          {formatRupiah(r.jumlah)}
-                        </td>
-                        <td className="py-2 px-3 text-right font-mono text-slate-400 whitespace-nowrap">
-                          {r.saldo !== null ? formatRupiah(r.saldo) : '-'}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {previewRows.length > 50 && (
-                <div className="text-[11px] text-slate-400 text-center italic">
-                  Menampilkan 50 baris pertama dari total {previewRows.length} baris.
-                </div>
-              )}
-            </div>
-
-            <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
-              <button
-                type="button"
-                disabled={isSubmittingImport}
-                onClick={() => setPreviewModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer disabled:opacity-50"
-              >
-                Batal
-              </button>
-              <button
-                type="button"
-                disabled={isSubmittingImport}
-                onClick={handleConfirmImport}
-                className="px-5 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-md disabled:opacity-50 flex items-center gap-2"
-              >
-                {isSubmittingImport ? (
-                  <>
-                    <Loader2 className="w-4 h-4 text-[#d4af37] animate-spin" />
-                    <span>Mengimpor Data...</span>
-                  </>
-                ) : (
-                  <>
-                    <Upload className="w-4 h-4 text-[#d4af37]" />
-                    <span>Konfirmasi & Simpan Mutasi</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================================= */}
-      {/* MODAL 2: FORM BUAT DRAF JURNAL DARI BARIS MUTASI (PRE-FILLED)             */}
-      {/* ========================================================================= */}
-      {modalJurnalOpen && selectedMutasiForJurnal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-3xl bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-8">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-[#d4af37]" />
-                <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
-                  Buat Draf Jurnal dari Mutasi
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setModalJurnalOpen(false)}
-                className="text-slate-400 hover:text-white"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="p-4 sm:p-6 space-y-5">
-              {/* Info Mutasi Asli */}
-              <div className="p-3.5 rounded-xl bg-[#06150f] border border-[#d4af37]/25 space-y-1.5 text-xs">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-[#d4af37] uppercase tracking-wider">
-                    Sumber Mutasi Bank
-                  </span>
-                  <span
-                    className={`font-mono font-bold px-2 py-0.5 rounded-lg border text-[11px] ${
-                      selectedMutasiForJurnal.jumlah > 0
-                        ? 'bg-emerald-950/60 text-emerald-300 border-emerald-500/40'
-                        : 'bg-rose-950/60 text-rose-300 border-rose-500/40'
-                    }`}
-                  >
-                    {selectedMutasiForJurnal.jumlah > 0
-                      ? `+${formatRupiah(selectedMutasiForJurnal.jumlah)} (Uang Masuk)`
-                      : `-${formatRupiah(Math.abs(selectedMutasiForJurnal.jumlah))} (Uang Keluar)`}
-                  </span>
-                </div>
-                <div className="text-slate-200 font-medium">
-                  {selectedMutasiForJurnal.deskripsi}
-                </div>
-                <div className="text-[11px] text-slate-400">
-                  Tanggal: {formatTanggalIndo(selectedMutasiForJurnal.tanggal)} ·
-                  Rekening: {selectedMutasiForJurnal.akun?.nama} (
-                  {selectedMutasiForJurnal.akun?.kode})
-                </div>
-              </div>
-
-              {jurnalModalError && (
-                <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-500/50 text-rose-200 text-xs flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                  <div>{jurnalModalError}</div>
-                </div>
-              )}
-
-              {/* Form Header Jurnal */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Tanggal Transaksi <span className="text-rose-400">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    value={formTanggalJurnal}
-                    onChange={(e) => setFormTanggalJurnal(e.target.value)}
-                    className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/40 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] [color-scheme:dark]"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Status Dokumen
-                  </label>
-                  <div className="p-2.5 rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-[#f3c853] text-xs font-bold flex items-center justify-between">
-                    <span>Draf Jurnal (Wajib Draf Sesuai PRD)</span>
-                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-2 space-y-1">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Keterangan Jurnal <span className="text-rose-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={formKeteranganJurnal}
-                    onChange={(e) => setFormKeteranganJurnal(e.target.value)}
-                    placeholder="Keterangan lengkap transaksi..."
-                    className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/40 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Tabel Dinamis Baris Jurnal */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#d4af37]">
-                    Rincian Baris Jurnal (Minimal 2 Baris Seimbang)
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleTambahBaris}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-[#d4af37]/40 text-[#f3c853] bg-[#06150f] hover:bg-[#0b2419] text-xs font-semibold cursor-pointer"
-                  >
-                    <Plus className="w-3.5 h-3.5 text-[#d4af37]" />
-                    <span>Tambah Baris Akun</span>
-                  </button>
-                </div>
-
-                <div className="border border-[#d4af37]/25 rounded-xl overflow-hidden">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-[#0b2419] text-[#d4af37] font-bold">
-                      <tr>
-                        <th className="py-2.5 px-3">Akun Akuntansi</th>
-                        <th className="py-2.5 px-3">Keterangan Baris</th>
-                        <th className="py-2.5 px-3 text-right w-32">Debit (Rp)</th>
-                        <th className="py-2.5 px-3 text-right w-32">Kredit (Rp)</th>
-                        <th className="py-2.5 px-2 text-center w-10">Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#d4af37]/15">
-                      {barisJurnal.map((baris, idx) => {
-                        const isKasBankLine = idx === 0;
-
-                        return (
-                          <tr key={baris.id} className="bg-[#071c15]">
-                            {/* Dropdown Akun */}
-                            <td className="py-2 px-3">
-                              <select
-                                value={baris.akun_id}
-                                onChange={(e) =>
-                                  handleUpdateBaris(idx, 'akun_id', Number(e.target.value))
-                                }
-                                className={`w-full p-1.5 text-xs rounded-lg border bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] ${
-                                  !baris.akun_id
-                                    ? 'border-rose-500/60'
-                                    : 'border-[#d4af37]/30'
-                                }`}
-                              >
-                                <option value={0}>-- Pilih Akun --</option>
-                                {semuaAkunList.map((ak) => (
-                                  <option key={ak.id} value={ak.id}>
-                                    {ak.kode} - {ak.nama} ({ak.tipe})
-                                  </option>
-                                ))}
-                              </select>
-                              {isKasBankLine && (
-                                <span className="text-[10px] text-[#f3c853] block mt-0.5">
-                                  ★ Akun Kas/Bank Mutasi
-                                </span>
-                              )}
-                            </td>
-
-                            {/* Keterangan Baris */}
-                            <td className="py-2 px-3">
-                              <input
-                                type="text"
-                                value={baris.keterangan}
-                                onChange={(e) =>
-                                  handleUpdateBaris(idx, 'keterangan', e.target.value)
-                                }
-                                placeholder="Uraian baris..."
-                                className="w-full p-1.5 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
-                              />
-                            </td>
-
-                            {/* Debit */}
-                            <td className="py-2 px-3 text-right">
-                              <input
-                                type="number"
-                                min={0}
-                                value={baris.debit || ''}
-                                onChange={(e) =>
-                                  handleUpdateBaris(idx, 'debit', e.target.value)
-                                }
-                                placeholder="0"
-                                className="w-full p-1.5 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 text-right font-mono focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
-                              />
-                            </td>
-
-                            {/* Kredit */}
-                            <td className="py-2 px-3 text-right">
-                              <input
-                                type="number"
-                                min={0}
-                                value={baris.kredit || ''}
-                                onChange={(e) =>
-                                  handleUpdateBaris(idx, 'kredit', e.target.value)
-                                }
-                                placeholder="0"
-                                className="w-full p-1.5 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 text-right font-mono focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
-                              />
-                            </td>
-
-                            {/* Tombol Hapus Baris */}
-                            <td className="py-2 px-2 text-center">
-                              {barisJurnal.length > 2 && (
-                                <button
-                                  type="button"
-                                  onClick={() => handleHapusBaris(idx)}
-                                  className="text-slate-400 hover:text-rose-400 p-1 cursor-pointer"
-                                  title="Hapus Baris"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* Kalkulasi Ringkasan Saldo Real-Time */}
-              <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-                <div className="flex items-center gap-6">
-                  <div>
-                    <span className="text-[11px] text-slate-400 block">Total Debit</span>
-                    <span className="font-mono font-bold text-slate-100 text-sm">
-                      {formatRupiah(totalDebitJurnal)}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[11px] text-slate-400 block">Total Kredit</span>
-                    <span className="font-mono font-bold text-slate-100 text-sm">
-                      {formatRupiah(totalKreditJurnal)}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-slate-400">Status Keseimbangan:</span>
-                  {isJurnalBalanced ? (
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                      Seimbang (Balance)
-                    </span>
-                  ) : (
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-rose-950/80 text-rose-300 border border-rose-500/50 flex items-center gap-1">
-                      <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
-                      Selisih {formatRupiah(selisihJurnal)}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
-              <button
-                type="button"
-                disabled={isSubmittingJurnal}
-                onClick={() => setModalJurnalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer disabled:opacity-50"
-              >
-                Batal
-              </button>
-              <button
-                type="button"
-                disabled={isSubmittingJurnal || !isJurnalBalanced}
-                onClick={handleSaveDrafJurnal}
-                className="px-5 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                {isSubmittingJurnal ? (
-                  <>
-                    <Loader2 className="w-4 h-4 text-[#d4af37] animate-spin" />
-                    <span>Menyimpan Draf...</span>
-                  </>
-                ) : (
-                  <>
-                    <Save className="w-4 h-4 text-[#d4af37]" />
-                    <span>Simpan Draf Jurnal</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

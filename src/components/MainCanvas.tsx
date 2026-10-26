@@ -24,11 +24,11 @@ export function MainCanvas({
 }: MainCanvasProps) {
   return (
     <div
-      className={`flex-1 w-full mx-auto px-3 sm:px-5 lg:px-6 py-6 sm:py-8 flex flex-col ${maxWidth} ${wrapperClassName}`}
+      className={`flex-1 w-full mx-auto px-3 sm:px-5 lg:px-6 py-6 sm:py-8 flex flex-col overflow-x-hidden ${maxWidth} ${wrapperClassName}`}
     >
       <main
         id={id}
-        className={`relative w-full bg-[#071c15] border border-[#d4af37]/25 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden p-4 sm:p-6 lg:p-8 flex-1 flex flex-col ${className}`}
+        className={`relative w-full bg-[#071c15] border border-[#d4af37]/25 rounded-2xl shadow-2xl shadow-black/60 overflow-hidden p-4 sm:p-6 lg:p-8 flex-1 flex flex-col overflow-x-hidden ${className}`}
       >
         {/* Latar Belakang Motif Batik Parang Mangkunegaran Eksklusif Kanvas */}
         <div
@@ -44,7 +44,7 @@ export function MainCanvas({
         />
 
         {/* Konten Halaman di Atas Kanvas */}
-        <div className="relative z-10 w-full flex-1">
+        <div className="relative z-10 w-full flex-1 overflow-x-hidden">
           {children}
         </div>
       </main>

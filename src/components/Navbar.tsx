@@ -216,7 +216,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
          ========================================================= */}
       {/* 1. Backdrop Gelap Transparan */}
       <div
-        className={`fixed inset-0 bg-black/60 z-40 transition-opacity duration-300 backdrop-blur-xs ${
+        className={`fixed inset-0 w-full h-full bg-black/60 z-40 transition-opacity duration-300 backdrop-blur-xs ${
           isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsSidebarOpen(false)}
@@ -225,7 +225,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
 
       {/* 2. Panel Sidebar Geser */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 sm:w-80 bg-[#071c15] border-r border-[#d4af37]/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out overflow-hidden ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 sm:w-80 max-w-[85vw] bg-[#071c15] border-r border-[#d4af37]/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out overflow-hidden ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         aria-label="Sidebar Navigasi"

@@ -229,6 +229,187 @@ export function JurnalDetailClient({
     impor_bank: 'bg-[#1a2d24] text-teal-200 border-teal-400/40',
   }[jurnal.sumber] || 'bg-[#123524] text-slate-300 border-slate-700';
 
+  if (showPembalikModal) {
+    return (
+      <div className="space-y-6 max-w-4xl mx-auto">
+        {/* Header Formulir Jurnal Pembalik */}
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              setShowPembalikModal(false);
+              setActionError(null);
+            }}
+            className="p-2 sm:p-2.5 rounded-xl border border-[#d4af37]/30 text-[#d4af37] hover:bg-[#d4af37]/10 transition-colors shrink-0 cursor-pointer"
+            title="Kembali ke Detail Jurnal"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+              Formulir Jurnal Pembalik
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+              Koreksi pembukuan dengan membalik posisi debit dan kredit dari transaksi terkait.
+            </p>
+          </div>
+        </div>
+
+        {/* Alert Error */}
+        {actionError && (
+          <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-500/50 flex items-start gap-3 text-rose-200 text-xs sm:text-sm">
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
+            <div className="leading-snug">{actionError}</div>
+          </div>
+        )}
+
+        {/* Formulir Card */}
+        <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 shadow-2xl p-6 sm:p-8 space-y-6">
+          {/* Banner Informasi Standar Akuntansi */}
+          <div className="p-4 rounded-xl bg-[#123524] border border-[#d4af37]/40 text-[#fdfbf7] text-xs flex items-start gap-3">
+            <RotateCcw className="w-5 h-5 text-[#d4af37] shrink-0 mt-0.5" />
+            <div className="leading-relaxed">
+              <strong className="text-[#d4af37]">Aturan Standar Akuntansi:</strong> Sesuai kaidah tata kelola keuangan, jurnal yang sudah diposting tidak dapat diubah atau dihapus secara langsung. Koreksi saldo dilakukan melalui <strong>Jurnal Pembalik (Reversing Entry)</strong> yang secara sistematis menukar posisi Debit dan Kredit, serta memperbarui status jurnal referensi menjadi <em>Dibalik</em>.
+            </div>
+          </div>
+
+          {/* Kartu Ringkasan Jurnal Referensi */}
+          <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/20 space-y-3">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#d4af37]">
+              Jurnal Referensi yang Dibalik
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+              <div>
+                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Nomor Jurnal</span>
+                <span className="font-mono font-bold text-slate-200">{jurnal.nomor || `#${jurnal.id}`}</span>
+              </div>
+              <div>
+                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Tanggal Asli</span>
+                <span className="text-slate-200 font-semibold">{formatTanggalIndo(jurnal.tanggal)}</span>
+              </div>
+              <div>
+                <span className="text-slate-400 block text-[10px] uppercase font-semibold">Total Nilai Transaksi</span>
+                <span className="text-[#d4af37] font-bold font-mono">{formatRupiah(totalDebit)}</span>
+              </div>
+            </div>
+            <div className="pt-2 border-t border-[#d4af37]/10 text-xs">
+              <span className="text-slate-400 block text-[10px] uppercase font-semibold">Keterangan Asli</span>
+              <p className="text-slate-300 italic">{jurnal.keterangan}</p>
+            </div>
+          </div>
+
+          {/* Form Input Fields */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+                Tanggal Jurnal Pembalik <span className="text-rose-400">*</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  value={tanggalPembalik}
+                  onChange={(e) => setTanggalPembalik(e.target.value)}
+                  onClick={(e) => {
+                    try {
+                      e.currentTarget.showPicker?.();
+                    } catch {}
+                  }}
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all cursor-pointer [color-scheme:dark]"
+                />
+                <Calendar className="w-4 h-4 text-[#d4af37] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+              <p className="text-[11px] text-slate-400 mt-1">
+                Tanggal harus berada pada periode akuntansi yang berstatus terbuka.
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+                Alasan Koreksi / Pembalikan (Opsional)
+              </label>
+              <input
+                type="text"
+                value={alasanPembalik}
+                onChange={(e) => setAlasanPembalik(e.target.value)}
+                placeholder="Contoh: Salah memilih akun kas atau penyesuaian nilai..."
+                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all"
+              />
+              <p className="text-[11px] text-slate-400 mt-1">
+                Catatan internal untuk audit trail pembukuan.
+              </p>
+            </div>
+          </div>
+
+          {/* Pratinjau Pertukaran Posisi Debit & Kredit */}
+          <div className="space-y-2 pt-2">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37]">
+              Pratinjau Ayat Jurnal Pembalik (Dibalik Otomatis)
+            </label>
+            <div className="overflow-x-auto rounded-xl border border-[#d4af37]/20 bg-[#06150f]">
+              <table className="w-full text-xs text-left">
+                <thead className="bg-[#123524] text-[#d4af37] border-b border-[#d4af37]/20">
+                  <tr>
+                    <th className="px-4 py-3 font-bold">Kode & Nama Akun</th>
+                    <th className="px-4 py-3 font-bold text-right">Debit (Sebelumnya Kredit)</th>
+                    <th className="px-4 py-3 font-bold text-right">Kredit (Sebelumnya Debit)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#d4af37]/10 text-slate-200">
+                  {jurnal.jurnal_baris?.map((b) => (
+                    <tr key={b.id} className="hover:bg-[#123524]/40">
+                      <td className="px-4 py-3">
+                        <span className="font-mono text-[#d4af37] font-semibold">{b.akun?.kode}</span> — {b.akun?.nama || 'Akun'}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono font-semibold text-emerald-400">
+                        {b.kredit > 0 ? formatRupiah(b.kredit) : '-'}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono font-semibold text-rose-400">
+                        {b.debit > 0 ? formatRupiah(b.debit) : '-'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Tombol Aksi Bawah */}
+          <div className="pt-6 border-t border-[#d4af37]/20 flex flex-col sm:flex-row items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setShowPembalikModal(false);
+                setActionError(null);
+              }}
+              disabled={loadingAction}
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-slate-700 text-slate-300 text-xs font-semibold hover:bg-[#06150f] transition-all cursor-pointer text-center"
+            >
+              Batalkan
+            </button>
+            <button
+              type="button"
+              onClick={handleBuatPembalik}
+              disabled={loadingAction}
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#06130D] text-xs font-extrabold hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all shadow-md shadow-[#d4af37]/15 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            >
+              {loadingAction ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Menerbitkan Pembalik...</span>
+                </>
+              ) : (
+                <>
+                  <RotateCcw className="w-4 h-4" />
+                  <span>Konfirmasi & Terbitkan Jurnal Pembalik</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* 1. Navigasi Atas & Judul */}
@@ -535,26 +716,28 @@ export function JurnalDetailClient({
 
       {/* MODAL 1: Konfirmasi Hapus Jurnal Draf */}
       {showHapusModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-          <div className="bg-[#0b2419] rounded-2xl border border-rose-500/50 p-6 max-w-md w-full shadow-2xl space-y-4">
-            <div className="flex items-center gap-3 text-rose-400">
+        <div className="fixed inset-0 w-full h-full z-50 bg-black/80 flex items-center justify-center p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
+          <div className="relative bg-[#0b2419] rounded-2xl border border-rose-500/50 max-w-md w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+            <div className="p-5 sm:p-6 pb-3 border-b border-rose-500/30 flex items-center gap-3 text-rose-400 shrink-0">
               <ShieldAlert className="w-6 h-6 shrink-0" />
               <h3 className="text-base font-bold text-slate-100">
                 Konfirmasi Hapus Jurnal Draf
               </h3>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Apakah Anda yakin ingin menghapus jurnal draf ini? Dokumen dan seluruh baris rinciannya akan dihapus permanen dari sistem.
-            </p>
+            <div className="p-5 sm:p-6 space-y-4 overflow-y-auto flex-1">
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Apakah Anda yakin ingin menghapus jurnal draf ini? Dokumen dan seluruh baris rinciannya akan dihapus permanen dari sistem.
+              </p>
 
-            {actionError && (
-              <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-200 text-xs">
-                {actionError}
-              </div>
-            )}
+              {actionError && (
+                <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-200 text-xs">
+                  {actionError}
+                </div>
+              )}
+            </div>
 
-            <div className="flex items-center justify-end gap-2.5 pt-2">
+            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => {
@@ -581,100 +764,7 @@ export function JurnalDetailClient({
         </div>
       )}
 
-      {/* MODAL 2: Buat Jurnal Pembalik */}
-      {showPembalikModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-          <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/40 p-6 max-w-lg w-full shadow-2xl space-y-4">
-            <div className="flex items-center gap-3 text-[#d4af37]">
-              <RotateCcw className="w-6 h-6 shrink-0" />
-              <h3 className="text-base font-bold text-slate-100">
-                Buat Jurnal Pembalik
-              </h3>
-            </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Sesuai aturan standar pembukuan akuntansi, jurnal yang sudah diposting tidak dapat diubah atau dihapus. Kesalahan dikoreksi dengan menerbitkan <strong>Jurnal Pembalik</strong> yang menukar posisi Debit dan Kredit dari jurnal ini, serta mengubah status jurnal ini menjadi <em>Dibalik</em>.
-            </p>
-
-            <div className="space-y-3 pt-1">
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37] mb-1">
-                  Tanggal Jurnal Pembalik <span className="text-rose-400">*</span>
-                </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    value={tanggalPembalik}
-                    onChange={(e) => setTanggalPembalik(e.target.value)}
-                    onClick={(e) => {
-                      try {
-                        e.currentTarget.showPicker?.();
-                      } catch {}
-                    }}
-                    className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer [color-scheme:dark]"
-                  />
-                  <Calendar className="w-4 h-4 text-[#d4af37] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                </div>
-                <span className="text-[10px] text-slate-400 mt-1 block">
-                  Tanggal harus berada pada periode akuntansi yang berstatus terbuka.
-                </span>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37] mb-1">
-                  Alasan Koreksi / Pembalikan (Opsional)
-                </label>
-                <input
-                  type="text"
-                  value={alasanPembalik}
-                  onChange={(e) => setAlasanPembalik(e.target.value)}
-                  placeholder="Misal: Salah memilih akun kas atau salah nominal..."
-                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
-                />
-              </div>
-            </div>
-
-            {actionError && (
-              <div className="p-3 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-200 text-xs">
-                {actionError}
-              </div>
-            )}
-
-            <div className="flex items-center justify-end gap-2.5 pt-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowPembalikModal(false);
-                  setActionError(null);
-                }}
-                disabled={loadingAction}
-                className="px-4 py-2 rounded-xl border border-slate-700 text-slate-300 text-xs font-semibold hover:bg-[#06150f]"
-              >
-                Batal
-              </button>
-
-              <button
-                type="button"
-                onClick={handleBuatPembalik}
-                disabled={loadingAction}
-                className="px-5 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold hover:bg-[#e0bc46] active:bg-[#c49f2e] flex items-center gap-2 cursor-pointer disabled:opacity-50"
-              >
-                {loadingAction ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin text-[#081c15]" />
-                    <span>Menerbitkan Pembalik...</span>
-                  </>
-                ) : (
-                  <>
-                    <RotateCcw className="w-4 h-4" />
-                    <span>Terbitkan Jurnal Pembalik</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

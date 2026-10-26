@@ -882,36 +882,39 @@ export function PengajuanDetailClient({
 
       {/* Modal Dialog Catatan Peninjau (Revisi / Tolak) */}
       {modalMode && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-150">
-          <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/40 shadow-2xl p-6 w-full max-w-md space-y-4">
-            <h3 className="text-base font-bold text-[#fdfbf7] flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-[#f3c853]" />
-              <span>
-                {modalMode === 'revisi' ? 'Minta Revisi Pengajuan' : 'Tolak Pengajuan'}
-              </span>
-            </h3>
-
-            <p className="text-xs text-slate-300">
-              Wajib memberikan catatan peninjau minimal 10 karakter agar pengaju mengetahui alasan perbaikan atau penolakan.
-            </p>
-
-            <div>
-              <div className="flex justify-between text-[11px] mb-1 font-semibold text-[#d4af37]">
-                <span>Catatan Peninjau</span>
-                <span className={catatanText.trim().length >= 10 ? 'text-emerald-400' : 'text-slate-400'}>
-                  {catatanText.trim().length}/10 karakter
+        <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-150 overflow-y-auto overflow-x-hidden">
+          <div className="relative bg-[#0b2419] rounded-2xl border border-[#d4af37]/40 shadow-2xl w-full max-w-md max-h-[92vh] flex flex-col overflow-hidden my-auto">
+            <div className="p-5 sm:p-6 pb-3 border-b border-[#d4af37]/20 shrink-0">
+              <h3 className="text-base font-bold text-[#fdfbf7] flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-[#f3c853]" />
+                <span>
+                  {modalMode === 'revisi' ? 'Minta Revisi Pengajuan' : 'Tolak Pengajuan'}
                 </span>
-              </div>
-              <textarea
-                rows={4}
-                value={catatanText}
-                onChange={(e) => setCatatanText(e.target.value)}
-                placeholder="Tuliskan catatan perbaikan (contoh: Foto nota buram dan tanggal transaksi tidak terlihat jelas)..."
-                className="w-full p-3 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
-              />
+              </h3>
+              <p className="text-xs text-slate-300 mt-1">
+                Wajib memberikan catatan peninjau minimal 10 karakter agar pengaju mengetahui alasan perbaikan atau penolakan.
+              </p>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-2">
+            <div className="p-5 sm:p-6 space-y-4 overflow-y-auto flex-1">
+              <div>
+                <div className="flex justify-between text-[11px] mb-1 font-semibold text-[#d4af37]">
+                  <span>Catatan Peninjau</span>
+                  <span className={catatanText.trim().length >= 10 ? 'text-emerald-400' : 'text-slate-400'}>
+                    {catatanText.trim().length}/10 karakter
+                  </span>
+                </div>
+                <textarea
+                  rows={4}
+                  value={catatanText}
+                  onChange={(e) => setCatatanText(e.target.value)}
+                  placeholder="Tuliskan catatan perbaikan (contoh: Foto nota buram dan tanggal transaksi tidak terlihat jelas)..."
+                  className="w-full p-3 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                />
+              </div>
+            </div>
+
+            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2 shrink-0">
               <button
                 type="button"
                 onClick={() => {

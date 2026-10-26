@@ -834,9 +834,9 @@ export function PenggunaAuditClient({
       {/* MODAL 1: KELOLA PENGGUNA (UBAH PERAN & STATUS AKTIF)                       */}
       {/* ========================================================================= */}
       {modalUserOpen && selectedUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-lg bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-8">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between">
+        <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
+          <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-[#d4af37]" />
                 <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
@@ -852,7 +852,7 @@ export function PenggunaAuditClient({
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               {/* Info Pengguna */}
               <div className="p-3.5 rounded-xl bg-[#06150f] border border-[#d4af37]/25 space-y-1">
                 <div className="text-sm font-bold text-slate-100">
@@ -997,7 +997,7 @@ export function PenggunaAuditClient({
               </div>
             </div>
 
-            <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
+            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setModalUserOpen(false)}
@@ -1022,9 +1022,9 @@ export function PenggunaAuditClient({
       {/* MODAL 2: RINCIAN LOG AUDIT & KOMPARASI DATA LAMA VS BARU                  */}
       {/* ========================================================================= */}
       {modalLogOpen && selectedLog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-3xl bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-8">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between">
+        <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
+          <div className="relative w-full max-w-3xl max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <ScrollText className="w-4 h-4 text-[#d4af37]" />
                 <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
@@ -1040,7 +1040,7 @@ export function PenggunaAuditClient({
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               {/* Meta Informasi Log */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-xl bg-[#06150f] border border-[#d4af37]/25 text-xs">
                 <div>
@@ -1200,7 +1200,7 @@ export function PenggunaAuditClient({
               )}
             </div>
 
-            <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end">
+            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end shrink-0">
               <button
                 type="button"
                 onClick={() => setModalLogOpen(false)}

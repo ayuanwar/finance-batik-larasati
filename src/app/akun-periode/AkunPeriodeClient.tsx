@@ -910,9 +910,9 @@ export function AkunPeriodeClient({
       {/* MODAL 1: TAMBAH / UBAH AKUN (AKUNTAN ONLY)                                */}
       {/* ========================================================================= */}
       {modalAkunOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-lg bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-8">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between">
+        <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
+          <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <Layers className="w-4 h-4 text-[#d4af37]" />
                 <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
@@ -928,7 +928,7 @@ export function AkunPeriodeClient({
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               {formError && (
                 <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-500/50 text-rose-200 text-xs">
                   {formError}
@@ -1045,7 +1045,7 @@ export function AkunPeriodeClient({
               </div>
             </div>
 
-            <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
+            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setModalAkunOpen(false)}
@@ -1070,9 +1070,9 @@ export function AkunPeriodeClient({
       {/* MODAL 2: BUKA KEMBALI PERIODE (DIREKTUR ONLY)                             */}
       {/* ========================================================================= */}
       {modalBukaPeriodeOpen && selectedPeriode && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-lg bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-8">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between">
+        <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
+          <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <Unlock className="w-4 h-4 text-[#d4af37]" />
                 <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
@@ -1088,7 +1088,7 @@ export function AkunPeriodeClient({
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/40 text-xs text-amber-200">
                 <div className="font-bold flex items-center gap-1.5 mb-1 text-[#f3c853]">
                   <Info className="w-4 h-4" />
@@ -1129,7 +1129,7 @@ export function AkunPeriodeClient({
               </div>
             </div>
 
-            <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
+            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setModalBukaPeriodeOpen(false)}
@@ -1154,9 +1154,9 @@ export function AkunPeriodeClient({
       {/* MODAL 3: TAMBAH PERIODE BARU (AKUNTAN ONLY)                               */}
       {/* ========================================================================= */}
       {modalTambahPeriodeOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-md bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-8">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between">
+        <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
+          <div className="relative w-full max-w-md max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-[#d4af37]" />
                 <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
@@ -1172,7 +1172,7 @@ export function AkunPeriodeClient({
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               {tambahPeriodeError && (
                 <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-500/50 text-rose-200 text-xs">
                   {tambahPeriodeError}
@@ -1211,7 +1211,7 @@ export function AkunPeriodeClient({
               </div>
             </div>
 
-            <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/25 flex items-center justify-end gap-2.5">
+            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setModalTambahPeriodeOpen(false)}
