@@ -254,8 +254,8 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                 <span className="font-serif font-bold text-[#fdfbf7] text-sm leading-tight tracking-tight">
                   CV Batik Larasati
                 </span>
-                <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight">
-                  Navigasi Modul
+                <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider leading-tight">
+                  Keuangan dan Akuntansi
                 </span>
               </div>
             </div>

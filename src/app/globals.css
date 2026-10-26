@@ -35,9 +35,9 @@ main {
 
 /* Kursor Kustom Canting Tradisional (Mangkunegaran) */
 html, body {
-  cursor: url('/canting.svg') 0 30, auto !important;
+  cursor: url('/canting.svg') 1 30, auto !important;
 }
 
 a, button, [role="button"], select, input[type="submit"], input[type="button"], input[type="reset"], [role="tab"], [role="menuitem"] {
-  cursor: url('/canting.svg') 0 30, pointer !important;
+  cursor: url('/canting.svg') 1 30, pointer !important;
 }
