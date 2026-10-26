@@ -180,12 +180,12 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
   return (
     <div className="space-y-6">
       {/* 1. Header & Statistik Ringkas */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#d4af37]/30 dark:border-[#d4af37]/20">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
             Daftar Jurnal Umum
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-300 mt-1 max-w-xl">
             Pencatatan kronologis debit dan kredit transaksi keuangan, jurnal draf, hingga jurnal pembalik.
           </p>
         </div>
@@ -194,7 +194,7 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
           <div>
             <Link
               href="/jurnal/baru"
-              className="px-5 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs sm:text-sm font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap"
+              className="px-5 py-2.5 rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] text-xs sm:text-sm font-bold shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Buat Jurnal Baru</span>
@@ -205,69 +205,69 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
 
       {/* 2. Kartu Ringkasan Status */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-[#0b2419] p-4 rounded-xl border border-[#d4af37]/25">
-          <div className="flex items-center justify-between text-slate-400 text-xs">
+        <div className="bg-white dark:bg-[#0b2419] p-4 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs">
+          <div className="flex items-center justify-between text-[#06130D]/70 dark:text-slate-400 text-xs">
             <span>Total Jurnal</span>
-            <BookOpen className="w-4 h-4 text-[#d4af37]" />
+            <BookOpen className="w-4 h-4 text-[#06130D]/60 dark:text-[#d4af37]" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-[#fdfbf7] mt-1.5 font-mono">
+          <div className="text-xl sm:text-2xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] mt-1.5 font-mono">
             {totalJurnal}
           </div>
         </div>
 
-        <div className="bg-[#0b2419] p-4 rounded-xl border border-emerald-500/30">
-          <div className="flex items-center justify-between text-emerald-300 text-xs">
+        <div className="bg-white dark:bg-[#0b2419] p-4 rounded-xl border border-emerald-500/30 dark:border-emerald-500/30 shadow-xs">
+          <div className="flex items-center justify-between text-emerald-700 dark:text-emerald-300 text-xs">
             <span>Diposting</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-emerald-300 mt-1.5 font-mono">
+          <div className="text-xl sm:text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 mt-1.5 font-mono">
             {totalDiposting}
           </div>
         </div>
 
-        <div className="bg-[#0b2419] p-4 rounded-xl border border-amber-500/30">
-          <div className="flex items-center justify-between text-[#f3c853] text-xs">
+        <div className="bg-white dark:bg-[#0b2419] p-4 rounded-xl border border-amber-500/30 dark:border-amber-500/30 shadow-xs">
+          <div className="flex items-center justify-between text-amber-700 dark:text-[#f3c853] text-xs">
             <span>Draf</span>
-            <Clock className="w-4 h-4 text-[#f3c853]" />
+            <Clock className="w-4 h-4 text-amber-600 dark:text-[#f3c853]" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-[#f3c853] mt-1.5 font-mono">
+          <div className="text-xl sm:text-2xl font-extrabold text-amber-700 dark:text-[#f3c853] mt-1.5 font-mono">
             {totalDraf}
           </div>
         </div>
 
-        <div className="bg-[#0b2419] p-4 rounded-xl border border-rose-500/30">
-          <div className="flex items-center justify-between text-rose-300 text-xs">
+        <div className="bg-white dark:bg-[#0b2419] p-4 rounded-xl border border-rose-500/30 dark:border-rose-500/30 shadow-xs">
+          <div className="flex items-center justify-between text-rose-700 dark:text-rose-300 text-xs">
             <span>Dibalik (Reversed)</span>
-            <ArrowRightLeft className="w-4 h-4 text-rose-400" />
+            <ArrowRightLeft className="w-4 h-4 text-rose-600 dark:text-rose-400" />
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-rose-300 mt-1.5 font-mono">
+          <div className="text-xl sm:text-2xl font-extrabold text-rose-700 dark:text-rose-300 mt-1.5 font-mono">
             {totalDibalik}
           </div>
         </div>
       </div>
 
       {/* 3. Panel Filter & Pencarian Cepat */}
-      <div className="bg-[#0b2419] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg space-y-4">
+      <div className="bg-white dark:bg-[#0b2419] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4 items-end">
           {/* A. Pencarian Keyword */}
           <div className="md:col-span-4">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37] mb-1.5">
               Pencarian Jurnal
             </label>
             <div className="relative">
-              <Search className="w-4 h-4 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#06130D]/60 dark:text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Cari nomor JU, keterangan, akun..."
-                className="w-full pl-9 pr-9 py-2 text-xs rounded-xl bg-[#06150f] border border-[#d4af37]/30 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all"
+                className="w-full pl-9 pr-9 py-2 text-xs rounded-xl bg-white dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/30 text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/30 dark:placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] transition-all shadow-xs"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -277,7 +277,7 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
 
           {/* B. Date Picker Rentang Waktu */}
           <div className="md:col-span-4">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37] mb-1.5">
               Rentang Tanggal Jurnal
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -291,10 +291,10 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
                       e.currentTarget.showPicker?.();
                     } catch {}
                   }}
-                  className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer [color-scheme:dark]"
+                  className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer [color-scheme:light] dark:[color-scheme:dark] shadow-xs"
                   title="Tanggal Mulai"
                 />
-                <Calendar className="w-3.5 h-3.5 text-[#d4af37] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Calendar className="w-3.5 h-3.5 text-[#06130D]/60 dark:text-[#d4af37] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
 
               <div className="relative">
@@ -307,23 +307,23 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
                       e.currentTarget.showPicker?.();
                     } catch {}
                   }}
-                  className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer [color-scheme:dark]"
+                  className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer [color-scheme:light] dark:[color-scheme:dark] shadow-xs"
                   title="Tanggal Selesai"
                 />
-                <Calendar className="w-3.5 h-3.5 text-[#d4af37] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Calendar className="w-3.5 h-3.5 text-[#06130D]/60 dark:text-[#d4af37] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
           </div>
 
           {/* C. Filter Status */}
           <div className="md:col-span-2">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37] mb-1.5">
               Status Jurnal
             </label>
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+              className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer shadow-xs"
             >
               <option value="semua">Semua Status</option>
               <option value="diposting">Diposting</option>
@@ -334,13 +334,13 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
 
           {/* D. Filter Sumber */}
           <div className="md:col-span-2">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37] mb-1.5">
               Sumber Jurnal
             </label>
             <select
               value={selectedSumber}
               onChange={(e) => setSelectedSumber(e.target.value)}
-              className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+              className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer shadow-xs"
             >
               <option value="semua">Semua Sumber</option>
               <option value="manual">Manual</option>
@@ -353,14 +353,14 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
 
         {/* Status Filter Aktif & Reset */}
         {isFilterActive && (
-          <div className="pt-2 border-t border-[#d4af37]/15 flex items-center justify-between text-xs">
-            <span className="text-slate-300">
-              Menemukan <strong className="text-[#f3c853]">{filteredData.length}</strong> jurnal sesuai filter
+          <div className="pt-2 border-t border-[#d4af37]/30 dark:border-[#d4af37]/15 flex items-center justify-between text-xs">
+            <span className="text-[#06130D]/70 dark:text-slate-300">
+              Menemukan <strong className="text-[#06130D] dark:text-[#f3c853]">{filteredData.length}</strong> jurnal sesuai filter
             </span>
             <button
               type="button"
               onClick={resetFilter}
-              className="inline-flex items-center gap-1.5 text-xs text-[#d4af37] hover:text-[#f3c853] font-semibold transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs text-[#06130D] dark:text-[#d4af37] hover:underline font-semibold transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset Filter</span>
@@ -370,12 +370,12 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
       </div>
 
       {/* 4. Tabel Daftar Jurnal Umum */}
-      <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/25 shadow-xl overflow-hidden">
+      <div className="bg-white dark:bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs overflow-hidden">
         {filteredData.length === 0 ? (
-          <div className="py-20 text-center text-slate-400">
-            <BookOpen className="w-12 h-12 mx-auto text-[#d4af37]/40 mb-3" />
-            <p className="text-base font-bold text-slate-200">Tidak ada jurnal ditemukan</p>
-            <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+          <div className="py-20 text-center text-[#06130D]/60 dark:text-slate-400">
+            <BookOpen className="w-12 h-12 mx-auto text-[#06130D]/40 dark:text-[#d4af37]/40 mb-3" />
+            <p className="text-base font-bold text-[#06130D] dark:text-slate-200">Tidak ada jurnal ditemukan</p>
+            <p className="text-xs text-[#06130D]/60 dark:text-slate-400 mt-1 max-w-sm mx-auto">
               {isFilterActive
                 ? 'Coba atur ulang kata kunci pencarian, rentang tanggal, atau status filter Anda.'
                 : 'Belum ada catatan jurnal umum yang tersimpan.'}
@@ -384,8 +384,8 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="bg-[#081c15] text-[#d4af37] uppercase text-[10px] font-bold tracking-wider border-b border-[#d4af37]/20">
+              <thead className="bg-[#fdfbf7] dark:bg-[#081c15] text-[#06130D]/80 dark:text-[#d4af37] uppercase text-[10px] font-bold tracking-wider border-b border-[#d4af37]/30 dark:border-[#d4af37]/20">
+                <tr>
                   <th className="py-3.5 px-4">No. Jurnal</th>
                   <th className="py-3.5 px-3">Tanggal</th>
                   <th className="py-3.5 px-4">Keterangan</th>
@@ -395,7 +395,7 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
                   <th className="py-3.5 px-4 text-center">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#d4af37]/10 text-slate-200">
+              <tbody className="divide-y divide-[#d4af37]/20 dark:divide-[#d4af37]/10 text-[#06130D] dark:text-slate-200">
                 {paginatedData.map((item) => {
                   // Hitung total debit dari baris jurnal
                   const totalDebit = item.jurnal_baris.reduce(
@@ -405,52 +405,52 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
 
                   // Sumber Badge
                   const sumberBadgeStyle = {
-                    manual: 'bg-[#123524] text-[#d4af37] border-[#d4af37]/40',
-                    pengajuan: 'bg-[#0e2c38] text-sky-200 border-sky-400/40',
-                    pembalik: 'bg-[#2d1b0d] text-amber-200 border-amber-400/40',
-                    saldo_awal: 'bg-[#251838] text-purple-200 border-purple-400/40',
-                    impor_bank: 'bg-[#1a2d24] text-teal-200 border-teal-400/40',
-                  }[item.sumber] || 'bg-[#123524] text-slate-300 border-slate-700';
+                    manual: 'bg-[#fdfbf7] dark:bg-[#123524] text-[#06130D] dark:text-[#d4af37] border-[#d4af37]/30',
+                    pengajuan: 'bg-sky-50 dark:bg-[#0e2c38] text-sky-800 dark:text-sky-200 border-sky-200 dark:border-sky-400/40',
+                    pembalik: 'bg-amber-50 dark:bg-[#2d1b0d] text-amber-800 dark:text-amber-200 border-amber-200 dark:border-amber-400/40',
+                    saldo_awal: 'bg-purple-50 dark:bg-[#251838] text-purple-800 dark:text-purple-200 border-purple-200 dark:border-purple-400/40',
+                    impor_bank: 'bg-teal-50 dark:bg-[#1a2d24] text-teal-800 dark:text-teal-200 border-teal-200 dark:border-teal-400/40',
+                  }[item.sumber] || 'bg-[#fdfbf7] dark:bg-[#123524] text-[#06130D]/70 dark:text-slate-300 border-[#d4af37]/30 dark:border-slate-700';
 
                   // Status Badge
                   const statusBadgeStyle = {
-                    diposting: 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40',
-                    draf: 'bg-amber-950/70 text-[#f3c853] border-amber-500/40',
-                    dibalik: 'bg-rose-950/70 text-rose-300 border-rose-500/40',
-                  }[item.status] || 'bg-slate-900 text-slate-300 border-slate-700';
+                    diposting: 'bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/40',
+                    draf: 'bg-amber-50 dark:bg-amber-950/70 text-amber-900 dark:text-[#f3c853] border-amber-200 dark:border-amber-500/40',
+                    dibalik: 'bg-rose-50 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 border-rose-200 dark:border-rose-500/40',
+                  }[item.status] || 'bg-[#fdfbf7] dark:bg-slate-900 text-[#06130D]/70 dark:text-slate-300 border-[#d4af37]/30 dark:border-slate-700';
 
                   return (
                     <tr
                       key={item.id}
-                      className="hover:bg-[#123524]/50 transition-colors group"
+                      className="hover:bg-[#fdfbf7]/80 dark:hover:bg-[#123524]/50 transition-colors group"
                     >
                       {/* Nomor Jurnal */}
                       <td className="py-3.5 px-4 font-mono font-bold whitespace-nowrap">
                         {item.nomor ? (
                           <Link
                             href={`/jurnal/${item.id}`}
-                            className="text-[#f3c853] hover:underline flex items-center gap-1.5"
+                            className="text-[#06130D] dark:text-[#f3c853] hover:underline flex items-center gap-1.5"
                           >
                             <span>{item.nomor}</span>
                           </Link>
                         ) : (
-                          <span className="text-amber-400/90 italic font-sans text-[11px]">
+                          <span className="text-amber-700 dark:text-amber-400/90 italic font-sans text-[11px]">
                             Draf (Belum Bernomor)
                           </span>
                         )}
                       </td>
 
                       {/* Tanggal */}
-                      <td className="py-3.5 px-3 whitespace-nowrap text-slate-300 font-mono">
+                      <td className="py-3.5 px-3 whitespace-nowrap text-[#06130D]/70 dark:text-slate-300 font-mono">
                         {formatTanggalIndo(item.tanggal)}
                       </td>
 
                       {/* Keterangan */}
                       <td className="py-3.5 px-4 max-w-xs sm:max-w-md">
-                        <div className="font-semibold text-slate-100 line-clamp-1">
+                        <div className="font-semibold text-[#06130D] dark:text-slate-100 line-clamp-1">
                           {item.keterangan}
                         </div>
-                        <div className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-2">
+                        <div className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-0.5 flex items-center gap-2">
                           <span>{item.jurnal_baris.length} baris akun</span>
                           {item.pembuat && (
                             <>
@@ -471,7 +471,7 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
                       </td>
 
                       {/* Total Debit/Kredit */}
-                      <td className="py-3.5 px-4 text-right font-mono font-bold text-slate-100 whitespace-nowrap">
+                      <td className="py-3.5 px-4 text-right font-mono font-bold text-[#06130D] dark:text-slate-100 whitespace-nowrap">
                         {formatRupiah(totalDebit)}
                       </td>
 
@@ -489,19 +489,19 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
                         <div className="flex items-center justify-center gap-2">
                           <Link
                             href={`/jurnal/${item.id}`}
-                            className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
+                            className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-white dark:bg-[#071c15] hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419] transition-all duration-200 cursor-pointer shadow-xs"
                             title="Lihat Rincian Jurnal"
                           >
-                            <Eye className="w-4 h-4 text-[#d4af37]" />
+                            <Eye className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
                           </Link>
 
                           {isAkuntan && item.status === 'draf' && (
                             <Link
                               href={`/jurnal/${item.id}/ubah`}
-                              className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer"
+                              className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-white dark:bg-[#071c15] hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419] transition-all duration-200 cursor-pointer shadow-xs"
                               title="Ubah Jurnal Draf"
                             >
-                              <SquarePen className="w-4 h-4 text-[#d4af37]" />
+                              <SquarePen className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
                             </Link>
                           )}
                         </div>
@@ -516,13 +516,13 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
 
         {/* 5. Kontrol Paginasi (Maksimal 10 Baris per Halaman) */}
         {filteredData.length > 0 && (
-          <div className="p-4 border-t border-[#d4af37]/20 bg-[#081c15] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-            <span className="text-slate-400">
+          <div className="p-4 border-t border-[#d4af37]/30 dark:border-[#d4af37]/20 bg-[#fdfbf7] dark:bg-[#081c15] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#06130D]/70 dark:text-slate-400">
+            <span>
               Menampilkan{' '}
-              <strong className="text-slate-200">
+              <strong className="text-[#06130D] dark:text-slate-200">
                 {startIndex + 1} - {endIndex}
               </strong>{' '}
-              dari <strong className="text-[#d4af37]">{filteredData.length}</strong> jurnal
+              dari <strong className="text-[#06130D] dark:text-[#d4af37]">{filteredData.length}</strong> jurnal
             </span>
 
             <div className="flex items-center gap-2">
@@ -530,13 +530,13 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
                 type="button"
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:bg-[#123524] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-300 hover:text-[#06130D] dark:hover:text-[#d4af37] hover:bg-[#fdfbf7] dark:hover:bg-[#123524] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 cursor-pointer shadow-xs"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Sebelumnya</span>
               </button>
 
-              <span className="px-3 py-1.5 font-bold font-mono text-[#d4af37] bg-[#06150f] rounded-xl border border-[#d4af37]/20">
+              <span className="px-3 py-1.5 font-bold font-mono text-[#06130D] dark:text-[#d4af37] bg-white dark:bg-[#06150f] rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/20">
                 {currentPage} / {totalPages}
               </span>
 
@@ -544,7 +544,7 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
                 type="button"
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:bg-[#123524] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-300 hover:text-[#06130D] dark:hover:text-[#d4af37] hover:bg-[#fdfbf7] dark:hover:bg-[#123524] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 cursor-pointer shadow-xs"
               >
                 <span>Selanjutnya</span>
                 <ChevronRight className="w-4 h-4" />

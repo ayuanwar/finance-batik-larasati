@@ -11,7 +11,7 @@ export function Footer({
 }: FooterProps) {
   return (
     <footer
-      className={`bg-[#06130D]/80 border-t border-[#d4af37]/20 py-4 text-center text-xs text-[#d4af37]/75 ${className}`}
+      className={`bg-[#fdfbf7] dark:bg-[#06130D]/80 border-t border-[#d4af37]/30 dark:border-[#d4af37]/20 py-4 text-center text-xs text-[#06130D]/75 dark:text-[#d4af37]/75 transition-colors duration-200 ${className}`}
     >
       {text}
     </footer>

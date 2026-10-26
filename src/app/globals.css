@@ -1,8 +1,58 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg-main: var(--color-bg-main);
+  --color-bg-canvas: var(--color-bg-canvas);
+  --color-bg-card: var(--color-bg-card);
+  --color-bg-card-subtle: var(--color-bg-card-subtle);
+  --color-text-main: var(--color-text-main);
+  --color-text-muted: var(--color-text-muted);
+  --color-border-accent: var(--color-border-accent);
+  --color-gold-accent: var(--color-gold);
+}
+
+/* Light Mode (Pembalikan Palet Mangkunegaran - Krem Putih Tulang & Emas Elegan) */
 :root {
-  --background: #06130D;
-  --foreground: #f8fafc;
+  --color-bg-main: #fdfbf7;
+  --color-bg-canvas: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-bg-card-subtle: #f7f4ed;
+  --color-text-main: #06130D;
+  --color-text-muted: #52635a;
+  --color-border-accent: rgba(212, 175, 55, 0.3);
+  --color-gold: #d4af37;
+
+  --background: var(--color-bg-main);
+  --foreground: var(--color-text-main);
+
+  --keraton-bg: #fdfbf7;
+  --keraton-card: #ffffff;
+  --keraton-gold: #d4af37;
+  --keraton-gold-hover: #b88e22;
+  --keraton-border: rgba(212, 175, 55, 0.3);
+  --gold: #d4af37;
+  --gold-light: #b88e22;
+  --forest-dark: #06130D;
+  --forest-card: #ffffff;
+  --forest-border: rgba(212, 175, 55, 0.3);
+}
+
+/* Dark Mode (Hijau Zamrud Pekat Keraton Mangkunegaran) */
+.dark {
+  --color-bg-main: #06130D;
+  --color-bg-canvas: #071c15;
+  --color-bg-card: #0b2419;
+  --color-bg-card-subtle: #06150f;
+  --color-text-main: #fdfbf7;
+  --color-text-muted: #94a3b8;
+  --color-border-accent: rgba(212, 175, 55, 0.3);
+  --color-gold: #d4af37;
+
+  --background: var(--color-bg-main);
+  --foreground: var(--color-text-main);
+
   --keraton-bg: #06130D;
   --keraton-card: #0A1A12;
   --keraton-gold: #C79F4B;
@@ -16,14 +66,14 @@
 }
 
 html {
-  background-color: #06130D;
+  background-color: var(--color-bg-main);
   overflow-x: hidden;
   max-width: 100%;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   max-width: 100%;

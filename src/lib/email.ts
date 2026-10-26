@@ -1,12 +1,29 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-// Inisialisasi Resend SDK dengan penanganan aman jika API key belum diisi
-const resendApiKey = process.env.RESEND_API_KEY;
-export const resend = resendApiKey ? new Resend(resendApiKey) : null;
+// Inisialisasi Transporter Nodemailer dengan kredensial SMTP dari environment
+const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
+const smtpPort = Number(process.env.SMTP_PORT) || 465;
+const smtpUser = process.env.SMTP_USER;
+const smtpPass = process.env.SMTP_PASS;
+
+export const transporter =
+  smtpUser && smtpPass
+    ? nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465, // true untuk port 465, false untuk port lainnya (seperti 587)
+        auth: {
+          user: smtpUser,
+          pass: smtpPass,
+        },
+      })
+    : null;
 
 // Konfigurasi Alamat Pengirim & URL Aplikasi
-export const SENDER_EMAIL =
-  process.env.RESEND_FROM_EMAIL || 'CV Batik Larasati <onboarding@resend.dev>';
+export const SENDER_EMAIL = process.env.SMTP_USER
+  ? `"CV Batik Larasati" <${process.env.SMTP_USER}>`
+  : '"CV Batik Larasati" <noreply@larasati.com>';
+
 export const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
@@ -19,22 +36,21 @@ function formatRupiah(amount: number): string {
 }
 
 // Helper: Menyesuaikan penerima email pada mode Sandbox / Akun Demo (.test)
-// Resend free tier membatasi pengiriman hanya ke email terdaftar pemilik akun (ayuaanwar0@gmail.com)
 function resolveRecipient(email: string): string {
-  const testRecipient = process.env.RESEND_TEST_RECIPIENT || 'ayuaanwar0@gmail.com';
+  const fallbackRecipient = process.env.SMTP_USER || 'ayuaanwar0@gmail.com';
   if (!email || email.endsWith('.test') || email.includes('larasati.test')) {
-    return testRecipient;
+    return fallbackRecipient;
   }
   return email;
 }
 
 function resolveDirectorRecipients(directorEmails: string[]): string[] {
-  const testRecipient = process.env.RESEND_TEST_RECIPIENT || 'ayuaanwar0@gmail.com';
+  const fallbackRecipient = process.env.SMTP_USER || 'ayuaanwar0@gmail.com';
   const valid = directorEmails.filter(
     (e) => Boolean(e) && !e.endsWith('.test') && !e.includes('larasati.test')
   );
   if (valid.length > 0) return valid;
-  return [testRecipient];
+  return [fallbackRecipient];
 }
 
 interface BaseEmailPengajuanData {
@@ -132,6 +148,47 @@ function renderEmailWrapper({
   `;
 }
 
+/**
+ * Fungsi Pengiriman Notifikasi Email Utama menggunakan Nodemailer
+ */
+export async function sendNotification(
+  to: string | string[],
+  subject: string,
+  htmlBody: string
+): Promise<{ success: boolean; data?: unknown; error?: string }> {
+  if (!transporter || !process.env.SMTP_USER) {
+    console.warn(
+      '[Nodemailer] Kredensial SMTP belum lengkap di environment. Pengiriman email dilewati.'
+    );
+    return {
+      success: false,
+      error: 'Kredensial SMTP belum dikonfigurasi.',
+    };
+  }
+
+  const sender = `"CV Batik Larasati" <${process.env.SMTP_USER}>`;
+  const recipients = Array.isArray(to) ? to.join(', ') : to;
+
+  try {
+    const info = await transporter.sendMail({
+      from: sender,
+      to: recipients,
+      subject,
+      html: htmlBody,
+    });
+    console.log(
+      `[Nodemailer Success] Email terkirim ke ${recipients} (Message ID: ${info.messageId})`
+    );
+    return { success: true, data: info };
+  } catch (err: unknown) {
+    console.error('[Nodemailer Error]:', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Gagal mengirim email.',
+    };
+  }
+}
+
 // ==============================================================================
 // 1. NOTIFIKASI KE PENGAJU: PERLU REVISI
 // ==============================================================================
@@ -153,11 +210,6 @@ export async function kirimEmailPengajuanRevisi({
   peninjauNama: string;
   peninjauPeran: string;
 }) {
-  if (!resend) {
-    console.warn('[Resend Email] RESEND_API_KEY belum dikonfigurasi. Notifikasi email dilewati.');
-    return { success: false, error: 'RESEND_API_KEY belum dikonfigurasi.' };
-  }
-
   const targetEmail = resolveRecipient(toEmail);
 
   const contentHtml = `
@@ -208,19 +260,11 @@ export async function kirimEmailPengajuanRevisi({
     ctaUrl: `${APP_URL}/pengajuan/${docId}/ubah`,
   });
 
-  try {
-    const res = await resend.emails.send({
-      from: SENDER_EMAIL,
-      to: targetEmail,
-      subject: `[Perlu Revisi] Pengajuan #${nomor} - CV Batik Larasati`,
-      html,
-    });
-    console.log(`[Resend Success - Revisi] Email terkirim ke ${targetEmail} (ID: ${res.data?.id})`);
-    return { success: true, data: res };
-  } catch (err: unknown) {
-    console.error('[Resend Error - Revisi]:', err);
-    return { success: false, error: err instanceof Error ? err.message : 'Gagal mengirim email.' };
-  }
+  return await sendNotification(
+    targetEmail,
+    `[Perlu Revisi] Pengajuan #${nomor} - CV Batik Larasati`,
+    html
+  );
 }
 
 // ==============================================================================
@@ -244,11 +288,6 @@ export async function kirimEmailPengajuanDitolak({
   peninjauNama: string;
   peninjauPeran: string;
 }) {
-  if (!resend) {
-    console.warn('[Resend Email] RESEND_API_KEY belum dikonfigurasi. Notifikasi email dilewati.');
-    return { success: false, error: 'RESEND_API_KEY belum dikonfigurasi.' };
-  }
-
   const targetEmail = resolveRecipient(toEmail);
 
   const contentHtml = `
@@ -299,19 +338,11 @@ export async function kirimEmailPengajuanDitolak({
     ctaUrl: `${APP_URL}/pengajuan/${docId}`,
   });
 
-  try {
-    const res = await resend.emails.send({
-      from: SENDER_EMAIL,
-      to: targetEmail,
-      subject: `[Ditolak] Pengajuan #${nomor} - CV Batik Larasati`,
-      html,
-    });
-    console.log(`[Resend Success - Tolak] Email terkirim ke ${targetEmail} (ID: ${res.data?.id})`);
-    return { success: true, data: res };
-  } catch (err: unknown) {
-    console.error('[Resend Error - Tolak]:', err);
-    return { success: false, error: err instanceof Error ? err.message : 'Gagal mengirim email.' };
-  }
+  return await sendNotification(
+    targetEmail,
+    `[Ditolak] Pengajuan #${nomor} - CV Batik Larasati`,
+    html
+  );
 }
 
 // ==============================================================================
@@ -335,11 +366,6 @@ export async function kirimEmailPengajuanDibayar({
   tanggalBayar: string;
   nomorJurnal?: string;
 }) {
-  if (!resend) {
-    console.warn('[Resend Email] RESEND_API_KEY belum dikonfigurasi. Notifikasi email dilewati.');
-    return { success: false, error: 'RESEND_API_KEY belum dikonfigurasi.' };
-  }
-
   const targetEmail = resolveRecipient(toEmail);
 
   const contentHtml = `
@@ -390,19 +416,11 @@ export async function kirimEmailPengajuanDibayar({
     ctaUrl: `${APP_URL}/pengajuan/${docId}`,
   });
 
-  try {
-    const res = await resend.emails.send({
-      from: SENDER_EMAIL,
-      to: targetEmail,
-      subject: `[Telah Dibayar] Pengajuan #${nomor} Telah Dicairkan - CV Batik Larasati`,
-      html,
-    });
-    console.log(`[Resend Success - Dibayar] Email terkirim ke ${targetEmail} (ID: ${res.data?.id})`);
-    return { success: true, data: res };
-  } catch (err: unknown) {
-    console.error('[Resend Error - Dibayar]:', err);
-    return { success: false, error: err instanceof Error ? err.message : 'Gagal mengirim email.' };
-  }
+  return await sendNotification(
+    targetEmail,
+    `[Telah Dibayar] Pengajuan #${nomor} Telah Dicairkan - CV Batik Larasati`,
+    html
+  );
 }
 
 // ==============================================================================
@@ -420,11 +438,6 @@ export async function kirimEmailMenungguDirektur({
   directorEmails: string[];
   namaPengaju: string;
 }) {
-  if (!resend) {
-    console.warn('[Resend Email] RESEND_API_KEY belum dikonfigurasi. Notifikasi email dilewati.');
-    return { success: false, error: 'RESEND_API_KEY belum dikonfigurasi.' };
-  }
-
   const targets = resolveDirectorRecipients(directorEmails);
 
   const contentHtml = `
@@ -470,17 +483,9 @@ export async function kirimEmailMenungguDirektur({
     ctaUrl: `${APP_URL}/pengajuan/${docId}`,
   });
 
-  try {
-    const res = await resend.emails.send({
-      from: SENDER_EMAIL,
-      to: targets,
-      subject: `[Persetujuan Diperlukan] Pengajuan #${nomor} (${formatRupiah(jumlah)}) - CV Batik Larasati`,
-      html,
-    });
-    console.log(`[Resend Success - Direktur] Email terkirim ke ${targets.join(', ')} (ID: ${res.data?.id})`);
-    return { success: true, data: res };
-  } catch (err: unknown) {
-    console.error('[Resend Error - Menunggu Direktur]:', err);
-    return { success: false, error: err instanceof Error ? err.message : 'Gagal mengirim email.' };
-  }
+  return await sendNotification(
+    targets,
+    `[Persetujuan Diperlukan] Pengajuan #${nomor} (${formatRupiah(jumlah)}) - CV Batik Larasati`,
+    html
+  );
 }

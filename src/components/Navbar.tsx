@@ -17,6 +17,8 @@ import {
   Settings2,
   UploadCloud,
   ShieldCheck,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { Profile } from '@/types/database';
 import { createClient } from '@/lib/supabase/client';
@@ -35,6 +37,29 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  // Inisialisasi tema saat mount
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'dark' : 'light');
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      try {
+        localStorage.setItem('theme', 'dark');
+      } catch {}
+    } else {
+      document.documentElement.classList.remove('dark');
+      try {
+        localStorage.setItem('theme', 'light');
+      } catch {}
+    }
+  };
 
   // Kunci scroll body dan tangani tombol Escape saat sidebar terbuka
   useEffect(() => {
@@ -95,9 +120,9 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
       : pathname === href || (href !== '/' && pathname.startsWith(href));
 
     if (isActive) {
-      return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-[#123524] text-[#d4af37] font-bold text-xs transition-colors';
+      return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg bg-[#06130D] text-white dark:text-[#f3c853] font-bold text-xs transition-colors border border-[#06130D] dark:border-[#d4af37]/50 shadow-sm';
     }
-    return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-[#d4af37] hover:bg-[#0c2419] font-medium text-xs transition-colors';
+    return 'flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[#06130D]/80 dark:text-slate-300 hover:text-[#06130D] dark:hover:text-[#d4af37] hover:bg-white dark:hover:bg-[#0c2419] font-medium text-xs transition-colors';
   };
 
   return (
@@ -105,16 +130,15 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
       {/* =========================================================
           BILAH NAVIGASI UTAMA (NAVBAR)
          ========================================================= */}
-      <header className="relative bg-[#071c15] border-b border-[#d4af37]/30 sticky top-0 z-30 shadow-md shadow-[#06130D]/80">
-        {/* Latar Belakang Motif Batik Parang Mangkunegaran (Emas #d4af37, Opasitas Optimal 20%) */}
+      <header className="relative bg-[#fdfbf7] dark:bg-[#071c15] border-b border-[#d4af37]/30 dark:border-[#d4af37]/35 sticky top-0 z-30 shadow-xs dark:shadow-black/40 transition-colors duration-200">
+        {/* Latar Belakang Motif Batik Parang Mangkunegaran (Emas #d4af37) */}
         <div
-          className="absolute inset-0 pointer-events-none z-0"
+          className="absolute inset-0 pointer-events-none z-0 invert opacity-[0.03] dark:invert-0 dark:opacity-18 transition-all duration-200"
           style={{
             backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
             backgroundRepeat: 'repeat',
             backgroundPosition: 'center',
             backgroundSize: '360px auto',
-            opacity: 0.20,
           }}
           aria-hidden="true"
         />
@@ -128,7 +152,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
               <button
                 type="button"
                 onClick={() => setIsSidebarOpen(true)}
-                className="p-2 rounded-lg bg-[#0b281e] border border-[#d4af37]/35 text-[#d4af37] hover:bg-[#123524] hover:border-[#d4af37] transition-all cursor-pointer shrink-0 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                className="p-2 rounded-lg bg-white dark:bg-[#0b281e] border border-[#d4af37]/30 dark:border-[#d4af37]/50 text-[#06130D] dark:text-[#d4af37] hover:bg-[#fdfbf7] dark:hover:bg-[#123524] transition-all cursor-pointer shrink-0 focus:outline-none focus:ring-1 focus:ring-[#d4af37]/50 dark:focus:ring-[#d4af37]"
                 title="Buka Navigasi Menu"
                 aria-label="Buka Navigasi Menu"
               >
@@ -137,15 +161,15 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
 
               {/* Logo Brand & Teks Merek */}
               <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
-                <div className="w-9 h-9 rounded-lg bg-[#071c14] flex items-center justify-center border border-[#d4af37]/40 group-hover:border-[#d4af37] transition-all shrink-0 p-1 shadow-xs">
+                <div className="w-9 h-9 rounded-lg bg-white dark:bg-[#071c14] flex items-center justify-center border border-[#d4af37]/30 dark:border-[#d4af37]/50 group-hover:border-[#d4af37] transition-all shrink-0 p-1 shadow-xs">
                   <Logo variant="transparent-monogram" size="xs" className="w-full h-full" priority />
                 </div>
                 <div className="flex flex-col justify-center">
-                  <span className="font-serif font-bold text-[#fdfbf7] text-xs sm:text-sm leading-tight tracking-tight whitespace-nowrap">
+                  <span className="font-serif font-bold text-[#06130D] dark:text-[#fdfbf7] text-xs sm:text-sm leading-tight tracking-tight whitespace-nowrap">
                     CV Batik Larasati
                   </span>
-                  <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider uppercase leading-tight whitespace-nowrap">
-                    Keuangan & Akuntansi
+                  <span className="text-[9px] text-[#06130D]/75 dark:text-[#d4af37] font-semibold tracking-wider uppercase leading-tight whitespace-nowrap">
+                    Keuangan &amp; Akuntansi
                   </span>
                 </div>
               </Link>
@@ -154,25 +178,40 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             {/* 2. TENGAH: KOLOM PENCARIAN (SEARCH BAR) */}
             <div className="flex-1 min-w-0 max-w-lg mx-1 sm:mx-3 md:mx-6">
               <form onSubmit={handleSearchSubmit} className="relative w-full m-0">
-                <Search className="w-4 h-4 text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Search className="w-4 h-4 text-[#06130D]/60 dark:text-[#d4af37] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Cari transaksi, pengajuan, nomor..."
-                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg bg-[#05140e] border border-[#d4af37]/35 text-[#fdfbf7] placeholder-slate-400 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all shadow-inner"
+                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg bg-white dark:bg-[#05140e] border border-[#d4af37]/30 dark:border-[#d4af37]/50 text-[#06130D] dark:text-[#fdfbf7] placeholder-[#06130D]/40 dark:placeholder-slate-500 focus:outline-none focus:border-[#06130D] dark:focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/40 dark:focus:ring-[#d4af37] transition-all shadow-xs"
                 />
               </form>
             </div>
 
             {/* 3. SISI KANAN: IDENTITAS PENGGUNA LENGKAP & RAPI HORIZONTAL SEJAJAR */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              {/* Tombol Toggle Tema (Mode Siang / Malam) */}
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="p-1.5 sm:p-2 rounded-lg bg-white dark:bg-[#0b281e] border border-[#d4af37]/30 dark:border-[#d4af37]/50 text-[#06130D] dark:text-[#d4af37] hover:bg-[#fdfbf7] dark:hover:bg-[#123524] transition-colors cursor-pointer shrink-0"
+                title={theme === 'dark' ? 'Beralih ke Mode Siang (Light Mode)' : 'Beralih ke Mode Malam (Dark Mode)'}
+                aria-label="Toggle tema siang/malam"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-4 h-4 text-[#d4af37]" />
+                ) : (
+                  <Moon className="w-4 h-4 text-[#06130D]" />
+                )}
+              </button>
+
               {/* Nama Lengkap & Jabatan */}
               <div className="flex flex-col justify-center items-end text-right shrink-0">
-                <span className="text-xs font-bold text-[#fdfbf7] leading-tight whitespace-nowrap">
+                <span className="text-xs font-bold text-[#06130D] dark:text-[#fdfbf7] leading-tight whitespace-nowrap">
                   {profile.nama_lengkap}
                 </span>
-                <span className="text-[10px] text-[#d4af37] leading-tight whitespace-nowrap mt-0.5 font-medium">
+                <span className="text-[10px] text-[#06130D]/75 dark:text-[#d4af37] leading-tight whitespace-nowrap mt-0.5 font-medium">
                   {formatTeksPuebi(profile.jabatan || profile.peran)}
                 </span>
               </div>
@@ -185,20 +224,20 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
               </span>
 
               {/* Garis Pemisah Vertikal Halus */}
-              <div className="h-6 w-px bg-[#d4af37]/25 shrink-0 hidden sm:block" />
+              <div className="h-6 w-px bg-[#d4af37]/30 shrink-0 hidden sm:block" />
 
               {/* Tombol Keluar */}
               <form onSubmit={handleLogout} className="shrink-0 flex items-center m-0">
                 <button
                   type="submit"
                   disabled={isLoggingOut}
-                  className="px-2.5 py-1.5 rounded-md bg-[#0b281e] border border-[#d4af37]/35 text-slate-200 hover:text-rose-300 hover:bg-rose-950/50 hover:border-rose-500/40 transition-colors text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap disabled:opacity-50 shrink-0"
+                  className="px-2.5 py-1.5 rounded-md bg-white dark:bg-[#0b281e] border border-[#d4af37]/30 dark:border-[#d4af37]/40 text-[#06130D] dark:text-slate-200 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors text-xs font-semibold flex items-center gap-1.5 cursor-pointer whitespace-nowrap disabled:opacity-50 shrink-0"
                   title="Keluar dari Akun"
                 >
                   {isLoggingOut ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin text-[#d4af37]" />
                   ) : (
-                    <LogOut className="w-3.5 h-3.5 text-[#d4af37]" />
+                    <LogOut className="w-3.5 h-3.5 text-[#06130D]/70 dark:text-[#d4af37]" />
                   )}
                   <span className="hidden md:inline">
                     {isLoggingOut ? 'Keluar...' : 'Keluar'}
@@ -225,36 +264,35 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
 
       {/* 2. Panel Sidebar Geser */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 sm:w-80 max-w-[85vw] bg-[#071c15] border-r border-[#d4af37]/30 shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out overflow-hidden ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 sm:w-80 max-w-[85vw] bg-white dark:bg-[#071c15] border-r border-[#d4af37]/30 dark:border-[#d4af37]/35 shadow-xl flex flex-col transform transition-transform duration-300 ease-in-out overflow-hidden ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         aria-label="Sidebar Navigasi"
       >
-        {/* Latar Belakang Motif Parang di Sidebar (Emas #d4af37, Opasitas Optimal 20%) */}
+        {/* Latar Belakang Motif Parang di Sidebar (Emas #d4af37) */}
         <div
-          className="absolute inset-0 pointer-events-none z-0"
+          className="absolute inset-0 pointer-events-none z-0 invert opacity-[0.03] dark:invert-0 dark:opacity-18 transition-all duration-200"
           style={{
             backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
             backgroundRepeat: 'repeat',
             backgroundPosition: 'center',
             backgroundSize: '360px auto',
-            opacity: 0.20,
           }}
           aria-hidden="true"
         />
 
         <div className="relative z-10 flex flex-col h-full">
           {/* Header Sidebar: Brand + Tombol Tutup */}
-          <div className="flex items-center justify-between p-4 border-b border-[#d4af37]/25 bg-[#05150f]/85">
+          <div className="flex items-center justify-between p-4 border-b border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-[#fdfbf7] dark:bg-[#05150f]/85">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#071c14] flex items-center justify-center border border-[#d4af37]/40 p-1 shadow-xs shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-white dark:bg-[#071c14] flex items-center justify-center border border-[#d4af37]/30 dark:border-[#d4af37]/40 p-1 shadow-xs shrink-0">
                 <Logo variant="transparent-monogram" size="xs" className="w-full h-full" priority />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif font-bold text-[#fdfbf7] text-sm leading-tight tracking-tight">
+                <span className="font-serif font-bold text-[#06130D] dark:text-[#fdfbf7] text-sm leading-tight tracking-tight">
                   CV Batik Larasati
                 </span>
-                <span className="text-[9px] text-[#d4af37] font-semibold tracking-wider leading-tight">
+                <span className="text-[9px] text-[#06130D]/75 dark:text-[#d4af37] font-semibold tracking-wider leading-tight">
                   Keuangan dan Akuntansi
                 </span>
               </div>
@@ -263,7 +301,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             <button
               type="button"
               onClick={() => setIsSidebarOpen(false)}
-              className="p-1.5 rounded-lg border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:bg-[#0b281e] transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/40 text-[#06130D]/70 dark:text-slate-300 hover:text-[#06130D] dark:hover:text-[#d4af37] hover:bg-white dark:hover:bg-[#0b281e] transition-colors cursor-pointer"
               title="Tutup Menu"
               aria-label="Tutup Menu Navigasi"
             >
@@ -275,7 +313,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
           <nav className="flex-1 overflow-y-auto p-4 space-y-6">
             {/* Kelompok Menu Utama */}
             <div>
-              <p className="text-[10px] font-bold text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
+              <p className="text-[10px] font-bold text-[#06130D]/60 dark:text-[#d4af37]/80 uppercase tracking-widest px-3 mb-2">
                 Menu Utama
               </p>
               <div className="space-y-1">
@@ -301,7 +339,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             {/* Kelompok Akuntansi & Pembukuan */}
             {isFinance && (
               <div>
-                <p className="text-[10px] font-bold text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
+                <p className="text-[10px] font-bold text-[#06130D]/60 dark:text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
                   Akuntansi & Pembukuan
                 </p>
                 <div className="space-y-1">
@@ -352,7 +390,7 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
             {/* Kelompok Administrasi (Khusus Direktur) */}
             {profile.peran === 'direktur' && (
               <div>
-                <p className="text-[10px] font-bold text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
+                <p className="text-[10px] font-bold text-[#06130D]/60 dark:text-[#d4af37]/70 uppercase tracking-widest px-3 mb-2">
                   Administrasi Sistem
                 </p>
                 <div className="space-y-1">
@@ -370,16 +408,16 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
           </nav>
 
           {/* Bagian Bawah Sidebar (Footer Sidebar: Ringkasan Pengguna Aktif) */}
-          <div className="p-4 border-t border-[#d4af37]/25 bg-[#05150f]/85">
+          <div className="p-4 border-t border-[#d4af37]/30 dark:border-[#d4af37]/25 bg-[#fdfbf7] dark:bg-[#05150f]/85">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#123524] border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] font-serif font-bold text-sm shrink-0">
+              <div className="w-9 h-9 rounded-full bg-[#06130D] dark:bg-[#123524] border border-[#d4af37]/30 dark:border-[#d4af37]/40 flex items-center justify-center text-white dark:text-[#d4af37] font-serif font-bold text-sm shrink-0">
                 {profile.nama_lengkap.charAt(0).toUpperCase()}
               </div>
               <div className="flex flex-col min-w-0 flex-1">
-                <span className="text-xs font-bold text-[#fdfbf7] truncate">
+                <span className="text-xs font-bold text-[#06130D] dark:text-[#fdfbf7] truncate">
                   {profile.nama_lengkap}
                 </span>
-                <span className="text-[10px] text-[#d4af37] truncate font-medium">
+                <span className="text-[10px] text-[#06130D]/75 dark:text-[#d4af37] truncate font-medium">
                   {formatTeksPuebi(profile.jabatan || profile.peran)}
                 </span>
               </div>

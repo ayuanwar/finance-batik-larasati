@@ -422,34 +422,34 @@ export function AkunPeriodeClient({
   const getBadgeTipe = (tipe: string) => {
     switch (tipe) {
       case 'aset':
-        return 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40';
+        return 'bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border-emerald-400 dark:border-emerald-500/40';
       case 'kewajiban':
-        return 'bg-amber-950/80 text-amber-300 border-amber-500/40';
+        return 'bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border-amber-400 dark:border-amber-500/40';
       case 'ekuitas':
-        return 'bg-indigo-950/80 text-indigo-300 border-indigo-500/40';
+        return 'bg-indigo-50 dark:bg-indigo-950/80 text-indigo-800 dark:text-indigo-300 border-indigo-400 dark:border-indigo-500/40';
       case 'pendapatan':
-        return 'bg-cyan-950/80 text-cyan-300 border-cyan-500/40';
+        return 'bg-cyan-50 dark:bg-cyan-950/80 text-cyan-800 dark:text-cyan-300 border-cyan-400 dark:border-cyan-500/40';
       case 'beban':
-        return 'bg-rose-950/80 text-rose-300 border-rose-500/40';
+        return 'bg-rose-50 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border-rose-400 dark:border-rose-500/40';
       default:
-        return 'bg-slate-900 text-slate-300 border-slate-700';
+        return 'bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700';
     }
   };
 
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* 1. Header Utama Halaman */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-[#d4af37]/25">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-[#d4af37]/30 dark:border-[#d4af37]/25">
         <div>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0b2419] border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] shadow-md">
-              <Building2 className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-[#fdfbf7] dark:bg-[#0b2419] border border-[#d4af37]/30 dark:border-[#d4af37]/40 flex items-center justify-center text-[#06130D] dark:text-[#d4af37] shadow-xs">
+              <Building2 className="w-5 h-5 text-[#06130D] dark:text-[#d4af37]" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#f3c853] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#f3c853] tracking-tight">
                 Akun & Periode
               </h1>
-              <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+              <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">
                 Kelola bagan akun akuntansi dan siklus status periode pembukuan
               </p>
             </div>
@@ -458,10 +458,10 @@ export function AkunPeriodeClient({
 
         {/* Info Peran Pengguna */}
         <div className="flex items-center gap-2 self-start md:self-auto">
-          <div className="px-3.5 py-1.5 rounded-xl bg-[#071c15] border border-[#d4af37]/40 text-xs flex items-center gap-2 shadow-xs">
-            <ShieldCheck className="w-4 h-4 text-[#d4af37]" />
-            <span className="text-slate-300">Akses Pengguna:</span>
-            <span className="font-bold text-[#f3c853] uppercase">{profile.peran}</span>
+          <div className="px-3.5 py-1.5 rounded-xl bg-[#fdfbf7] dark:bg-[#071c15] border border-[#d4af37]/30 dark:border-[#d4af37]/40 text-xs flex items-center gap-2 shadow-xs">
+            <ShieldCheck className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
+            <span className="text-[#06130D]/70 dark:text-slate-300">Akses Pengguna:</span>
+            <span className="font-bold text-[#06130D] dark:text-[#f3c853] uppercase">{profile.peran}</span>
           </div>
         </div>
       </div>
@@ -469,24 +469,24 @@ export function AkunPeriodeClient({
       {/* Notifikasi Global */}
       {notification && (
         <div
-          className={`p-4 rounded-xl border text-xs sm:text-sm flex items-center justify-between ${
+          className={`p-4 rounded-xl border text-xs sm:text-sm flex items-center justify-between shadow-xs ${
             notification.type === 'success'
-              ? 'bg-[#0b2419] border-emerald-500/50 text-emerald-200'
-              : 'bg-rose-950/70 border-rose-500/60 text-rose-200'
+              ? 'bg-[#fdfbf7] dark:bg-[#0b2419] border-emerald-500/40 dark:border-emerald-500/50 text-emerald-900 dark:text-emerald-200'
+              : 'bg-rose-50 dark:bg-rose-950/70 border-rose-300 dark:border-rose-500/60 text-rose-900 dark:text-rose-200'
           }`}
         >
           <div className="flex items-center gap-2">
             {notification.type === 'success' ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             ) : (
-              <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+              <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
             )}
             <span>{notification.message}</span>
           </div>
           <button
             type="button"
             onClick={() => setNotification(null)}
-            className="text-slate-400 hover:text-white font-bold ml-4"
+            className="text-[#06130D]/60 dark:text-slate-400 hover:text-[#06130D] dark:hover:text-white font-bold ml-4 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -494,19 +494,19 @@ export function AkunPeriodeClient({
       )}
 
       {/* 2. Navigasi Tab (Bagan Akun vs Manajemen Periode) */}
-      <div className="bg-[#071c15] p-1.5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex gap-1.5">
+      <div className="bg-[#fdfbf7] dark:bg-[#071c15] p-1.5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex gap-1.5">
         <button
           type="button"
           onClick={() => setActiveTab('akun')}
           className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
             activeTab === 'akun'
-              ? 'bg-[#0b2419] text-[#f3c853] border border-[#d4af37]/60 shadow-md'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-[#06150f]'
+              ? 'bg-white dark:bg-[#0b2419] text-[#06130D] dark:text-[#f3c853] border border-[#d4af37]/30 dark:border-[#d4af37]/60 shadow-xs'
+              : 'text-[#06130D]/70 dark:text-slate-400 hover:text-[#06130D] dark:hover:text-slate-200 hover:bg-white/60 dark:hover:bg-[#06150f]'
           }`}
         >
-          <Layers className="w-4 h-4 text-[#d4af37]" />
+          <Layers className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
           <span>Bagan Akun (Chart of Accounts)</span>
-          <span className="ml-1.5 px-2 py-0.5 rounded-full text-[10px] bg-[#06150f] text-[#d4af37] border border-[#d4af37]/30">
+          <span className="ml-1.5 px-2 py-0.5 rounded-full text-[10px] bg-white dark:bg-[#06150f] text-[#06130D] dark:text-[#d4af37] border border-[#d4af37]/30">
             {akunList.length}
           </span>
         </button>
@@ -516,13 +516,13 @@ export function AkunPeriodeClient({
           onClick={() => setActiveTab('periode')}
           className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
             activeTab === 'periode'
-              ? 'bg-[#0b2419] text-[#f3c853] border border-[#d4af37]/60 shadow-md'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-[#06150f]'
+              ? 'bg-white dark:bg-[#0b2419] text-[#06130D] dark:text-[#f3c853] border border-[#d4af37]/30 dark:border-[#d4af37]/60 shadow-xs'
+              : 'text-[#06130D]/70 dark:text-slate-400 hover:text-[#06130D] dark:hover:text-slate-200 hover:bg-white/60 dark:hover:bg-[#06150f]'
           }`}
         >
-          <Calendar className="w-4 h-4 text-[#d4af37]" />
+          <Calendar className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
           <span>Manajemen Periode Akuntansi</span>
-          <span className="ml-1.5 px-2 py-0.5 rounded-full text-[10px] bg-[#06150f] text-[#d4af37] border border-[#d4af37]/30">
+          <span className="ml-1.5 px-2 py-0.5 rounded-full text-[10px] bg-white dark:bg-[#06150f] text-[#06130D] dark:text-[#d4af37] border border-[#d4af37]/30">
             {periodeList.length}
           </span>
         </button>
@@ -534,18 +534,18 @@ export function AkunPeriodeClient({
       {activeTab === 'akun' && (
         <div className="space-y-6">
           {/* Panel Filter & Tombol Tambah Akun */}
-          <div className="bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg space-y-4">
+          <div className="bg-white dark:bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs space-y-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
                 {/* Pencarian Akun */}
                 <div className="relative">
-                  <Search className="w-4 h-4 text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <Search className="w-4 h-4 text-[#06130D]/40 dark:text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="text"
                     value={searchAkun}
                     onChange={(e) => setSearchAkun(e.target.value)}
                     placeholder="Cari kode atau nama akun..."
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37]"
                   />
                 </div>
 
@@ -554,7 +554,7 @@ export function AkunPeriodeClient({
                   <select
                     value={filterTipe}
                     onChange={(e) => setFilterTipe(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer"
                   >
                     <option value="semua">Semua Tipe Akun</option>
                     <option value="aset">Aset (1xxx)</option>
@@ -570,7 +570,7 @@ export function AkunPeriodeClient({
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer"
                   >
                     <option value="semua">Semua Status</option>
                     <option value="aktif">Hanya Aktif</option>
@@ -584,17 +584,17 @@ export function AkunPeriodeClient({
                 <button
                   type="button"
                   onClick={handleOpenTambahAkun}
-                  className="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm self-start lg:self-auto shrink-0"
+                  className="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] shadow-xs active:bg-[#06130D] transition-all flex items-center justify-center gap-2 cursor-pointer self-start lg:self-auto shrink-0"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus className="w-4 h-4 text-[#d4af37]" />
                   <span>Tambah Akun Baru</span>
                 </button>
               )}
 
               {/* Mode Baca Direktur */}
               {isDirektur && (
-                <div className="text-xs text-slate-400 italic flex items-center gap-1 self-center">
-                  <Info className="w-3.5 h-3.5 text-[#d4af37]" />
+                <div className="text-xs text-[#06130D]/60 dark:text-slate-400 italic flex items-center gap-1 self-center">
+                  <Info className="w-3.5 h-3.5 text-[#06130D] dark:text-[#d4af37]" />
                   <span>Mode Hanya-Baca: Perubahan bagan akun dikelola oleh Akuntan</span>
                 </div>
               )}
@@ -602,11 +602,11 @@ export function AkunPeriodeClient({
           </div>
 
           {/* Tabel Bagan Akun */}
-          <div className="bg-[#071c15] rounded-2xl border border-[#d4af37]/25 shadow-xl overflow-hidden">
+          <div className="bg-white dark:bg-[#071c15] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-[#06150f] text-[#d4af37] border-b border-[#d4af37]/25 uppercase text-[11px] tracking-wider font-bold">
+                  <tr className="bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-[#d4af37] border-b border-[#d4af37]/30 dark:border-[#d4af37]/25 uppercase text-[11px] tracking-wider font-bold">
                     <th scope="col" className="px-4 py-3.5 w-24">
                       Kode
                     </th>
@@ -632,10 +632,10 @@ export function AkunPeriodeClient({
                     )}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#d4af37]/10">
+                <tbody className="divide-y divide-[#d4af37]/20 dark:divide-[#d4af37]/10">
                   {filteredAkun.length === 0 ? (
                     <tr>
-                      <td colSpan={isAkuntan ? 7 : 6} className="px-4 py-12 text-center text-slate-400">
+                      <td colSpan={isAkuntan ? 7 : 6} className="px-4 py-12 text-center text-[#06130D]/60 dark:text-slate-400">
                         Tidak ada akun yang sesuai dengan filter pencarian.
                       </td>
                     </tr>
@@ -643,20 +643,20 @@ export function AkunPeriodeClient({
                     filteredAkun.map((ak) => (
                       <tr
                         key={ak.id}
-                        className={`hover:bg-[#0c2b1e]/60 transition-colors ${
-                          !ak.aktif ? 'opacity-60 bg-[#06150f]/60' : 'text-slate-200'
+                        className={`hover:bg-[#fdfbf7]/80 dark:hover:bg-[#0c2b1e]/60 transition-colors ${
+                          !ak.aktif ? 'opacity-60 bg-[#fdfbf7]/60 dark:bg-[#06150f]/60' : 'text-[#06130D] dark:text-slate-200'
                         }`}
                       >
                         {/* Kode */}
-                        <td className="px-4 py-3.5 font-mono font-bold text-[#f3c853] whitespace-nowrap">
+                        <td className="px-4 py-3.5 font-mono font-bold text-[#06130D] dark:text-[#f3c853] whitespace-nowrap">
                           {ak.kode}
                         </td>
 
                         {/* Nama */}
                         <td className="px-4 py-3.5">
-                          <div className="font-semibold text-slate-100">{formatTeksPuebi(ak.nama)}</div>
+                          <div className="font-semibold text-[#06130D] dark:text-slate-100">{formatTeksPuebi(ak.nama)}</div>
                           {ak.keterangan && (
-                            <div className="text-[11px] text-slate-400 mt-0.5">{ak.keterangan}</div>
+                            <div className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-0.5">{ak.keterangan}</div>
                           )}
                         </td>
 
@@ -675,7 +675,7 @@ export function AkunPeriodeClient({
                         <td className="px-4 py-3.5 whitespace-nowrap">
                           <span
                             className={`font-mono text-xs font-semibold ${
-                              ak.saldo_normal === 'debit' ? 'text-emerald-400' : 'text-amber-400'
+                              ak.saldo_normal === 'debit' ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'
                             }`}
                           >
                             {ak.saldo_normal === 'debit' ? 'Debit (D)' : 'Kredit (K)'}
@@ -685,28 +685,28 @@ export function AkunPeriodeClient({
                         {/* Kas / Bank */}
                         <td className="px-4 py-3.5 whitespace-nowrap">
                           {ak.is_kas_bank ? (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">
                               Kas / Bank
                             </span>
                           ) : (
-                            <span className="text-slate-500">-</span>
+                            <span className="text-gray-400 dark:text-slate-500">-</span>
                           )}
                         </td>
 
                         {/* Status Aktif */}
                         <td className="px-4 py-3.5 text-center whitespace-nowrap">
                           {ak.aktif ? (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">
                               Aktif
                             </span>
                           ) : (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-900 text-slate-400 border border-slate-700">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#fdfbf7] dark:bg-slate-900 text-[#06130D]/60 dark:text-slate-400 border border-[#d4af37]/30 dark:border-slate-700">
                               Nonaktif
                             </span>
                           )}
                         </td>
 
-                        {/* Aksi Akuntan: Ubah & Nonaktifkan (Rounded-Square Emas) */}
+                        {/* Aksi Akuntan: Ubah & Nonaktifkan (Rounded-Square) */}
                         {isAkuntan && (
                           <td className="px-4 py-3.5 text-center whitespace-nowrap">
                             <div className="flex items-center justify-center gap-2">
@@ -714,27 +714,27 @@ export function AkunPeriodeClient({
                               <button
                                 type="button"
                                 onClick={() => handleOpenUbahAkun(ak)}
-                                className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#071c15] hover:bg-[#0b2419] transition-all duration-200 cursor-pointer shadow-xs"
+                                className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/40 bg-[#fdfbf7] dark:bg-[#071c15] hover:bg-white dark:hover:bg-[#0b2419] transition-all duration-200 cursor-pointer shadow-xs"
                                 title="Ubah Akun"
                               >
-                                <SquarePen className="w-4 h-4 text-[#d4af37]" />
+                                <SquarePen className="w-3.5 h-3.5 text-[#06130D] dark:text-[#d4af37]" />
                               </button>
 
                               {/* Tombol Toggle Status (Soft-Delete) */}
                               <button
                                 type="button"
                                 onClick={() => handleToggleStatusAkun(ak)}
-                                className={`w-9 h-9 flex items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer shadow-xs ${
+                                className={`w-8 h-8 flex items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer shadow-xs ${
                                   ak.aktif
-                                    ? 'border-rose-500/35 bg-[#071c15] hover:bg-rose-950/50 text-rose-400'
-                                    : 'border-emerald-500/35 bg-[#071c15] hover:bg-emerald-950/50 text-emerald-400'
+                                    ? 'border-[#d4af37]/30 dark:border-rose-500/35 bg-[#fdfbf7] dark:bg-[#071c15] hover:bg-rose-50 dark:hover:bg-rose-950/50 text-rose-600 dark:text-rose-400'
+                                    : 'border-[#d4af37]/30 dark:border-emerald-500/35 bg-[#fdfbf7] dark:bg-[#071c15] hover:bg-emerald-50 dark:hover:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400'
                                 }`}
                                 title={ak.aktif ? 'Nonaktifkan Akun' : 'Aktifkan Kembali Akun'}
                               >
                                 {ak.aktif ? (
-                                  <PowerOff className="w-4 h-4" />
+                                  <PowerOff className="w-3.5 h-3.5" />
                                 ) : (
-                                  <Power className="w-4 h-4" />
+                                  <Power className="w-3.5 h-3.5" />
                                 )}
                               </button>
                             </div>
@@ -756,13 +756,13 @@ export function AkunPeriodeClient({
       {activeTab === 'periode' && (
         <div className="space-y-6">
           {/* Header Panel Periode */}
-          <div className="bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="bg-white dark:bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <div className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#d4af37]" />
+              <div className="text-sm font-bold text-[#06130D] dark:text-slate-100 flex items-center gap-2">
+                <Clock className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
                 <span>Siklus Pembukuan Bulanan</span>
               </div>
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-xs text-[#06130D]/70 dark:text-slate-400 mt-1">
                 Akuntan dapat menutup periode yang telah selesai. Direktur memiliki wewenang untuk membuka kembali periode tertutup.
               </div>
             </div>
@@ -775,20 +775,20 @@ export function AkunPeriodeClient({
                   setTambahPeriodeError(null);
                   setModalTambahPeriodeOpen(true);
                 }}
-                className="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm self-start sm:self-auto shrink-0"
+                className="px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] shadow-xs active:bg-[#06130D] transition-all flex items-center justify-center gap-2 cursor-pointer self-start sm:self-auto shrink-0"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4 text-[#d4af37]" />
                 <span>Buka Periode Baru</span>
               </button>
             )}
           </div>
 
           {/* Tabel Periode */}
-          <div className="bg-[#071c15] rounded-2xl border border-[#d4af37]/25 shadow-xl overflow-hidden">
+          <div className="bg-white dark:bg-[#071c15] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="bg-[#06150f] text-[#d4af37] border-b border-[#d4af37]/25 uppercase text-[11px] tracking-wider font-bold">
+                  <tr className="bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-[#d4af37] border-b border-[#d4af37]/30 dark:border-[#d4af37]/25 uppercase text-[11px] tracking-wider font-bold">
                     <th scope="col" className="px-4 py-3.5 w-44">
                       Periode
                     </th>
@@ -806,31 +806,31 @@ export function AkunPeriodeClient({
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#d4af37]/10">
+                <tbody className="divide-y divide-[#d4af37]/20 dark:divide-[#d4af37]/10">
                   {periodeList.map((p) => {
                     const namaBulan = NAMA_BULAN[p.bulan] || p.bulan;
                     const isBuka = p.status === 'terbuka';
 
                     return (
-                      <tr key={p.id} className="hover:bg-[#0c2b1e]/60 transition-colors text-slate-200">
+                      <tr key={p.id} className="hover:bg-[#fdfbf7]/80 dark:hover:bg-[#0c2b1e]/60 transition-colors text-[#06130D] dark:text-slate-200">
                         {/* Periode */}
-                        <td className="px-4 py-3.5 whitespace-nowrap font-bold text-slate-100 text-sm">
+                        <td className="px-4 py-3.5 whitespace-nowrap font-bold text-[#06130D] dark:text-slate-100 text-sm">
                           {namaBulan} {p.tahun}
                         </td>
 
                         {/* Tanggal Mulai */}
-                        <td className="px-4 py-3.5 whitespace-nowrap font-mono text-slate-300">
+                        <td className="px-4 py-3.5 whitespace-nowrap font-mono text-[#06130D]/70 dark:text-slate-300">
                           {formatTanggalIndo(p.tanggal_mulai)}
                         </td>
 
                         {/* Status */}
                         <td className="px-4 py-3.5 text-center whitespace-nowrap">
                           {isBuka ? (
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-950/80 text-emerald-300 border border-emerald-500/40">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">
                               Terbuka
                             </span>
                           ) : (
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-slate-900 text-slate-400 border border-slate-700">
+                            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-[#fdfbf7] dark:bg-slate-900 text-[#06130D]/60 dark:text-slate-400 border border-[#d4af37]/30 dark:border-slate-700">
                               Ditutup
                             </span>
                           )}
@@ -840,19 +840,19 @@ export function AkunPeriodeClient({
                         <td className="px-4 py-3.5">
                           {!isBuka && (
                             <div className="space-y-0.5">
-                              <div className="text-slate-300">
+                              <div className="text-[#06130D]/80 dark:text-slate-300">
                                 Ditutup pada: {formatTanggalIndo(p.ditutup_pada)}
                               </div>
                             </div>
                           )}
                           {p.alasan_buka_ulang && (
-                            <div className="text-[11px] text-[#f3c853] mt-1 p-2 rounded-lg bg-[#06150f] border border-[#d4af37]/30">
-                              <span className="font-semibold text-slate-300">Alasan Dibuka Kembali:</span>{' '}
+                            <div className="text-[11px] text-[#06130D] dark:text-[#f3c853] mt-1 p-2 rounded-lg bg-[#fdfbf7] dark:bg-[#06150f] border border-[#d4af37]/30">
+                              <span className="font-semibold text-[#06130D] dark:text-slate-300">Alasan Dibuka Kembali:</span>{' '}
                               {p.alasan_buka_ulang}
                             </div>
                           )}
                           {isBuka && !p.alasan_buka_ulang && (
-                            <span className="text-slate-500 italic">Periode pembukuan sedang aktif</span>
+                            <span className="text-[#06130D]/50 dark:text-slate-500 italic">Periode pembukuan sedang aktif</span>
                           )}
                         </td>
 
@@ -863,7 +863,7 @@ export function AkunPeriodeClient({
                             <button
                               type="button"
                               onClick={() => handleTutupPeriode(p)}
-                              className="px-3 py-1.5 rounded-lg border border-amber-500/40 bg-[#071c15] text-amber-300 hover:bg-amber-950/50 hover:border-amber-400 transition-all font-semibold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs mx-auto"
+                              className="px-3 py-1.5 rounded-lg border border-[#d4af37]/30 dark:border-amber-500/40 bg-[#fdfbf7] dark:bg-[#071c15] text-amber-800 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/50 transition-all font-semibold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs mx-auto"
                               title="Tutup Periode Ini"
                             >
                               <Lock className="w-3.5 h-3.5" />
@@ -872,7 +872,7 @@ export function AkunPeriodeClient({
                           )}
 
                           {isAkuntan && !isBuka && (
-                            <span className="text-xs text-slate-500 font-medium">
+                            <span className="text-xs text-[#06130D]/50 dark:text-slate-500 font-medium">
                               Terkunci
                             </span>
                           )}
@@ -882,16 +882,16 @@ export function AkunPeriodeClient({
                             <button
                               type="button"
                               onClick={() => handleOpenBukaPeriode(p)}
-                              className="px-3 py-1.5 rounded-lg border border-[#d4af37] bg-[#071c15] text-[#f3c853] hover:bg-[#0b2419] transition-all font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs mx-auto"
+                              className="px-3 py-1.5 rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37] bg-[#fdfbf7] dark:bg-[#071c15] text-[#06130D] dark:text-[#f3c853] hover:bg-white dark:hover:bg-[#0b2419] transition-all font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs mx-auto"
                               title="Buka Kembali Periode Tertutup"
                             >
-                              <Unlock className="w-3.5 h-3.5 text-[#d4af37]" />
+                              <Unlock className="w-3.5 h-3.5 text-[#06130D] dark:text-[#d4af37]" />
                               <span>Buka Kembali</span>
                             </button>
                           )}
 
                           {isDirektur && isBuka && (
-                            <span className="text-xs text-emerald-400 font-semibold">
+                            <span className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
                               Aktif
                             </span>
                           )}
@@ -907,22 +907,23 @@ export function AkunPeriodeClient({
       )}
 
       {/* ========================================================================= */}
+      {/* ========================================================================= */}
       {/* MODAL 1: TAMBAH / UBAH AKUN (AKUNTAN ONLY)                                */}
       {/* ========================================================================= */}
       {modalAkunOpen && (
         <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
-          <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
+          <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-white dark:bg-[#071c15] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#fdfbf7] dark:bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#d4af37]" />
-                <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
+                <Layers className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
+                <h3 className="text-sm sm:text-base font-bold text-[#06130D] dark:text-[#f3c853]">
                   {modalAkunMode === 'tambah' ? 'Tambah Akun Baru' : `Ubah Akun ${formKode}`}
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setModalAkunOpen(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-[#06130D]/60 hover:text-[#06130D] dark:hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -930,14 +931,14 @@ export function AkunPeriodeClient({
 
             <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               {formError && (
-                <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-500/50 text-rose-200 text-xs">
+                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/70 border border-rose-300 dark:border-rose-500/50 text-rose-900 dark:text-rose-200 text-xs">
                   {formError}
                 </div>
               )}
 
               {/* Tipe Akun */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Tipe Akun
                 </label>
                 <select
@@ -947,7 +948,7 @@ export function AkunPeriodeClient({
                       e.target.value as 'aset' | 'kewajiban' | 'ekuitas' | 'pendapatan' | 'beban'
                     )
                   }
-                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer"
                 >
                   <option value="aset">Aset (Awalan 1xxx)</option>
                   <option value="kewajiban">Kewajiban (Awalan 2xxx)</option>
@@ -959,22 +960,22 @@ export function AkunPeriodeClient({
 
               {/* Saldo Normal (Otomatis menyesuaikan dengan tipe akun) */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Posisi Saldo Normal (Otomatis)
                 </label>
-                <div className="p-2.5 rounded-xl border border-[#d4af37]/25 bg-[#0b2419]/70 text-xs flex items-center justify-between font-mono">
-                  <span className="text-slate-300">Posisi Akuntansi:</span>
+                <div className="p-2.5 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 bg-[#fdfbf7] dark:bg-[#0b2419]/70 text-xs flex items-center justify-between font-mono">
+                  <span className="text-[#06130D]/80 dark:text-slate-300">Posisi Akuntansi:</span>
                   <span
                     className={`font-bold uppercase ${
                       getSaldoNormalByTipe(formTipe) === 'debit'
-                        ? 'text-emerald-400'
-                        : 'text-amber-400'
+                        ? 'text-emerald-700 dark:text-emerald-400'
+                        : 'text-amber-700 dark:text-amber-400'
                     }`}
                   >
                     {getSaldoNormalByTipe(formTipe).toUpperCase()}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
+                <p className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
                   {formTipe === 'aset' || formTipe === 'beban'
                     ? 'Akun bertipe Aset dan Beban secara baku memiliki saldo normal Debit.'
                     : 'Akun bertipe Kewajiban, Ekuitas, dan Pendapatan secara baku memiliki saldo normal Kredit.'}
@@ -983,7 +984,7 @@ export function AkunPeriodeClient({
 
               {/* Kode Akun */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Kode Akun (4 Digit)
                 </label>
                 <input
@@ -992,16 +993,16 @@ export function AkunPeriodeClient({
                   value={formKode}
                   onChange={(e) => setFormKode(e.target.value.replace(/\D/g, ''))}
                   placeholder={`Contoh: ${getPrefixByTipe(formTipe)}101`}
-                  className="w-full p-2.5 text-xs font-mono font-bold rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                  className="w-full p-2.5 text-xs font-mono font-bold rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37]"
                 />
-                <p className="text-[11px] text-slate-400 mt-1">
+                <p className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
                   Harus diawali angka {getPrefixByTipe(formTipe)} sesuai tipe {formTipe.toUpperCase()}.
                 </p>
               </div>
 
               {/* Nama Akun */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Nama Akun
                 </label>
                 <input
@@ -1009,7 +1010,7 @@ export function AkunPeriodeClient({
                   value={formNama}
                   onChange={(e) => setFormNama(e.target.value)}
                   placeholder="Contoh: Kas Kecil Operasional"
-                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37]"
                 />
               </div>
 
@@ -1021,9 +1022,9 @@ export function AkunPeriodeClient({
                       type="checkbox"
                       checked={formIsKasBank}
                       onChange={(e) => setFormIsKasBank(e.target.checked)}
-                      className="rounded border-[#d4af37]/40 bg-[#06150f] text-[#d4af37] focus:ring-[#d4af37]"
+                      className="rounded border-[#d4af37]/40 bg-[#fdfbf7] text-[#06130D] focus:ring-[#06130D]"
                     />
-                    <span className="text-xs text-slate-200 font-medium">
+                    <span className="text-xs text-[#06130D] dark:text-slate-200 font-medium">
                       Tandai sebagai Rekening Kas atau Bank Operasional
                     </span>
                   </label>
@@ -1032,7 +1033,7 @@ export function AkunPeriodeClient({
 
               {/* Keterangan */}
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Keterangan (Opsional)
                 </label>
                 <textarea
@@ -1040,16 +1041,16 @@ export function AkunPeriodeClient({
                   value={formKeterangan}
                   onChange={(e) => setFormKeterangan(e.target.value)}
                   placeholder="Catatan peruntukan akun..."
-                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37]"
                 />
               </div>
             </div>
 
-            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
+            <div className="sticky bottom-0 z-20 bg-[#fdfbf7] dark:bg-[#06130D] border-t border-[#d4af37]/30 dark:border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setModalAkunOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#d4af37]/30 dark:border-slate-700 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:bg-slate-800 transition-all cursor-pointer shadow-xs"
               >
                 Batal
               </button>
@@ -1057,7 +1058,7 @@ export function AkunPeriodeClient({
                 type="button"
                 disabled={isPending}
                 onClick={handleSaveAkun}
-                className="px-4 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-xs disabled:opacity-50"
+                className="px-4 py-2 text-xs font-bold rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] shadow-xs active:bg-[#06130D] transition-all cursor-pointer disabled:opacity-50"
               >
                 {isPending ? 'Menyimpan...' : 'Simpan Akun'}
               </button>
@@ -1071,26 +1072,26 @@ export function AkunPeriodeClient({
       {/* ========================================================================= */}
       {modalBukaPeriodeOpen && selectedPeriode && (
         <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
-          <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
+          <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-white dark:bg-[#071c15] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#fdfbf7] dark:bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
-                <Unlock className="w-4 h-4 text-[#d4af37]" />
-                <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
+                <Unlock className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
+                <h3 className="text-sm sm:text-base font-bold text-[#06130D] dark:text-[#f3c853]">
                   Buka Kembali Periode {NAMA_BULAN[selectedPeriode.bulan]} {selectedPeriode.tahun}
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setModalBukaPeriodeOpen(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-[#06130D]/60 hover:text-[#06130D] dark:hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
-              <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/40 text-xs text-amber-200">
-                <div className="font-bold flex items-center gap-1.5 mb-1 text-[#f3c853]">
+              <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-500/40 text-xs text-amber-900 dark:text-amber-200">
+                <div className="font-bold flex items-center gap-1.5 mb-1 text-amber-900 dark:text-[#f3c853]">
                   <Info className="w-4 h-4" />
                   <span>Otorisasi Khusus Direktur</span>
                 </div>
@@ -1100,13 +1101,13 @@ export function AkunPeriodeClient({
               </div>
 
               {bukaPeriodeError && (
-                <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-500/50 text-rose-200 text-xs">
+                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/70 border border-rose-300 dark:border-rose-500/50 text-rose-900 dark:text-rose-200 text-xs">
                   {bukaPeriodeError}
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Alasan Pembukaan Kembali (Minimal 20 Karakter)
                 </label>
                 <textarea
@@ -1114,13 +1115,13 @@ export function AkunPeriodeClient({
                   value={alasanBukaUlang}
                   onChange={(e) => setAlasanBukaUlang(e.target.value)}
                   placeholder="Jelaskan kebutuhan audit, penyesuaian jurnal, atau alasan bisnis terkait..."
-                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37]"
                 />
-                <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1">
+                <div className="flex items-center justify-between text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
                   <span>Panjang teks saat ini:</span>
                   <span
                     className={`font-mono font-bold ${
-                      alasanBukaUlang.trim().length >= 20 ? 'text-emerald-400' : 'text-amber-400'
+                      alasanBukaUlang.trim().length >= 20 ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'
                     }`}
                   >
                     {alasanBukaUlang.trim().length} / 20 karakter minimum
@@ -1129,11 +1130,11 @@ export function AkunPeriodeClient({
               </div>
             </div>
 
-            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
+            <div className="sticky bottom-0 z-20 bg-[#fdfbf7] dark:bg-[#06130D] border-t border-[#d4af37]/30 dark:border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setModalBukaPeriodeOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#d4af37]/30 dark:border-slate-700 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:bg-slate-800 transition-all cursor-pointer shadow-xs"
               >
                 Batal
               </button>
@@ -1141,7 +1142,7 @@ export function AkunPeriodeClient({
                 type="button"
                 disabled={isPending || alasanBukaUlang.trim().length < 20}
                 onClick={handleSubmitBukaPeriode}
-                className="px-4 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-xs disabled:opacity-40"
+                className="px-4 py-2 text-xs font-bold rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] shadow-xs active:bg-[#06130D] transition-all cursor-pointer disabled:opacity-40"
               >
                 {isPending ? 'Memproses...' : 'Buka Kembali Periode'}
               </button>
@@ -1155,18 +1156,18 @@ export function AkunPeriodeClient({
       {/* ========================================================================= */}
       {modalTambahPeriodeOpen && (
         <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto overflow-x-hidden">
-          <div className="relative w-full max-w-md max-h-[92vh] flex flex-col bg-[#071c15] rounded-2xl border border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
-            <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
+          <div className="relative w-full max-w-md max-h-[92vh] flex flex-col bg-white dark:bg-[#071c15] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/50 shadow-2xl overflow-hidden my-auto">
+            <div className="p-4 sm:p-5 bg-[#fdfbf7] dark:bg-[#0b2419] border-b border-[#d4af37]/30 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-[#d4af37]" />
-                <h3 className="text-sm sm:text-base font-bold text-[#f3c853]">
+                <Calendar className="w-4 h-4 text-[#06130D] dark:text-[#d4af37]" />
+                <h3 className="text-sm sm:text-base font-bold text-[#06130D] dark:text-[#f3c853]">
                   Buka Periode Akuntansi Baru
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setModalTambahPeriodeOpen(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-[#06130D]/60 hover:text-[#06130D] dark:hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1174,19 +1175,19 @@ export function AkunPeriodeClient({
 
             <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               {tambahPeriodeError && (
-                <div className="p-3 rounded-xl bg-rose-950/70 border border-rose-500/50 text-rose-200 text-xs">
+                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/70 border border-rose-300 dark:border-rose-500/50 text-rose-900 dark:text-rose-200 text-xs">
                   {tambahPeriodeError}
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Bulan
                 </label>
                 <select
                   value={formBulan}
                   onChange={(e) => setFormBulan(Number(e.target.value))}
-                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+                  className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer"
                 >
                   {NAMA_BULAN.slice(1).map((nama, idx) => (
                     <option key={idx + 1} value={idx + 1}>
@@ -1197,7 +1198,7 @@ export function AkunPeriodeClient({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-bold text-[#06130D] dark:text-slate-300 uppercase tracking-wider mb-1.5">
                   Tahun
                 </label>
                 <input
@@ -1206,16 +1207,16 @@ export function AkunPeriodeClient({
                   max={2050}
                   value={formTahun}
                   onChange={(e) => setFormTahun(Number(e.target.value))}
-                  className="w-full p-2.5 text-xs font-mono font-bold rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                  className="w-full p-2.5 text-xs font-mono font-bold rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37]"
                 />
               </div>
             </div>
 
-            <div className="sticky bottom-0 z-20 bg-[#06130D] border-t border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
+            <div className="sticky bottom-0 z-20 bg-[#fdfbf7] dark:bg-[#06130D] border-t border-[#d4af37]/30 dark:border-[#d4af37]/20 p-4 mt-auto flex items-center justify-end gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => setModalTambahPeriodeOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-slate-800 transition-all cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#d4af37]/30 dark:border-slate-700 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:bg-slate-800 transition-all cursor-pointer shadow-xs"
               >
                 Batal
               </button>
@@ -1223,7 +1224,7 @@ export function AkunPeriodeClient({
                 type="button"
                 disabled={isPending}
                 onClick={handleSaveTambahPeriode}
-                className="px-4 py-2 text-xs font-bold rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] transition-all cursor-pointer shadow-xs disabled:opacity-50"
+                className="px-4 py-2 text-xs font-bold rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] shadow-xs active:bg-[#06130D] transition-all cursor-pointer disabled:opacity-50"
               >
                 {isPending ? 'Menyimpan...' : 'Buka Periode'}
               </button>

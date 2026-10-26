@@ -151,7 +151,7 @@ export default async function BerandaPage() {
       .order('bulan', { ascending: true });
 
     return (
-      <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
+      <div className="min-h-screen bg-transparent text-gray-900 dark:text-slate-100 flex flex-col">
         <Navbar profile={profile} onLogout={handleKeluar} />
         <MainCanvas>
           <DashboardFinance
@@ -192,7 +192,7 @@ export default async function BerandaPage() {
     .order('dibuat_pada', { ascending: false });
 
   return (
-    <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-transparent text-gray-900 dark:text-slate-100 flex flex-col">
       <Navbar profile={profile} onLogout={handleKeluar} />
       <MainCanvas>
         <DashboardStaf

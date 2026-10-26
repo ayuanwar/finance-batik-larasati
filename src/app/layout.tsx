@@ -33,10 +33,18 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-[#06130D] overflow-x-hidden`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased bg-[#fdfbf7] dark:bg-[#06130D] overflow-x-hidden`}
     >
-      <body className="min-h-full flex flex-col bg-[#06130D] text-slate-100 relative selection:bg-[#d4af37] selection:text-[#06130D] overflow-x-hidden w-full max-w-full">
-        {/* Konten Utama Aplikasi (Latar Belakang Global Murni Solid Hijau Zamrud Tanpa Motif) */}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){}})()`,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-[#fdfbf7] dark:bg-[#06130D] text-[#06130D] dark:text-[#fdfbf7] relative selection:bg-[#d4af37] selection:text-[#06130D] overflow-x-hidden w-full max-w-full transition-colors duration-200">
+        {/* Konten Utama Aplikasi */}
         <div className="relative z-10 flex-1 flex flex-col w-full overflow-x-hidden">
           {children}
         </div>

@@ -170,17 +170,17 @@ export function BukuBesarClient({
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* 1. Header Halaman */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-[#d4af37]/25">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-[#d4af37]/30 dark:border-[#d4af37]/25">
         <div>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0b2419] border border-[#d4af37]/40 flex items-center justify-center text-[#d4af37] shadow-md">
-              <BookOpen className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-xl bg-white dark:bg-[#0b2419] border border-[#d4af37]/30 dark:border-[#d4af37]/40 flex items-center justify-center text-[#06130D] dark:text-[#d4af37] shadow-xs">
+              <BookOpen className="w-5 h-5 text-[#06130D] dark:text-[#f3c853]" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#f3c853] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] tracking-tight font-serif">
                 Buku Besar
               </h1>
-              <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+              <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">
                 Rincian mutasi debit, kredit, dan saldo berjalan akun buku besar
               </p>
             </div>
@@ -192,7 +192,7 @@ export function BukuBesarClient({
           <button
             type="button"
             onClick={() => window.print()}
-            className="px-3.5 py-2 text-xs font-semibold rounded-xl border border-[#d4af37]/40 bg-[#071c15] text-[#d4af37] hover:bg-[#0b2419] hover:text-[#f3c853] transition-all flex items-center gap-2 cursor-pointer shadow-sm"
+            className="px-3.5 py-2 text-xs font-semibold rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/40 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-[#d4af37] hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419] transition-all flex items-center gap-2 cursor-pointer shadow-xs"
             title="Cetak Buku Besar"
           >
             <Printer className="w-4 h-4" />
@@ -202,7 +202,7 @@ export function BukuBesarClient({
           <button
             type="button"
             onClick={handleReset}
-            className="px-3 py-2 text-xs font-semibold rounded-xl border border-slate-700 bg-[#071c15] text-slate-300 hover:bg-[#0b2419] hover:text-white transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+            className="px-3 py-2 text-xs font-semibold rounded-xl border border-[#d4af37]/30 dark:border-slate-700 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419] transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
             title="Reset Filter"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -213,12 +213,12 @@ export function BukuBesarClient({
 
       {/* Pesan Kesalahan Jika Ada */}
       {errorMessage && (
-        <div className="p-4 rounded-xl bg-rose-950/50 border border-rose-500/40 text-rose-200 text-xs sm:text-sm flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-500/40 text-rose-900 dark:text-rose-200 text-xs sm:text-sm flex items-center justify-between shadow-xs">
           <span>{errorMessage}</span>
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            className="text-rose-400 hover:text-rose-200 font-bold ml-4"
+            className="text-rose-600 dark:text-rose-400 hover:text-rose-800 font-bold ml-4"
           >
             <X className="w-4 h-4" />
           </button>
@@ -226,13 +226,13 @@ export function BukuBesarClient({
       )}
 
       {/* 2. Panel Filter Utama */}
-      <div className="bg-[#071c15] p-5 sm:p-6 rounded-2xl border border-[#d4af37]/25 shadow-xl space-y-4">
+      <div className="bg-white dark:bg-[#071c15] p-5 sm:p-6 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs space-y-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-end">
           {/* A. Dropdown Pemilihan Akun */}
           <div className="lg:col-span-5 space-y-1.5">
             <label
               htmlFor="akun-select"
-              className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37]"
+              className="block text-[11px] font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37]"
             >
               Pilih Akun Buku Besar
             </label>
@@ -241,26 +241,26 @@ export function BukuBesarClient({
                 id="akun-select"
                 value={selectedAkunId}
                 onChange={(e) => handleAkunChange(Number(e.target.value))}
-                className="w-full appearance-none pl-3.5 pr-10 py-2.5 text-xs sm:text-sm rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 font-medium focus:outline-none focus:ring-1 focus:ring-[#d4af37] transition-all cursor-pointer"
+                className="w-full appearance-none pl-3.5 pr-10 py-2.5 text-xs sm:text-sm rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 font-medium focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] transition-all cursor-pointer shadow-xs"
               >
                 {akunList.map((ak) => (
-                  <option key={ak.id} value={ak.id} className="bg-[#071c15] text-slate-100 py-1">
+                  <option key={ak.id} value={ak.id} className="bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-100 py-1">
                     {ak.kode} - {formatTeksPuebi(ak.nama)} ({ak.tipe.toUpperCase()})
                   </option>
                 ))}
               </select>
-              <ChevronDown className="w-4 h-4 text-[#d4af37] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-4 h-4 text-[#06130D]/60 dark:text-[#d4af37] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
 
           {/* B. Date Picker Rentang Tanggal (Dari - Sampai) */}
           <div className="lg:col-span-5 space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37]">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37]">
                 Rentang Tanggal Mutasi
               </label>
               {isPending && (
-                <span className="text-[11px] text-[#f3c853] animate-pulse flex items-center gap-1">
+                <span className="text-[11px] text-[#06130D] dark:text-[#f3c853] animate-pulse flex items-center gap-1 font-medium">
                   <Clock className="w-3 h-3" /> Memuat data...
                 </span>
               )}
@@ -276,7 +276,7 @@ export function BukuBesarClient({
                       e.currentTarget.showPicker?.();
                     } catch {}
                   }}
-                  className="w-full p-2.5 text-xs sm:text-sm rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer [color-scheme:dark]"
+                  className="w-full p-2.5 text-xs sm:text-sm rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer shadow-xs dark:[color-scheme:dark]"
                   title="Tanggal Mulai"
                   placeholder="Dari Tanggal"
                 />
@@ -292,7 +292,7 @@ export function BukuBesarClient({
                       e.currentTarget.showPicker?.();
                     } catch {}
                   }}
-                  className="w-full p-2.5 text-xs sm:text-sm rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer [color-scheme:dark]"
+                  className="w-full p-2.5 text-xs sm:text-sm rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] cursor-pointer shadow-xs dark:[color-scheme:dark]"
                   title="Tanggal Selesai"
                   placeholder="Sampai Tanggal"
                 />
@@ -302,32 +302,32 @@ export function BukuBesarClient({
 
           {/* C. Pencarian Cepat di Tabel */}
           <div className="lg:col-span-2 space-y-1.5">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#d4af37]">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37]">
               Cari Keterangan
             </label>
             <div className="relative">
-              <Search className="w-4 h-4 text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#06130D]/60 dark:text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
                 placeholder="Cari transaksi..."
-                className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-[#d4af37]/35 bg-[#06150f] text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/30 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] shadow-xs"
               />
             </div>
           </div>
         </div>
 
         {/* Preset Cepat Rentang Waktu */}
-        <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-[#d4af37]/15">
-          <span className="text-[11px] text-slate-400 font-medium mr-1">Preset Cepat:</span>
+        <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-[#d4af37]/30 dark:border-[#d4af37]/15">
+          <span className="text-[11px] text-[#06130D]/70 dark:text-slate-400 font-medium mr-1">Preset Cepat:</span>
           <button
             type="button"
             onClick={() => applyPreset('bulan_ini')}
-            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer ${
+            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer shadow-xs ${
               tanggalMulai === '2026-10-01' && tanggalSelesai === '2026-10-31'
-                ? 'bg-[#0b2419] border-[#d4af37] text-[#f3c853] font-bold'
-                : 'border-slate-800 bg-[#06150f] text-slate-300 hover:border-[#d4af37]/40'
+                ? 'bg-[#06130D] border-[#06130D] text-white dark:bg-[#0b2419] dark:border-[#d4af37] dark:text-[#f3c853] font-bold'
+                : 'border-[#d4af37]/30 dark:border-slate-800 bg-white dark:bg-[#06150f] text-[#06130D]/70 dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:border-[#d4af37]/40'
             }`}
           >
             Bulan Ini (Okt 2026)
@@ -335,10 +335,10 @@ export function BukuBesarClient({
           <button
             type="button"
             onClick={() => applyPreset('bulan_lalu')}
-            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer ${
+            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer shadow-xs ${
               tanggalMulai === '2026-09-01' && tanggalSelesai === '2026-09-30'
-                ? 'bg-[#0b2419] border-[#d4af37] text-[#f3c853] font-bold'
-                : 'border-slate-800 bg-[#06150f] text-slate-300 hover:border-[#d4af37]/40'
+                ? 'bg-[#06130D] border-[#06130D] text-white dark:bg-[#0b2419] dark:border-[#d4af37] dark:text-[#f3c853] font-bold'
+                : 'border-[#d4af37]/30 dark:border-slate-800 bg-white dark:bg-[#06150f] text-[#06130D]/70 dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:border-[#d4af37]/40'
             }`}
           >
             Bulan Lalu (Sep 2026)
@@ -346,10 +346,10 @@ export function BukuBesarClient({
           <button
             type="button"
             onClick={() => applyPreset('tahun_ini')}
-            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer ${
+            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer shadow-xs ${
               tanggalMulai === '2026-01-01' && tanggalSelesai === '2026-12-31'
-                ? 'bg-[#0b2419] border-[#d4af37] text-[#f3c853] font-bold'
-                : 'border-slate-800 bg-[#06150f] text-slate-300 hover:border-[#d4af37]/40'
+                ? 'bg-[#06130D] border-[#06130D] text-white dark:bg-[#0b2419] dark:border-[#d4af37] dark:text-[#f3c853] font-bold'
+                : 'border-[#d4af37]/30 dark:border-slate-800 bg-white dark:bg-[#06150f] text-[#06130D]/70 dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:border-[#d4af37]/40'
             }`}
           >
             Tahun 2026
@@ -357,10 +357,10 @@ export function BukuBesarClient({
           <button
             type="button"
             onClick={() => applyPreset('semua')}
-            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer ${
+            className={`px-2.5 py-1 text-[11px] rounded-lg border transition-all cursor-pointer shadow-xs ${
               !tanggalMulai && !tanggalSelesai
-                ? 'bg-[#0b2419] border-[#d4af37] text-[#f3c853] font-bold'
-                : 'border-slate-800 bg-[#06150f] text-slate-300 hover:border-[#d4af37]/40'
+                ? 'bg-[#06130D] border-[#06130D] text-white dark:bg-[#0b2419] dark:border-[#d4af37] dark:text-[#f3c853] font-bold'
+                : 'border-[#d4af37]/30 dark:border-slate-800 bg-white dark:bg-[#06150f] text-[#06130D]/70 dark:text-slate-300 hover:bg-[#fdfbf7] dark:hover:border-[#d4af37]/40'
             }`}
           >
             Semua Mutasi
@@ -371,9 +371,9 @@ export function BukuBesarClient({
       {/* 3. Header Informasi Akun & Ringkasan Saldo (Kartu Eksekutif) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* A. Info Akun & Saldo Awal */}
-        <div className="bg-[#071c15] p-4 rounded-xl border border-[#d4af37]/30 shadow-md flex flex-col justify-between">
-          <div className="flex items-center justify-between text-xs text-slate-400">
-            <span className="font-semibold text-[#d4af37]">Saldo Awal</span>
+        <div className="bg-white dark:bg-[#071c15] p-4 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-xs text-[#06130D]/70 dark:text-slate-400">
+            <span className="font-semibold text-[#06130D] dark:text-[#d4af37]">Saldo Awal</span>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-bold border uppercase ${getTipeBadge(
                 currentAkun.tipe
@@ -383,66 +383,66 @@ export function BukuBesarClient({
             </span>
           </div>
           <div className="mt-2">
-            <div className="text-xl sm:text-2xl font-black text-slate-100 font-mono tracking-tight">
+            <div className="text-xl sm:text-2xl font-black text-[#06130D] dark:text-slate-100 font-mono tracking-tight">
               {formatSaldo(ledgerData.saldo_awal)}
             </div>
-            <div className="text-[11px] text-slate-400 mt-1 truncate">
+            <div className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1 truncate">
               {tanggalMulai ? `Per ${formatTanggalIndo(tanggalMulai)}` : 'Saldo Awal Awal Waktu'}
             </div>
           </div>
         </div>
 
         {/* B. Total Mutasi Debit */}
-        <div className="bg-[#071c15] p-4 rounded-xl border border-emerald-500/30 shadow-md flex flex-col justify-between">
-          <div className="flex items-center justify-between text-xs text-emerald-400">
+        <div className="bg-white dark:bg-[#071c15] p-4 rounded-xl border border-emerald-500/30 dark:border-emerald-500/30 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-xs text-emerald-800 dark:text-emerald-400">
             <span className="font-semibold">Total Mutasi Debit</span>
-            <span className="text-[10px] font-mono text-emerald-300">
+            <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-300">
               {currentAkun.saldo_normal === 'debit' ? '(+ Menambah)' : '(- Mengurang)'}
             </span>
           </div>
           <div className="mt-2">
-            <div className="text-xl sm:text-2xl font-black text-emerald-400 font-mono tracking-tight">
+            <div className="text-xl sm:text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono tracking-tight">
               {formatRupiah(ledgerData.total_debit)}
             </div>
-            <div className="text-[11px] text-slate-400 mt-1">
+            <div className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
               {ledgerData.mutasi.length} transaksi di rentang ini
             </div>
           </div>
         </div>
 
         {/* C. Total Mutasi Kredit */}
-        <div className="bg-[#071c15] p-4 rounded-xl border border-amber-500/30 shadow-md flex flex-col justify-between">
-          <div className="flex items-center justify-between text-xs text-amber-400">
+        <div className="bg-white dark:bg-[#071c15] p-4 rounded-xl border border-amber-500/30 dark:border-amber-500/30 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-xs text-amber-800 dark:text-amber-400">
             <span className="font-semibold">Total Mutasi Kredit</span>
-            <span className="text-[10px] font-mono text-amber-300">
+            <span className="text-[10px] font-mono text-amber-700 dark:text-amber-300">
               {currentAkun.saldo_normal === 'kredit' ? '(+ Menambah)' : '(- Mengurang)'}
             </span>
           </div>
           <div className="mt-2">
-            <div className="text-xl sm:text-2xl font-black text-amber-400 font-mono tracking-tight">
+            <div className="text-xl sm:text-2xl font-black text-amber-700 dark:text-amber-400 font-mono tracking-tight">
               {formatRupiah(ledgerData.total_kredit)}
             </div>
-            <div className="text-[11px] text-slate-400 mt-1">
+            <div className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
               Saldo Normal: {currentAkun.saldo_normal.toUpperCase()}
             </div>
           </div>
         </div>
 
         {/* D. Saldo Akhir */}
-        <div className="bg-[#0b2419] p-4 rounded-xl border border-[#d4af37]/60 shadow-md flex flex-col justify-between">
-          <div className="flex items-center justify-between text-xs text-[#d4af37]">
+        <div className="bg-white dark:bg-[#0b2419] p-4 rounded-xl border border-[#d4af37]/40 dark:border-[#d4af37]/60 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between text-xs text-[#06130D] dark:text-[#d4af37]">
             <span className="font-bold flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-[#f3c853]" /> Saldo Akhir
+              <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" /> Saldo Akhir
             </span>
-            <span className="text-[10px] font-mono text-[#f3c853]">
+            <span className="text-[10px] font-mono text-[#06130D]/60 dark:text-[#f3c853]">
               {tanggalSelesai ? formatTanggalIndo(tanggalSelesai) : 'Saat Ini'}
             </span>
           </div>
           <div className="mt-2">
-            <div className="text-xl sm:text-2xl font-black text-[#f3c853] font-mono tracking-tight">
+            <div className="text-xl sm:text-2xl font-black text-[#06130D] dark:text-[#f3c853] font-mono tracking-tight">
               {formatSaldo(ledgerData.saldo_akhir)}
             </div>
-            <div className="text-[11px] text-slate-300 mt-1 truncate">
+            <div className="text-[11px] text-[#06130D]/70 dark:text-slate-300 mt-1 truncate">
               {currentAkun.kode} - {formatTeksPuebi(currentAkun.nama)}
             </div>
           </div>
@@ -450,38 +450,38 @@ export function BukuBesarClient({
       </div>
 
       {/* 4. Tabel Buku Besar Utama */}
-      <div className="bg-[#071c15] rounded-2xl border border-[#d4af37]/25 shadow-xl overflow-hidden">
+      <div className="bg-white dark:bg-[#071c15] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs overflow-hidden">
         {/* Header Tabel Keterangan Akun */}
-        <div className="p-4 sm:p-5 bg-[#0b2419] border-b border-[#d4af37]/25 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="p-4 sm:p-5 bg-[#fdfbf7] dark:bg-[#0b2419] border-b border-[#d4af37]/30 dark:border-[#d4af37]/25 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="px-3 py-1 rounded-lg bg-[#06150f] border border-[#d4af37]/40 text-[#f3c853] font-mono font-bold text-sm">
+            <span className="px-3 py-1 rounded-lg bg-white dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/40 text-[#06130D] dark:text-[#f3c853] font-mono font-bold text-sm shadow-xs">
               {currentAkun.kode}
             </span>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-100">{formatTeksPuebi(currentAkun.nama)}</h2>
-              <div className="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
+              <h2 className="text-base sm:text-lg font-bold text-[#06130D] dark:text-slate-100">{formatTeksPuebi(currentAkun.nama)}</h2>
+              <div className="text-xs text-[#06130D]/60 dark:text-slate-400 flex items-center gap-2 mt-0.5">
                 <span>Kategori: {currentAkun.tipe.toUpperCase()}</span>
                 <span>•</span>
                 <span>Posisi Normal: {currentAkun.saldo_normal.toUpperCase()}</span>
                 {currentAkun.is_kas_bank && (
                   <>
                     <span>•</span>
-                    <span className="text-emerald-400 font-semibold">Kas / Bank Operasional</span>
+                    <span className="text-emerald-700 dark:text-emerald-400 font-semibold">Kas / Bank Operasional</span>
                   </>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="text-right text-xs text-slate-400">
+          <div className="text-right text-xs text-[#06130D]/70 dark:text-slate-400">
             <div>
               Periode:{' '}
-              <span className="font-semibold text-slate-200">
+              <span className="font-semibold text-[#06130D] dark:text-slate-200">
                 {tanggalMulai ? formatTanggalIndo(tanggalMulai) : 'Awal Waktu'} s/d{' '}
                 {tanggalSelesai ? formatTanggalIndo(tanggalSelesai) : 'Hari Ini'}
               </span>
             </div>
-            <div className="text-[11px] text-slate-400 mt-0.5">
+            <div className="text-[11px] text-[#06130D]/50 dark:text-slate-500 mt-0.5">
               Hanya menampilkan transaksi jurnal berstatus <em>diposting</em>
             </div>
           </div>
@@ -491,7 +491,7 @@ export function BukuBesarClient({
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-[#06150f] text-[#d4af37] border-b border-[#d4af37]/25 uppercase text-[11px] tracking-wider font-bold">
+              <tr className="bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D]/80 dark:text-[#d4af37] border-b border-[#d4af37]/30 dark:border-[#d4af37]/25 uppercase text-[11px] tracking-wider font-bold">
                 <th scope="col" className="px-4 py-3.5 w-32">
                   Tanggal
                 </th>
@@ -512,16 +512,16 @@ export function BukuBesarClient({
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#d4af37]/10 font-normal">
+            <tbody className="divide-y divide-[#d4af37]/20 dark:divide-[#d4af37]/10 font-normal">
               {/* Baris Pertama: Saldo Awal */}
-              <tr className="bg-[#092218]/80 text-slate-200 font-semibold border-b border-[#d4af37]/25">
-                <td className="px-4 py-3 font-mono text-slate-400">
+              <tr className="bg-[#fdfbf7]/80 dark:bg-[#092218]/80 text-[#06130D] dark:text-slate-200 font-semibold border-b border-[#d4af37]/20">
+                <td className="px-4 py-3 font-mono text-[#06130D]/60 dark:text-slate-400">
                   {tanggalMulai ? formatTanggalIndo(tanggalMulai) : '-'}
                 </td>
-                <td className="px-4 py-3 text-slate-400 font-mono">-</td>
-                <td className="px-4 py-3 text-slate-200 font-medium">
+                <td className="px-4 py-3 text-[#06130D]/60 dark:text-slate-400 font-mono">-</td>
+                <td className="px-4 py-3 text-[#06130D] dark:text-slate-200 font-medium">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#06150f] text-[#d4af37] border border-[#d4af37]/30">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white dark:bg-[#06150f] text-[#06130D] dark:text-[#d4af37] border border-[#d4af37]/30 shadow-xs">
                       AWAL
                     </span>
                     <span>
@@ -531,9 +531,9 @@ export function BukuBesarClient({
                     </span>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-right font-mono text-slate-500">-</td>
-                <td className="px-4 py-3 text-right font-mono text-slate-500">-</td>
-                <td className="px-4 py-3 text-right font-mono font-bold text-[#f3c853]">
+                <td className="px-4 py-3 text-right font-mono text-gray-400 dark:text-slate-500">-</td>
+                <td className="px-4 py-3 text-right font-mono text-gray-400 dark:text-slate-500">-</td>
+                <td className="px-4 py-3 text-right font-mono font-bold text-[#06130D] dark:text-[#f3c853]">
                   {formatSaldo(ledgerData.saldo_awal)}
                 </td>
               </tr>
@@ -541,13 +541,13 @@ export function BukuBesarClient({
               {/* Baris Transaksi (Mutasi Berjalan) */}
               {filteredMutasi.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-12 text-center text-slate-400">
+                  <td colSpan={6} className="px-4 py-12 text-center text-[#06130D]/60 dark:text-slate-400">
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <FileText className="w-8 h-8 text-slate-500" />
-                      <div className="text-sm font-semibold text-slate-300">
+                      <FileText className="w-8 h-8 text-[#06130D]/40 dark:text-slate-500" />
+                      <div className="text-sm font-semibold text-[#06130D] dark:text-slate-300">
                         Tidak ada transaksi mutasi pada rentang tanggal ini.
                       </div>
-                      <div className="text-xs text-slate-500">
+                      <div className="text-xs text-[#06130D]/50 dark:text-slate-500">
                         Saldo tidak mengalami perubahan selama periode yang dipilih.
                       </div>
                     </div>
@@ -557,10 +557,10 @@ export function BukuBesarClient({
                 filteredMutasi.map((item) => (
                   <tr
                     key={item.id}
-                    className="hover:bg-[#0c2b1e]/70 transition-colors text-slate-200"
+                    className="hover:bg-[#fdfbf7]/80 dark:hover:bg-[#0c2b1e]/70 transition-colors text-[#06130D] dark:text-slate-200"
                   >
                     {/* Tanggal */}
-                    <td className="px-4 py-3 font-mono text-slate-300 whitespace-nowrap">
+                    <td className="px-4 py-3 font-mono text-[#06130D]/70 dark:text-slate-300 whitespace-nowrap">
                       {formatTanggalIndo(item.tanggal)}
                     </td>
 
@@ -569,23 +569,23 @@ export function BukuBesarClient({
                       {item.nomor_jurnal ? (
                         <Link
                           href={`/jurnal/${item.jurnal_id}`}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold bg-[#06150f] border border-[#d4af37]/35 text-[#d4af37] hover:border-[#d4af37] hover:text-[#f3c853] transition-all"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold bg-white dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/35 text-[#06130D] dark:text-[#d4af37] hover:bg-[#fdfbf7] dark:hover:text-[#f3c853] transition-all shadow-xs"
                           title="Buka detail jurnal"
                         >
                           <span>{item.nomor_jurnal}</span>
-                          <ExternalLink className="w-3 h-3 text-[#d4af37]/70" />
+                          <ExternalLink className="w-3 h-3 text-[#06130D]/60 dark:text-[#d4af37]/70" />
                         </Link>
                       ) : (
-                        <span className="font-mono text-slate-500">-</span>
+                        <span className="font-mono text-[#06130D]/50 dark:text-slate-500">-</span>
                       )}
                     </td>
 
                     {/* Keterangan */}
                     <td className="px-4 py-3">
-                      <div className="font-medium text-slate-100">{item.keterangan_baris}</div>
+                      <div className="font-medium text-[#06130D] dark:text-slate-100">{item.keterangan_baris}</div>
                       {item.keterangan_jurnal &&
                         item.keterangan_jurnal !== item.keterangan_baris && (
-                          <div className="text-[11px] text-slate-400 font-normal mt-0.5">
+                          <div className="text-[11px] text-[#06130D]/60 dark:text-slate-400 font-normal mt-0.5">
                             {item.keterangan_jurnal}
                           </div>
                         )}
@@ -594,27 +594,27 @@ export function BukuBesarClient({
                     {/* Debit */}
                     <td className="px-4 py-3 text-right font-mono whitespace-nowrap">
                       {item.debit > 0 ? (
-                        <span className="text-emerald-300 font-semibold">
+                        <span className="text-emerald-700 dark:text-emerald-300 font-semibold">
                           {formatRupiah(item.debit)}
                         </span>
                       ) : (
-                        <span className="text-slate-500">-</span>
+                        <span className="text-gray-400 dark:text-slate-500">-</span>
                       )}
                     </td>
 
                     {/* Kredit */}
                     <td className="px-4 py-3 text-right font-mono whitespace-nowrap">
                       {item.kredit > 0 ? (
-                        <span className="text-amber-300 font-semibold">
+                        <span className="text-amber-700 dark:text-amber-300 font-semibold">
                           {formatRupiah(item.kredit)}
                         </span>
                       ) : (
-                        <span className="text-slate-500">-</span>
+                        <span className="text-gray-400 dark:text-slate-500">-</span>
                       )}
                     </td>
 
                     {/* Saldo Berjalan */}
-                    <td className="px-4 py-3 text-right font-mono font-bold text-slate-100 whitespace-nowrap">
+                    <td className="px-4 py-3 text-right font-mono font-bold text-[#06130D] dark:text-slate-100 whitespace-nowrap">
                       {formatSaldo(item.saldo_berjalan)}
                     </td>
                   </tr>
@@ -624,24 +624,24 @@ export function BukuBesarClient({
 
             {/* Baris Terakhir: Total Mutasi & Saldo Akhir */}
             <tfoot>
-              <tr className="bg-[#06150f] text-slate-100 font-bold border-t-2 border-[#d4af37]/40 text-xs">
+              <tr className="bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 font-bold border-t-2 border-[#d4af37]/30 dark:border-[#d4af37]/40 text-xs">
                 <td colSpan={3} className="px-4 py-4 text-left">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#0b2419] text-[#f3c853] border border-[#d4af37]/40">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white dark:bg-[#0b2419] text-[#06130D] dark:text-[#f3c853] border border-[#d4af37]/30 dark:border-[#d4af37]/40 shadow-xs">
                       AKHIR
                     </span>
-                    <span className="text-slate-100 uppercase tracking-wider text-[11px]">
+                    <span className="text-[#06130D] dark:text-slate-100 uppercase tracking-wider text-[11px]">
                       Total Mutasi Periode & Saldo Akhir
                     </span>
                   </div>
                 </td>
-                <td className="px-4 py-4 text-right font-mono text-emerald-400 text-sm whitespace-nowrap">
+                <td className="px-4 py-4 text-right font-mono text-emerald-700 dark:text-emerald-400 text-sm whitespace-nowrap">
                   {formatRupiah(ledgerData.total_debit)}
                 </td>
-                <td className="px-4 py-4 text-right font-mono text-amber-400 text-sm whitespace-nowrap">
+                <td className="px-4 py-4 text-right font-mono text-amber-700 dark:text-amber-400 text-sm whitespace-nowrap">
                   {formatRupiah(ledgerData.total_kredit)}
                 </td>
-                <td className="px-4 py-4 text-right font-mono font-extrabold text-[#f3c853] text-sm whitespace-nowrap">
+                <td className="px-4 py-4 text-right font-mono font-extrabold text-[#06130D] dark:text-[#f3c853] text-sm whitespace-nowrap">
                   {formatSaldo(ledgerData.saldo_akhir)}
                 </td>
               </tr>

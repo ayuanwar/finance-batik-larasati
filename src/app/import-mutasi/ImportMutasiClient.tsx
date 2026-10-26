@@ -732,16 +732,16 @@ export function ImportMutasiClient({
           <button
             type="button"
             onClick={() => setModalJurnalOpen(false)}
-            className="p-2 rounded-xl bg-[#0b2419] border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:border-[#d4af37] transition-all cursor-pointer"
+            className="p-2 rounded-xl bg-white dark:bg-[#0b2419] border border-[#d4af37]/30 text-[#06130D] dark:text-gold-accent hover:bg-[#fdfbf7] dark:hover:bg-[#123524] transition-all cursor-pointer shadow-xs"
             title="Kembali ke Daftar Mutasi"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
               Formulir Draf Jurnal Mutasi Bank
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+            <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">
               Konversi baris mutasi rekening koran menjadi ayat jurnal draf pembukuan CV Batik Larasati.
             </p>
           </div>
@@ -749,26 +749,26 @@ export function ImportMutasiClient({
 
         {/* Alert Error jika Ada */}
         {jurnalModalError && (
-          <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-500/50 flex items-start gap-3 text-rose-200 text-xs sm:text-sm">
-            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
+          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-500/50 flex items-start gap-3 text-rose-800 dark:text-rose-200 text-xs sm:text-sm shadow-xs">
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-600 dark:text-rose-400" />
             <div className="leading-snug">{jurnalModalError}</div>
           </div>
         )}
 
         {/* Formulir Card */}
-        <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 shadow-2xl p-6 sm:p-8 space-y-6">
+        <div className="bg-white dark:bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs dark:shadow-xl p-6 sm:p-8 space-y-6">
           {/* Banner Informasi Mutasi Bank Asli */}
-          <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25 space-y-2 text-xs">
+          <div className="p-4 rounded-xl bg-[#fdfbf7] dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/20 space-y-2 text-xs shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <span className="text-xs font-bold text-[#d4af37] uppercase tracking-wider flex items-center gap-2">
-                <FileSpreadsheet className="w-4 h-4 text-[#d4af37]" />
+              <span className="text-xs font-bold text-[#06130D] dark:text-[#d4af37] uppercase tracking-wider flex items-center gap-2">
+                <FileSpreadsheet className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37]" />
                 Sumber Mutasi Bank
               </span>
               <span
                 className={`font-mono font-bold px-3 py-1 rounded-lg border text-xs self-start sm:self-auto ${
                   selectedMutasiForJurnal.jumlah > 0
-                    ? 'bg-emerald-950/60 text-emerald-300 border-emerald-500/40'
-                    : 'bg-rose-950/60 text-rose-300 border-rose-500/40'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/40'
+                    : 'bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-500/40'
                 }`}
               >
                 {selectedMutasiForJurnal.jumlah > 0
@@ -776,10 +776,10 @@ export function ImportMutasiClient({
                   : `-${formatRupiah(Math.abs(selectedMutasiForJurnal.jumlah))} (Uang Keluar)`}
               </span>
             </div>
-            <div className="text-slate-100 font-semibold text-sm">
+            <div className="text-[#06130D] dark:text-slate-100 font-semibold text-sm">
               {selectedMutasiForJurnal.deskripsi}
             </div>
-            <div className="text-xs text-slate-400">
+            <div className="text-xs text-[#06130D]/70 dark:text-slate-400">
               Tanggal Transaksi Bank: {formatTanggalIndo(selectedMutasiForJurnal.tanggal)} · Rekening: {selectedMutasiForJurnal.akun?.nama} ({selectedMutasiForJurnal.akun?.kode})
             </div>
           </div>
@@ -787,8 +787,8 @@ export function ImportMutasiClient({
           {/* Grid Informasi Kepala Jurnal */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
-                Tanggal Transaksi <span className="text-rose-400">*</span>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37] mb-1.5">
+                Tanggal Transaksi <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
                 <input
@@ -800,33 +800,33 @@ export function ImportMutasiClient({
                       e.currentTarget.showPicker?.();
                     } catch {}
                   }}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all cursor-pointer [color-scheme:dark]"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] focus:border-[#d4af37] dark:focus:border-[#d4af37] transition-all cursor-pointer [color-scheme:light] dark:[color-scheme:dark] shadow-xs"
                   required
                 />
-                <Calendar className="w-4 h-4 text-[#d4af37] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Calendar className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37] absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37] mb-1.5">
                 Status Dokumen
               </label>
-              <div className="px-3.5 py-2.5 rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-[#f3c853] text-xs font-bold flex items-center justify-between">
+              <div className="px-3.5 py-2.5 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 bg-[#fdfbf7] dark:bg-[#06150f] text-amber-800 dark:text-[#f3c853] text-xs font-bold flex items-center justify-between shadow-xs">
                 <span>Draf Jurnal (Wajib Draf Sesuai PRD)</span>
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37] mb-1.5">
-                Keterangan Jurnal <span className="text-rose-400">*</span>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37] mb-1.5">
+                Keterangan Jurnal <span className="text-rose-500">*</span>
               </label>
               <input
                 type="text"
                 value={formKeteranganJurnal}
                 onChange={(e) => setFormKeteranganJurnal(e.target.value)}
                 placeholder="Keterangan lengkap transaksi..."
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/25 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] focus:border-[#d4af37] transition-all"
+                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] focus:border-[#d4af37] dark:focus:border-[#d4af37] transition-all shadow-xs"
                 required
               />
             </div>
@@ -836,26 +836,26 @@ export function ImportMutasiClient({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#d4af37]">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#06130D] dark:text-[#d4af37]">
                   Rincian Baris Jurnal (Minimal 2 Baris Seimbang)
                 </label>
-                <p className="text-[11px] text-slate-400 mt-0.5">
+                <p className="text-[11px] text-[#06130D]/70 dark:text-slate-400 mt-0.5">
                   Tentukan akun lawan dan pastikan total debit sama dengan total kredit sebelum menyimpan.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleTambahBaris}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#d4af37]/40 text-[#f3c853] bg-[#06150f] hover:bg-[#123524] text-xs font-bold transition-all cursor-pointer shadow-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/40 text-[#06130D] dark:text-[#f3c853] bg-white dark:bg-[#06150f] hover:bg-[#fdfbf7] dark:hover:bg-[#123524] text-xs font-bold transition-all cursor-pointer shadow-xs"
               >
-                <Plus className="w-3.5 h-3.5 text-[#d4af37]" />
+                <Plus className="w-3.5 h-3.5 text-[#8a6b10] dark:text-[#d4af37]" />
                 <span>Tambah Baris Akun</span>
               </button>
             </div>
 
-            <div className="border border-[#d4af37]/25 rounded-xl overflow-x-auto">
+            <div className="border border-[#d4af37]/30 dark:border-[#d4af37]/25 rounded-xl overflow-x-auto shadow-xs">
               <table className="w-full text-left text-xs min-w-[700px]">
-                <thead className="bg-[#071c15] text-[#d4af37] uppercase text-[10px] font-bold border-b border-[#d4af37]/20">
+                <thead className="bg-[#fdfbf7] dark:bg-[#071c15] text-[#06130D] dark:text-[#d4af37] uppercase text-[10px] font-bold border-b border-[#d4af37]/30 dark:border-[#d4af37]/20">
                   <tr>
                     <th className="py-3 px-3 w-64 sm:w-72">Akun Akuntansi</th>
                     <th className="py-3 px-3">Keterangan Baris</th>
@@ -864,12 +864,12 @@ export function ImportMutasiClient({
                     <th className="py-3 px-2 text-center w-12">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#d4af37]/15">
+                <tbody className="divide-y divide-[#d4af37]/15 dark:divide-[#d4af37]/15">
                   {barisJurnal.map((baris, idx) => {
                     const isKasBankLine = idx === 0;
 
                     return (
-                      <tr key={baris.id} className="bg-[#071c15] hover:bg-[#0b2419]/70">
+                      <tr key={baris.id} className="bg-white dark:bg-[#071c15] hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419]/70 transition-colors">
                         {/* Dropdown Akun */}
                         <td className="py-2.5 px-3">
                           <select
@@ -877,10 +877,10 @@ export function ImportMutasiClient({
                             onChange={(e) =>
                               handleUpdateBaris(idx, 'akun_id', Number(e.target.value))
                             }
-                            className={`w-full p-2 text-xs rounded-lg border bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] ${
+                            className={`w-full p-2 text-xs rounded-lg border bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] shadow-xs ${
                               !baris.akun_id
-                                ? 'border-rose-500/60'
-                                : 'border-[#d4af37]/30'
+                                ? 'border-rose-400 dark:border-rose-500/60'
+                                : 'border-[#d4af37]/30 dark:border-[#d4af37]/30'
                             }`}
                           >
                             <option value={0}>-- Pilih Akun --</option>
@@ -891,7 +891,7 @@ export function ImportMutasiClient({
                             ))}
                           </select>
                           {isKasBankLine && (
-                            <span className="text-[10px] text-[#f3c853] block mt-1">
+                            <span className="text-[10px] text-[#8a6b10] dark:text-[#f3c853] block mt-1 font-semibold">
                               ★ Akun Kas/Bank Mutasi Asal
                             </span>
                           )}
@@ -906,7 +906,7 @@ export function ImportMutasiClient({
                               handleUpdateBaris(idx, 'keterangan', e.target.value)
                             }
                             placeholder="Uraian baris..."
-                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] shadow-xs"
                           />
                         </td>
 
@@ -920,7 +920,7 @@ export function ImportMutasiClient({
                               handleUpdateBaris(idx, 'debit', e.target.value)
                             }
                             placeholder="0"
-                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 text-right font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-emerald-700 dark:text-slate-100 text-right font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#d4af37] shadow-xs"
                           />
                         </td>
 
@@ -934,7 +934,7 @@ export function ImportMutasiClient({
                               handleUpdateBaris(idx, 'kredit', e.target.value)
                             }
                             placeholder="0"
-                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 bg-[#06150f] text-slate-100 text-right font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                            className="w-full p-2 text-xs rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-rose-700 dark:text-slate-100 text-right font-mono font-bold focus:outline-none focus:ring-1 focus:ring-[#d4af37] shadow-xs"
                           />
                         </td>
 
@@ -944,7 +944,7 @@ export function ImportMutasiClient({
                             <button
                               type="button"
                               onClick={() => handleHapusBaris(idx)}
-                              className="text-slate-400 hover:text-rose-400 p-1 cursor-pointer transition-colors"
+                              className="text-[#06130D]/40 hover:text-rose-600 dark:hover:text-rose-400 p-1 cursor-pointer transition-colors"
                               title="Hapus Baris"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -960,36 +960,36 @@ export function ImportMutasiClient({
           </div>
 
           {/* Kalkulasi Ringkasan Saldo Real-Time */}
-          <div className="p-4 sm:p-5 rounded-xl bg-[#06150f] border border-[#d4af37]/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+          <div className="p-4 sm:p-5 rounded-xl bg-[#fdfbf7] dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs shadow-xs">
             <div className="flex items-center gap-6">
               <div>
-                <span className="text-[11px] text-slate-400 block uppercase font-bold tracking-wider">
+                <span className="text-[11px] text-[#06130D]/70 dark:text-slate-400 block uppercase font-bold tracking-wider">
                   Total Debit
                 </span>
-                <span className="font-mono font-bold text-emerald-300 text-base sm:text-lg">
+                <span className="font-mono font-bold text-emerald-700 dark:text-emerald-300 text-base sm:text-lg">
                   {formatRupiah(totalDebitJurnal)}
                 </span>
               </div>
               <div>
-                <span className="text-[11px] text-slate-400 block uppercase font-bold tracking-wider">
+                <span className="text-[11px] text-[#06130D]/70 dark:text-slate-400 block uppercase font-bold tracking-wider">
                   Total Kredit
                 </span>
-                <span className="font-mono font-bold text-rose-300 text-base sm:text-lg">
+                <span className="font-mono font-bold text-rose-700 dark:text-rose-300 text-base sm:text-lg">
                   {formatRupiah(totalKreditJurnal)}
                 </span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-300 font-medium">Status Keseimbangan:</span>
+              <span className="text-xs text-[#06130D]/80 dark:text-slate-300 font-medium">Status Keseimbangan:</span>
               {isJurnalBalanced ? (
-                <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 flex items-center gap-1.5 shadow-xs">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/50 flex items-center gap-1.5 shadow-xs">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   Seimbang (Balance)
                 </span>
               ) : (
-                <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-rose-950/80 text-rose-300 border border-rose-500/50 flex items-center gap-1.5 shadow-xs">
-                  <AlertTriangle className="w-4 h-4 text-rose-400" />
+                <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-rose-50 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/50 flex items-center gap-1.5 shadow-xs">
+                  <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                   Selisih {formatRupiah(selisihJurnal)}
                 </span>
               )}
@@ -997,12 +997,12 @@ export function ImportMutasiClient({
           </div>
 
           {/* Area Tombol Aksi Bawah */}
-          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#d4af37]/20">
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#d4af37]/30 dark:border-[#d4af37]/20">
             <button
               type="button"
               disabled={isSubmittingJurnal}
               onClick={() => setModalJurnalOpen(false)}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-[#06150f] text-xs font-semibold text-center transition-all cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-[#d4af37]/30 dark:border-slate-700 text-[#06130D] dark:text-slate-300 hover:text-[#8a6b10] dark:hover:text-white hover:bg-[#fdfbf7] dark:hover:bg-[#06150f] text-xs font-semibold text-center transition-all cursor-pointer shadow-xs"
             >
               Batalkan
             </button>
@@ -1010,16 +1010,16 @@ export function ImportMutasiClient({
               type="button"
               disabled={isSubmittingJurnal || !isJurnalBalanced}
               onClick={handleSaveDrafJurnal}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] text-xs font-bold shadow-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
             >
               {isSubmittingJurnal ? (
                 <>
-                  <Loader2 className="w-4 h-4 text-[#081c15] animate-spin" />
+                  <Loader2 className="w-4 h-4 text-white animate-spin" />
                   <span>Menyimpan Draf...</span>
                 </>
               ) : (
                 <>
-                  <Save className="w-4 h-4 text-[#081c15]" />
+                  <Save className="w-4 h-4 text-white" />
                   <span>Simpan Draf Jurnal</span>
                 </>
               )}
@@ -1041,16 +1041,16 @@ export function ImportMutasiClient({
           <button
             type="button"
             onClick={() => setPreviewModalOpen(false)}
-            className="p-2 rounded-xl bg-[#0b2419] border border-[#d4af37]/30 text-slate-300 hover:text-[#d4af37] hover:border-[#d4af37] transition-all cursor-pointer"
+            className="p-2 rounded-xl bg-white dark:bg-[#0b2419] border border-[#d4af37]/40 dark:border-border-accent text-[#8a6b10] dark:text-gold-accent hover:bg-[#F4EFE6] dark:hover:bg-[#123524] transition-all cursor-pointer shadow-sm"
             title="Batalkan Pratinjau"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
               Pratinjau Impor Mutasi Bank
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+            <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">
               Periksa daftar transaksi mutasi dari berkas ({previewFileName}) sebelum disimpan ke sistem.
             </p>
           </div>
@@ -1058,47 +1058,47 @@ export function ImportMutasiClient({
 
         {/* Alert Error jika Ada */}
         {modalImportError && (
-          <div className="p-4 rounded-xl bg-rose-950/80 border border-rose-500/50 flex items-start gap-3 text-rose-200 text-xs sm:text-sm">
-            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
+          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-500/50 flex items-start gap-3 text-rose-800 dark:text-rose-200 text-xs sm:text-sm shadow-sm">
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-600 dark:text-rose-400" />
             <div className="leading-snug">{modalImportError}</div>
           </div>
         )}
 
         {/* Formulir Card */}
-        <div className="bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 shadow-2xl p-6 sm:p-8 space-y-6">
+        <div className="bg-white dark:bg-[#0b2419] rounded-2xl border border-[#d4af37]/35 dark:border-[#d4af37]/25 shadow-xl p-6 sm:p-8 space-y-6">
           {/* Ringkasan File */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25">
-              <div className="text-xs text-slate-400 font-bold uppercase tracking-wider text-[#d4af37]">
+            <div className="p-4 rounded-xl bg-[#FDFBF7] dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs">
+              <div className="text-xs text-[#8a6b10] dark:text-[#d4af37] font-bold uppercase tracking-wider">
                 Total Transaksi Terbaca
               </div>
-              <div className="text-2xl font-bold text-[#f3c853] mt-1 font-serif">
+              <div className="text-2xl font-bold text-[#8a6b10] dark:text-[#d4af37] mt-1 font-serif">
                 {previewRows.length} baris
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25">
-              <div className="text-xs text-slate-400 font-bold uppercase tracking-wider text-[#d4af37]">
+            <div className="p-4 rounded-xl bg-[#FDFBF7] dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs">
+              <div className="text-xs text-[#8a6b10] dark:text-[#d4af37] font-bold uppercase tracking-wider">
                 Rekening Kas/Bank Tujuan
               </div>
-              <div className="text-sm font-bold text-slate-100 truncate mt-1">
+              <div className="text-sm font-bold text-[#06130D] dark:text-slate-100 truncate mt-1">
                 {kasBankList.find((a) => a.id === selectedAkunId)?.nama || '-'}
               </div>
             </div>
-            <div className="p-4 rounded-xl bg-[#06150f] border border-[#d4af37]/25">
-              <div className="text-xs text-slate-400 font-bold uppercase tracking-wider text-[#d4af37]">
+            <div className="p-4 rounded-xl bg-[#FDFBF7] dark:bg-[#06150f] border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs">
+              <div className="text-xs text-[#8a6b10] dark:text-[#d4af37] font-bold uppercase tracking-wider">
                 Validasi Anti-Duplikasi
               </div>
-              <div className="text-sm font-bold text-emerald-400 mt-1 flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <div className="text-sm font-bold text-emerald-700 dark:text-emerald-400 mt-1 flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Otomatis Dicek Sistem
               </div>
             </div>
           </div>
 
           {/* Tabel Pratinjau Baris */}
-          <div className="border border-[#d4af37]/25 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
+          <div className="border border-[#d4af37]/30 dark:border-[#d4af37]/25 rounded-xl overflow-hidden max-h-96 overflow-y-auto shadow-sm">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#071c15] text-[#d4af37] sticky top-0 font-bold uppercase text-[10px] tracking-wider border-b border-[#d4af37]/20">
+              <thead className="bg-[#F4EFE6] dark:bg-[#071c15] text-[#06130D] dark:text-[#d4af37] sticky top-0 font-bold uppercase text-[10px] tracking-wider border-b border-[#d4af37]/30 dark:border-[#d4af37]/20">
                 <tr>
                   <th className="py-3 px-3">Tanggal</th>
                   <th className="py-3 px-3">Deskripsi Transaksi</th>
@@ -1106,22 +1106,22 @@ export function ImportMutasiClient({
                   <th className="py-3 px-3 text-right">Saldo (Rp)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#d4af37]/15">
+              <tbody className="divide-y divide-[#d4af37]/20 dark:divide-[#d4af37]/15">
                 {previewRows.slice(0, 100).map((r, idx) => (
-                  <tr key={idx} className="hover:bg-[#123524]/40">
-                    <td className="py-2.5 px-3 whitespace-nowrap text-slate-300 font-mono">
+                  <tr key={idx} className="hover:bg-[#F9F6F0] dark:hover:bg-[#123524]/40 transition-colors">
+                    <td className="py-2.5 px-3 whitespace-nowrap text-[#06130D]/80 dark:text-slate-300 font-mono">
                       {r.tanggal}
                     </td>
-                    <td className="py-2.5 px-3 text-slate-200">{r.deskripsi}</td>
+                    <td className="py-2.5 px-3 text-[#06130D] dark:text-slate-200">{r.deskripsi}</td>
                     <td
                       className={`py-2.5 px-3 text-right font-mono font-bold whitespace-nowrap ${
-                        r.jumlah > 0 ? 'text-emerald-400' : 'text-rose-400'
+                        r.jumlah > 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'
                       }`}
                     >
                       {r.jumlah > 0 ? '+' : ''}
                       {formatRupiah(r.jumlah)}
                     </td>
-                    <td className="py-2.5 px-3 text-right font-mono text-slate-400 whitespace-nowrap">
+                    <td className="py-2.5 px-3 text-right font-mono text-[#06130D]/70 dark:text-slate-400 whitespace-nowrap">
                       {r.saldo !== null ? formatRupiah(r.saldo) : '-'}
                     </td>
                   </tr>
@@ -1131,18 +1131,18 @@ export function ImportMutasiClient({
           </div>
 
           {previewRows.length > 100 && (
-            <div className="text-xs text-slate-400 text-center italic">
+            <div className="text-xs text-[#06130D]/60 dark:text-slate-400 text-center italic">
               Menampilkan 100 baris pertama dari total {previewRows.length} baris.
             </div>
           )}
 
           {/* Tombol Aksi Bawah */}
-          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#d4af37]/20">
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[#d4af37]/25 dark:border-[#d4af37]/20">
             <button
               type="button"
               disabled={isSubmittingImport}
               onClick={() => setPreviewModalOpen(false)}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-[#06150f] text-xs font-semibold text-center transition-all cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-[#d4af37]/40 dark:border-slate-700 text-[#06130D] dark:text-slate-300 hover:text-[#8a6b10] dark:hover:text-white hover:bg-[#F4EFE6] dark:hover:bg-[#06150f] text-xs font-semibold text-center transition-all cursor-pointer shadow-sm"
             >
               Batalkan
             </button>
@@ -1150,16 +1150,16 @@ export function ImportMutasiClient({
               type="button"
               disabled={isSubmittingImport}
               onClick={handleConfirmImport}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#081c15] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#d4af37] text-[#06130D] text-xs font-extrabold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
             >
               {isSubmittingImport ? (
                 <>
-                  <Loader2 className="w-4 h-4 text-[#081c15] animate-spin" />
+                  <Loader2 className="w-4 h-4 text-[#06130D] animate-spin" />
                   <span>Mengimpor Data...</span>
                 </>
               ) : (
                 <>
-                  <Upload className="w-4 h-4 text-[#081c15]" />
+                  <Upload className="w-4 h-4 text-[#06130D]" />
                   <span>Konfirmasi & Simpan Mutasi</span>
                 </>
               )}
@@ -1172,21 +1172,21 @@ export function ImportMutasiClient({
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      {/* 1. Header Judul & Deskripsi Nuansa Keraton */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#d4af37]/25 pb-6">
+      {/* 1. Header Judul & Deskripsi Nuansa Mangkunegaran Minimalis */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#d4af37]/30 dark:border-[#d4af37]/25 pb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
             Import Mutasi Bank
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#06130D]/75 dark:text-slate-300 mt-1 max-w-2xl leading-relaxed">
             Unggah rekening koran (CSV / Excel) untuk menyelaraskan catatan kas
             dan buat draf jurnal transaksi perantara secara otomatis.
           </p>
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 bg-[#071c15] text-[#d4af37] text-xs font-semibold flex items-center gap-1.5 shadow-xs">
-            <ShieldCheck className="w-4 h-4 text-[#d4af37]" />
+          <span className="px-3 py-1.5 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-[#d4af37] text-xs font-semibold flex items-center gap-1.5 shadow-xs">
+            <ShieldCheck className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37]" />
             Anti-Duplikasi Aktif
           </span>
         </div>
@@ -1195,24 +1195,24 @@ export function ImportMutasiClient({
       {/* Global Notification Banner */}
       {notification && (
         <div
-          className={`p-4 rounded-2xl border flex items-center justify-between text-xs sm:text-sm shadow-md transition-all ${
+          className={`p-4 rounded-2xl border flex items-center justify-between text-xs sm:text-sm shadow-xs transition-all ${
             notification.type === 'success'
-              ? 'bg-emerald-950/80 border-emerald-500/50 text-emerald-200'
-              : 'bg-rose-950/80 border-rose-500/50 text-rose-200'
+              ? 'bg-emerald-50 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-500/50 text-emerald-800 dark:text-emerald-200'
+              : 'bg-rose-50 dark:bg-rose-950/80 border-rose-300 dark:border-rose-500/50 text-rose-800 dark:text-rose-200'
           }`}
         >
           <div className="flex items-center gap-2">
             {notification.type === 'success' ? (
-              <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
             ) : (
-              <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0" />
             )}
             <span>{notification.message}</span>
           </div>
           <button
             type="button"
             onClick={() => setNotification(null)}
-            className="text-slate-400 hover:text-white font-bold ml-4"
+            className="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white font-bold ml-4 cursor-pointer"
           >
             ✕
           </button>
@@ -1221,84 +1221,84 @@ export function ImportMutasiClient({
 
       {/* 2. Kartu Metrik Ringkasan (KPI) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#d4af37]">
+        <div className="bg-white dark:bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
               Belum Diproses
             </span>
-            <Clock className="w-4 h-4 text-amber-400" />
+            <Clock className="w-4 h-4 text-amber-500 dark:text-amber-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-amber-300 font-serif">
+          <div className="text-2xl sm:text-3xl font-black text-[#06130D] dark:text-amber-300 font-serif">
             {stats.belumCount}
           </div>
-          <span className="text-[11px] text-slate-400 mt-1">
+          <span className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
             Mutasi memerlukan draf jurnal
           </span>
         </div>
 
-        <div className="bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#d4af37]">
+        <div className="bg-white dark:bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
               Sudah Dijurnal
             </span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-emerald-300 font-serif">
+          <div className="text-2xl sm:text-3xl font-black text-[#06130D] dark:text-emerald-300 font-serif">
             {stats.sudahCount}
           </div>
-          <span className="text-[11px] text-slate-400 mt-1">
+          <span className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
             Terhubung ke jurnal draf/resmi
           </span>
         </div>
 
-        <div className="bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#d4af37]">
+        <div className="bg-white dark:bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
               Total Uang Masuk
             </span>
-            <ArrowDownLeft className="w-4 h-4 text-emerald-400" />
+            <ArrowDownLeft className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div className="text-lg sm:text-xl font-bold text-emerald-300 font-mono">
+          <div className="text-lg sm:text-xl font-bold text-emerald-700 dark:text-emerald-300 font-mono">
             {formatRupiah(stats.totalMasuk)}
           </div>
-          <span className="text-[11px] text-slate-400 mt-1">
+          <span className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
             Penerimaan kas/bank tercatat
           </span>
         </div>
 
-        <div className="bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex flex-col justify-between">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#d4af37]">
+        <div className="bg-white dark:bg-[#071c15] p-4 sm:p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
               Total Uang Keluar
             </span>
-            <ArrowUpRight className="w-4 h-4 text-rose-400" />
+            <ArrowUpRight className="w-4 h-4 text-rose-600 dark:text-rose-400" />
           </div>
-          <div className="text-lg sm:text-xl font-bold text-rose-300 font-mono">
+          <div className="text-lg sm:text-xl font-bold text-rose-700 dark:text-rose-300 font-mono">
             {formatRupiah(stats.totalKeluar)}
           </div>
-          <span className="text-[11px] text-slate-400 mt-1">
+          <span className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
             Pengeluaran kas/bank tercatat
           </span>
         </div>
       </div>
 
       {/* 3. Panel Area Unggah File Rekening Koran (CSV / XLSX / XLS) */}
-      <div className="bg-[#071c15] p-5 sm:p-6 rounded-2xl border border-[#d4af37]/35 shadow-xl space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#d4af37]/20 pb-4">
+      <div className="bg-white dark:bg-[#071c15] p-5 sm:p-6 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/35 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#d4af37]/20 dark:border-[#d4af37]/20 pb-4">
           <div className="flex items-center gap-2">
-            <UploadCloud className="w-5 h-5 text-[#d4af37]" />
-            <h2 className="text-sm sm:text-base font-bold text-[#f3c853]">
+            <UploadCloud className="w-5 h-5 text-[#06130D] dark:text-[#d4af37]" />
+            <h2 className="text-sm sm:base font-bold text-[#06130D] dark:text-[#f3c853]">
               Unggah Rekening Koran / Berkas Mutasi
             </h2>
           </div>
-          <span className="text-[11px] text-[#d4af37] font-medium bg-[#0b2419] px-3 py-1 rounded-full border border-[#d4af37]/30 self-start sm:self-auto">
+          <span className="text-[11px] text-[#06130D] dark:text-[#d4af37] font-medium bg-[#fdfbf7] dark:bg-[#0b2419] px-3 py-1 rounded-full border border-[#d4af37]/30 dark:border-[#d4af37]/30 self-start sm:self-auto shadow-xs">
             Mendukung .CSV, .XLS, .XLSX
           </span>
         </div>
 
         {uploadError && (
-          <div className="p-3.5 rounded-xl bg-rose-950/70 border border-rose-500/50 flex items-start gap-2.5 text-rose-200 text-xs">
-            <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+          <div className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/70 border border-rose-300 dark:border-rose-500/50 flex items-start gap-2.5 text-rose-800 dark:text-rose-200 text-xs shadow-xs">
+            <AlertTriangle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
             <div>{uploadError}</div>
           </div>
         )}
@@ -1306,13 +1306,13 @@ export function ImportMutasiClient({
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
           {/* Pilihan Akun Kas/Bank (Wajib) */}
           <div className="md:col-span-4 space-y-1.5">
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-              Pilih Akun Kas/Bank <span className="text-rose-400">*</span>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#06130D] dark:text-slate-300">
+              Pilih Akun Kas/Bank <span className="text-rose-500">*</span>
             </label>
             <select
               value={selectedAkunId}
               onChange={(e) => setSelectedAkunId(Number(e.target.value))}
-              className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/40 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+              className="w-full p-2.5 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/40 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] cursor-pointer shadow-xs"
             >
               {kasBankList.map((ak) => (
                 <option key={ak.id} value={ak.id}>
@@ -1320,7 +1320,7 @@ export function ImportMutasiClient({
                 </option>
               ))}
             </select>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-[#06130D]/60 dark:text-slate-400">
               Mutasi akan dipetakan ke rekening kas/bank terpilih.
             </p>
           </div>
@@ -1337,8 +1337,8 @@ export function ImportMutasiClient({
               onClick={() => fileInputRef.current?.click()}
               className={`p-6 rounded-2xl border-2 border-dashed transition-all cursor-pointer flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left ${
                 isDragging
-                  ? 'border-[#d4af37] bg-[#0b2419]'
-                  : 'border-[#d4af37]/35 bg-[#06150f] hover:border-[#d4af37]/70 hover:bg-[#081c15]'
+                  ? 'border-[#d4af37] dark:border-[#d4af37] bg-[#fdfbf7] dark:bg-[#0b2419]'
+                  : 'border-[#d4af37]/40 dark:border-[#d4af37]/35 bg-[#fdfbf7] dark:bg-[#06150f] hover:border-[#d4af37] dark:hover:border-[#d4af37]/70 hover:bg-[#F9F6F0] dark:hover:bg-[#081c15]'
               }`}
             >
               <input
@@ -1348,17 +1348,17 @@ export function ImportMutasiClient({
                 onChange={handleFileChange}
                 className="hidden"
               />
-              <div className="w-12 h-12 rounded-2xl bg-[#0b2419] border border-[#d4af37]/30 flex items-center justify-center shrink-0 text-[#d4af37]">
-                <FileSpreadsheet className="w-6 h-6 text-[#d4af37]" />
+              <div className="w-12 h-12 rounded-2xl bg-white dark:bg-[#0b2419] border border-[#d4af37]/30 dark:border-[#d4af37]/30 flex items-center justify-center shrink-0 text-[#8a6b10] dark:text-[#d4af37] shadow-xs">
+                <FileSpreadsheet className="w-6 h-6 text-[#8a6b10] dark:text-[#d4af37]" />
               </div>
               <div className="space-y-1">
-                <div className="text-xs sm:text-sm font-bold text-slate-200">
-                  <span className="text-[#f3c853] underline underline-offset-2">
+                <div className="text-xs sm:text-sm font-bold text-[#06130D] dark:text-slate-200">
+                  <span className="text-[#8a6b10] dark:text-[#f3c853] underline underline-offset-2">
                     Klik untuk pilih berkas
                   </span>{' '}
                   atau seret berkas ke sini
                 </div>
-                <div className="text-[11px] text-slate-400">
+                <div className="text-[11px] text-[#06130D]/60 dark:text-slate-400">
                   Format tabel dengan kolom: Tanggal, Deskripsi, Jumlah/Debit/Kredit, dan Saldo.
                 </div>
               </div>
@@ -1370,7 +1370,7 @@ export function ImportMutasiClient({
       {/* 4. Filter Bar & Navigasi Tab Status Mutasi */}
       <div className="space-y-4">
         {/* Tab Pilihan Status */}
-        <div className="bg-[#071c15] p-1.5 rounded-2xl border border-[#d4af37]/25 shadow-lg flex gap-1.5">
+        <div className="bg-[#fdfbf7] dark:bg-[#071c15] p-1.5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex gap-1.5">
           <button
             type="button"
             onClick={() => {
@@ -1379,13 +1379,13 @@ export function ImportMutasiClient({
             }}
             className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === 'belum'
-                ? 'bg-[#0b2419] text-[#f3c853] border border-[#d4af37]/60 shadow-md'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#06150f]'
+                ? 'bg-white dark:bg-[#0b2419] text-[#06130D] dark:text-[#f3c853] border border-[#d4af37]/40 dark:border-[#d4af37]/60 shadow-xs'
+                : 'text-[#06130D]/70 hover:text-[#06130D] hover:bg-white/60 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-[#06150f]'
             }`}
           >
-            <Clock className="w-4 h-4 text-amber-400" />
+            <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>Belum Diproses</span>
-            <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-[#06150f] text-amber-300 border border-amber-500/30">
+            <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-amber-50 dark:bg-[#06150f] text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30">
               {stats.belumCount}
             </span>
           </button>
@@ -1398,13 +1398,13 @@ export function ImportMutasiClient({
             }}
             className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === 'semua'
-                ? 'bg-[#0b2419] text-[#f3c853] border border-[#d4af37]/60 shadow-md'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#06150f]'
+                ? 'bg-white dark:bg-[#0b2419] text-[#06130D] dark:text-[#f3c853] border border-[#d4af37]/40 dark:border-[#d4af37]/60 shadow-xs'
+                : 'text-[#06130D]/70 hover:text-[#06130D] hover:bg-white/60 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-[#06150f]'
             }`}
           >
-            <Layers className="w-4 h-4 text-[#d4af37]" />
+            <Layers className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37]" />
             <span>Semua Mutasi</span>
-            <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-[#06150f] text-[#d4af37] border border-[#d4af37]/30">
+            <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-[#d4af37] border border-[#d4af37]/30 dark:border-[#d4af37]/30">
               {stats.total}
             </span>
           </button>
@@ -1417,24 +1417,24 @@ export function ImportMutasiClient({
             }}
             className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === 'sudah'
-                ? 'bg-[#0b2419] text-[#f3c853] border border-[#d4af37]/60 shadow-md'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#06150f]'
+                ? 'bg-white dark:bg-[#0b2419] text-[#06130D] dark:text-[#f3c853] border border-[#d4af37]/40 dark:border-[#d4af37]/60 shadow-xs'
+                : 'text-[#06130D]/70 hover:text-[#06130D] hover:bg-white/60 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-[#06150f]'
             }`}
           >
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Sudah Dijurnal</span>
-            <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-[#06150f] text-emerald-300 border border-emerald-500/30">
+            <span className="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-emerald-50 dark:bg-[#06150f] text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30">
               {stats.sudahCount}
             </span>
           </button>
         </div>
 
         {/* Filter Bar Lengkap */}
-        <div className="bg-[#071c15] p-4 rounded-2xl border border-[#d4af37]/25 shadow-md">
+        <div className="bg-white dark:bg-[#071c15] p-4 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
             {/* Pencarian Deskripsi */}
             <div className="lg:col-span-4 relative">
-              <Search className="w-4 h-4 text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
@@ -1443,7 +1443,7 @@ export function ImportMutasiClient({
                   setCurrentPage(1);
                 }}
                 placeholder="Cari transaksi, nominal, rekening..."
-                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] shadow-xs"
               />
             </div>
 
@@ -1455,7 +1455,7 @@ export function ImportMutasiClient({
                   setFilterAkun(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer"
+                className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] cursor-pointer shadow-xs"
               >
                 <option value="semua">Semua Rekening Kas/Bank</option>
                 {kasBankList.map((ak) => (
@@ -1475,7 +1475,7 @@ export function ImportMutasiClient({
                   setTglMulai(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer [color-scheme:dark]"
+                className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] cursor-pointer [color-scheme:light] dark:[color-scheme:dark] shadow-xs"
                 title="Tanggal Mulai"
               />
               <input
@@ -1485,7 +1485,7 @@ export function ImportMutasiClient({
                   setTglSelesai(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] cursor-pointer [color-scheme:dark]"
+                className="w-full p-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] cursor-pointer [color-scheme:light] dark:[color-scheme:dark] shadow-xs"
                 title="Tanggal Selesai"
               />
             </div>
@@ -1501,10 +1501,10 @@ export function ImportMutasiClient({
                   setSearchQuery('');
                   setCurrentPage(1);
                 }}
-                className="p-2 rounded-xl border border-[#d4af37]/30 bg-[#06150f] text-slate-300 hover:text-white hover:bg-[#0b2419] transition-all cursor-pointer"
+                className="p-2 rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-300 hover:text-[#8a6b10] dark:hover:text-white hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419] transition-all cursor-pointer shadow-xs"
                 title="Reset Filter"
               >
-                <RotateCcw className="w-4 h-4 text-[#d4af37]" />
+                <RotateCcw className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37]" />
               </button>
             </div>
           </div>
@@ -1512,11 +1512,11 @@ export function ImportMutasiClient({
       </div>
 
       {/* 5. Tabel Daftar Mutasi Bank */}
-      <div className="bg-[#071c15] rounded-2xl border border-[#d4af37]/25 shadow-xl overflow-hidden">
+      <div className="bg-white dark:bg-[#071c15] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-[#0b2419] border-b border-[#d4af37]/30 text-[#d4af37] uppercase font-bold tracking-wider">
+              <tr className="bg-[#fdfbf7] dark:bg-[#0b2419] border-b border-[#d4af37]/30 dark:border-[#d4af37]/30 text-[#06130D] dark:text-[#d4af37] uppercase font-bold tracking-wider">
                 <th className="py-3 px-4">Tanggal</th>
                 <th className="py-3 px-4">Rekening Bank</th>
                 <th className="py-3 px-4">Deskripsi / Uraian Mutasi</th>
@@ -1526,16 +1526,16 @@ export function ImportMutasiClient({
                 <th className="py-3 px-4 text-center">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#d4af37]/15">
+            <tbody className="divide-y divide-[#d4af37]/15 dark:divide-[#d4af37]/15">
               {paginatedMutasi.length === 0 ? (
                 <tr>
                   <td
                     colSpan={7}
-                    className="py-12 text-center text-slate-400 bg-[#06150f]/50"
+                    className="py-12 text-center text-[#06130D]/60 dark:text-slate-400 bg-transparent"
                   >
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <FileText className="w-8 h-8 text-[#d4af37]/40" />
-                      <span className="font-semibold text-slate-300">
+                      <FileText className="w-8 h-8 text-[#8a6b10]/40 dark:text-[#d4af37]/40" />
+                      <span className="font-semibold text-[#06130D] dark:text-slate-300">
                         Tidak ada catatan mutasi bank yang sesuai dengan kriteria penyaringan.
                       </span>
                     </div>
@@ -1549,27 +1549,27 @@ export function ImportMutasiClient({
                   return (
                     <tr
                       key={item.id}
-                      className="hover:bg-[#0b2419]/50 transition-colors"
+                      className="hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419]/50 transition-colors"
                     >
                       {/* Tanggal */}
-                      <td className="py-3 px-4 whitespace-nowrap text-slate-200 font-medium">
+                      <td className="py-3 px-4 whitespace-nowrap text-[#06130D] dark:text-slate-200 font-medium">
                         {formatTanggalIndo(item.tanggal)}
                       </td>
 
                       {/* Rekening Kas/Bank */}
-                      <td className="py-3 px-4 whitespace-nowrap text-slate-300">
+                      <td className="py-3 px-4 whitespace-nowrap text-[#06130D]/80 dark:text-slate-300">
                         <div className="flex items-center gap-1.5">
-                          <Building2 className="w-3.5 h-3.5 text-[#d4af37]" />
-                          <span className="font-semibold text-slate-100">
+                          <Building2 className="w-3.5 h-3.5 text-[#8a6b10] dark:text-[#d4af37]" />
+                          <span className="font-semibold text-[#06130D] dark:text-slate-100">
                             {item.akun?.nama || `Akun ID ${item.akun_bank_id}`}
                           </span>
                         </div>
                       </td>
 
                       {/* Deskripsi */}
-                      <td className="py-3 px-4 text-slate-200 min-w-[220px]">
+                      <td className="py-3 px-4 text-[#06130D] dark:text-slate-200 min-w-[220px]">
                         <div className="font-medium">{item.deskripsi}</div>
-                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">
+                        <div className="text-[10px] text-[#06130D]/60 dark:text-slate-400 font-mono mt-0.5">
                           File: {item.nama_file}
                         </div>
                       </td>
@@ -1579,18 +1579,18 @@ export function ImportMutasiClient({
                         <span
                           className={`inline-flex items-center gap-1 font-bold px-2 py-0.5 rounded-lg border text-xs ${
                             isMasuk
-                              ? 'bg-emerald-950/60 text-emerald-300 border-emerald-500/40'
-                              : 'bg-rose-950/60 text-rose-300 border-rose-500/40'
+                              ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/40'
+                              : 'bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-500/40'
                           }`}
                         >
                           {isMasuk ? (
                             <>
-                              <ArrowDownLeft className="w-3.5 h-3.5 text-emerald-400" />
+                              <ArrowDownLeft className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                               <span>+{formatRupiah(item.jumlah)}</span>
                             </>
                           ) : (
                             <>
-                              <ArrowUpRight className="w-3.5 h-3.5 text-rose-400" />
+                              <ArrowUpRight className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
                               <span>-{formatRupiah(Math.abs(item.jumlah))}</span>
                             </>
                           )}
@@ -1598,7 +1598,7 @@ export function ImportMutasiClient({
                       </td>
 
                       {/* Saldo Rekening */}
-                      <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-slate-300">
+                      <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-[#06130D]/80 dark:text-slate-300">
                         {item.saldo !== null && item.saldo !== undefined
                           ? formatRupiah(item.saldo)
                           : '-'}
@@ -1607,13 +1607,13 @@ export function ImportMutasiClient({
                       {/* Status Jurnal */}
                       <td className="py-3 px-4 text-center whitespace-nowrap">
                         {isBelumDijurnal ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-950/60 text-amber-300 border border-amber-500/40">
-                            <Clock className="w-3 h-3 text-amber-400" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 border border-amber-300 dark:border-amber-500/40">
+                            <Clock className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                             Belum Dijurnal
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-950/60 text-emerald-300 border border-emerald-500/40">
-                            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                             {item.jurnal?.nomor || `Jurnal #${item.jurnal_id}`}
                           </span>
                         )}
@@ -1625,14 +1625,14 @@ export function ImportMutasiClient({
                           <button
                             type="button"
                             onClick={() => handleOpenBuatJurnal(item)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#d4af37] bg-[#0b2419] text-[#f3c853] hover:bg-[#0e2f21] hover:scale-105 transition-all text-xs font-bold cursor-pointer shadow-xs"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#d4af37]/40 dark:border-[#d4af37] bg-white dark:bg-[#0b2419] text-[#06130D] dark:text-[#f3c853] hover:bg-[#fdfbf7] dark:hover:bg-[#0e2f21] hover:border-[#d4af37] transition-all text-xs font-bold cursor-pointer shadow-xs"
                             title="Buat draf jurnal dari mutasi ini"
                           >
-                            <BookOpen className="w-3.5 h-3.5 text-[#d4af37]" />
+                            <BookOpen className="w-3.5 h-3.5 text-[#8a6b10] dark:text-[#d4af37]" />
                             <span>Buat Jurnal</span>
                           </button>
                         ) : (
-                          <span className="text-[11px] text-slate-400 italic">
+                          <span className="text-[11px] text-[#06130D]/60 dark:text-slate-400 italic">
                             Sudah diproses
                           </span>
                         )}
@@ -1647,7 +1647,7 @@ export function ImportMutasiClient({
 
         {/* Paginasi */}
         {filteredMutasi.length > ITEMS_PER_PAGE && (
-          <div className="p-4 bg-[#0b2419] border-t border-[#d4af37]/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-300">
+          <div className="p-4 bg-[#fdfbf7] dark:bg-[#0b2419] border-t border-[#d4af37]/30 dark:border-[#d4af37]/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#06130D]/75 dark:text-slate-300">
             <div>
               Menampilkan {startIndex + 1} -{' '}
               {Math.min(startIndex + ITEMS_PER_PAGE, filteredMutasi.length)} dari{' '}
@@ -1658,20 +1658,20 @@ export function ImportMutasiClient({
                 type="button"
                 disabled={currentPage <= 1}
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                className="p-1.5 rounded-lg border border-[#d4af37]/30 bg-[#071c15] text-slate-200 hover:bg-[#0b2419] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-200 hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-xs"
               >
-                <ChevronLeft className="w-4 h-4 text-[#d4af37]" />
+                <ChevronLeft className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37]" />
               </button>
-              <span className="font-bold text-[#f3c853] px-2">
+              <span className="font-bold text-[#06130D] dark:text-[#f3c853] px-2">
                 Halaman {currentPage} dari {totalPages}
               </span>
               <button
                 type="button"
                 disabled={currentPage >= totalPages}
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                className="p-1.5 rounded-lg border border-[#d4af37]/30 bg-[#071c15] text-slate-200 hover:bg-[#0b2419] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                className="p-1.5 rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/30 bg-white dark:bg-[#071c15] text-[#06130D] dark:text-slate-200 hover:bg-[#fdfbf7] dark:hover:bg-[#0b2419] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-xs"
               >
-                <ChevronRight className="w-4 h-4 text-[#d4af37]" />
+                <ChevronRight className="w-4 h-4 text-[#8a6b10] dark:text-[#d4af37]" />
               </button>
             </div>
           </div>
