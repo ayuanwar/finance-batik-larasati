@@ -327,9 +327,11 @@ export function PenggunaAuditClient({
           <button
             type="button"
             onClick={() => setNotification(null)}
-            className="text-gray-400 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white font-bold ml-4 cursor-pointer"
+            className="text-gray-400 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white p-1 rounded-md transition-colors cursor-pointer ml-4"
+            title="Tutup Notifikasi"
+            aria-label="Tutup Notifikasi"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}

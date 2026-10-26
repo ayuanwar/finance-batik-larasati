@@ -20,7 +20,6 @@ import {
   ChevronLeft,
   ChevronRight,
   RotateCcw,
-  Sparkles,
   Building2,
   Layers,
   ArrowRight,
@@ -892,7 +891,7 @@ export function ImportMutasiClient({
                           </select>
                           {isKasBankLine && (
                             <span className="text-[10px] text-[#8a6b10] dark:text-[#f3c853] block mt-1 font-semibold">
-                              ★ Akun Kas/Bank Mutasi Asal
+                              (Akun Kas/Bank Mutasi Asal)
                             </span>
                           )}
                         </td>
@@ -1212,9 +1211,11 @@ export function ImportMutasiClient({
           <button
             type="button"
             onClick={() => setNotification(null)}
-            className="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white font-bold ml-4 cursor-pointer"
+            className="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white p-1 rounded-md transition-colors cursor-pointer ml-4"
+            title="Tutup Notifikasi"
+            aria-label="Tutup Notifikasi"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}

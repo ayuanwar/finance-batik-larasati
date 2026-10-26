@@ -16,7 +16,6 @@ import {
   Info,
   DollarSign,
   FileCheck,
-  Sparkles,
   X
 } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';

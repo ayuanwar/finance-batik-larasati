@@ -12,7 +12,6 @@ import {
   ChevronRight,
   ChevronLeft,
   Info,
-  Sparkles,
   Search,
   Calendar,
   RotateCcw,

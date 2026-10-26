@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   AlertTriangle,
   Clock,
-  Sparkles,
   ArrowRight,
   FileSpreadsheet,
   X,

@@ -14,7 +14,6 @@ import {
   ExternalLink,
   ChevronDown,
   Clock,
-  Sparkles,
   X,
 } from 'lucide-react';
 import { formatRupiah, formatTanggalIndo, formatTeksPuebi } from '@/lib/utils';
@@ -431,8 +430,8 @@ export function BukuBesarClient({
         {/* D. Saldo Akhir */}
         <div className="bg-white dark:bg-[#0b2419] p-4 rounded-xl border border-[#d4af37]/40 dark:border-[#d4af37]/60 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between text-xs text-[#06130D] dark:text-[#d4af37]">
-            <span className="font-bold flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" /> Saldo Akhir
+            <span className="font-semibold text-[#06130D] dark:text-[#d4af37]">
+              Saldo Akhir
             </span>
             <span className="text-[10px] font-mono text-[#06130D]/60 dark:text-[#f3c853]">
               {tanggalSelesai ? formatTanggalIndo(tanggalSelesai) : 'Saat Ini'}

@@ -147,7 +147,7 @@ export default function HalamanMasuk() {
       {/* =========================================================
            KARTU UTAMA DENGAN ATAP JOGLO KLASIK MINIMALIS & BERSIH
            ========================================================= */}
-      <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center my-auto drop-shadow-[0_15px_35px_rgba(17,48,27,0.18)] dark:drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]">
+      <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center my-auto">
         
         {/* SVG ATAP JOGLO MINIMALIS TEGAS (BERSIH TANPA ORNAMEN SUDUT) */}
         <div className="w-full relative -mb-[7px] z-10 pointer-events-none">
@@ -205,7 +205,7 @@ export default function HalamanMasuk() {
         </div>
 
         {/* PAPAN KARTU UTAMA DENGAN BINGKAI BERSIH */}
-        <div className="w-[72%] sm:w-[72%] bg-[#F7F7ED] dark:bg-[#081a12] border-2 border-[#D3BC5F] border-t-0 p-2 sm:p-2.5 pb-6 flex flex-col items-center shadow-lg dark:shadow-2xl relative overflow-hidden">
+        <div className="w-[72%] sm:w-[72%] bg-[#F7F7ED] dark:bg-[#081a12] border-2 border-[#D3BC5F] border-t-0 p-2 sm:p-2.5 pb-6 flex flex-col items-center relative overflow-hidden">
           
           {/* Bingkai Dalam Tipis (Inner Border Line) */}
           <div className="relative z-10 w-full border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/80 p-4 sm:p-5 flex flex-col items-center">
@@ -218,7 +218,7 @@ export default function HalamanMasuk() {
                 className="w-12 h-12 mb-2"
                 priority
               />
-              <h1 className="text-xl sm:text-2xl font-bold text-[#11301B] dark:text-[#D3BC5F] tracking-wide mb-1 drop-shadow-xs">
+              <h1 className="text-xl sm:text-2xl font-bold text-[#11301B] dark:text-[#D3BC5F] tracking-wide mb-1">
                 CV Batik Larasati
               </h1>
               <p className="text-[#11301B]/80 dark:text-[#D3BC5F] text-[9.5px] sm:text-[10px] tracking-[0.2em] font-medium uppercase">
@@ -226,8 +226,8 @@ export default function HalamanMasuk() {
               </p>
             </div>
 
-            {/* Kotak Formulir Masuk */}
-            <div className="w-full rounded-xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F] bg-[#F7F7ED] dark:bg-[#05140d] p-4 sm:p-5 shadow-xs">
+            {/* Formulir Masuk Bersih Polos */}
+            <div className="w-full mt-1">
               
               {/* Notifikasi Galat Jika Ada */}
               {errorMessage && (
@@ -258,7 +258,7 @@ export default function HalamanMasuk() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       disabled={loading}
-                      className="w-full bg-white dark:bg-[#030d08] border border-[#D3BC5F]/50 dark:border-[#D3BC5F]/40 rounded-lg pl-8 pr-3 py-1.5 sm:py-2 text-[#11301B] dark:text-slate-100 outline-none focus:border-[#11301B] dark:focus:border-[#D3BC5F] focus:ring-1 focus:ring-[#D3BC5F] transition-all text-xs placeholder:text-[#11301B]/40 dark:placeholder:text-slate-600 disabled:opacity-50"
+                      className="login-input w-full bg-white dark:bg-[#05140d] border border-gray-300 dark:border-[#D3BC5F]/40 rounded-lg pl-8 pr-3 py-1.5 sm:py-2 text-[#11301B] dark:text-slate-100 outline-none focus:border-[#11301B] dark:focus:border-[#D3BC5F] focus:ring-0 shadow-none text-xs placeholder:text-gray-400 dark:placeholder:text-slate-600 disabled:opacity-50 transition-colors"
                     />
                   </div>
                 </div>
@@ -283,7 +283,7 @@ export default function HalamanMasuk() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={loading}
-                      className="w-full bg-white dark:bg-[#030d08] border border-[#D3BC5F]/50 dark:border-[#D3BC5F]/40 rounded-lg pl-8 pr-8 py-1.5 sm:py-2 text-[#11301B] dark:text-slate-100 outline-none focus:border-[#11301B] dark:focus:border-[#D3BC5F] focus:ring-1 focus:ring-[#D3BC5F] transition-all text-xs placeholder:text-[#11301B]/40 dark:placeholder:text-slate-600 tracking-wider disabled:opacity-50"
+                      className="login-input w-full bg-white dark:bg-[#05140d] border border-gray-300 dark:border-[#D3BC5F]/40 rounded-lg pl-8 pr-8 py-1.5 sm:py-2 text-[#11301B] dark:text-slate-100 outline-none focus:border-[#11301B] dark:focus:border-[#D3BC5F] focus:ring-0 shadow-none text-xs placeholder:text-gray-400 dark:placeholder:text-slate-600 tracking-wider disabled:opacity-50 transition-colors"
                     />
                     <button
                       type="button"
@@ -300,7 +300,7 @@ export default function HalamanMasuk() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-2 w-full flex items-center justify-center gap-2 bg-[#11301B] hover:bg-[#11301B]/90 active:bg-[#11301B] text-[#E4C588] border border-[#D3BC5F] font-bold text-xs uppercase tracking-widest py-2.5 rounded-lg transition-all shadow-xs disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+                  className="mt-2 w-full flex items-center justify-center gap-2 bg-[#11301B] hover:bg-[#11301B]/90 active:bg-[#11301B] text-[#E4C588] border border-[#D3BC5F] font-bold text-xs uppercase tracking-widest py-2.5 rounded-lg transition-all shadow-none disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {loading ? (
                     <>

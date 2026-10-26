@@ -14,7 +14,6 @@ import {
   CheckCircle2,
   AlertTriangle,
   Clock,
-  Sparkles,
   ShieldCheck,
   Building2,
   Info,

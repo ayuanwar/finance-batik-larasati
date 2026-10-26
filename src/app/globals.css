@@ -89,16 +89,21 @@ main {
 }
 
 /* Penyesuaian Palet Warna Light Mode: Seluruh elemen kartu (cards), tabel, dan form menggunakan #F7F7ED */
-html:not(.dark) .bg-white,
+html:not(.dark) .bg-white:not(.login-input),
 html:not(.dark) .bg-\[\#fdfbf7\],
-html:not(.dark) .bg-\[\#ffffff\],
+html:not(.dark) .bg-\[\#ffffff\]:not(.login-input),
 html:not(.dark) table,
 html:not(.dark) tr.bg-white,
 html:not(.dark) td.bg-white,
-html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html:not(.dark) input:not(.login-input):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
 html:not(.dark) select,
 html:not(.dark) textarea {
   background-color: #F7F7ED !important;
+}
+
+html:not(.dark) .login-input {
+  background-color: #ffffff !important;
+  box-shadow: none !important;
 }
 
 /* Kursor Kustom Canting Tradisional (Mangkunegaran) */

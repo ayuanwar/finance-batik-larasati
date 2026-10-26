@@ -28,7 +28,6 @@ import {
   Send,
   Ban,
   Check,
-  Sparkles,
   ArrowRight,
   Wallet,
   Receipt
