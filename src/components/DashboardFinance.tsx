@@ -128,12 +128,12 @@ export function DashboardFinance({
   return (
     <div className="space-y-6">
       {/* 1. Header Ringkas & Aksi Cepat */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#d4af37]/30 dark:border-[#d4af37]/20">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D3BC5F]/30 dark:border-[#D3BC5F]/20">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#06130D] dark:text-[#fdfbf7] font-serif">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#11301B] dark:text-[#fdfbf7]">
             Ikhtisar Keuangan
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5">
+          <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5">
             Posisi kas, performa laba rugi, dan persetujuan pengajuan ({namaBulanAktif})
           </p>
         </div>
@@ -141,7 +141,7 @@ export function DashboardFinance({
         <div>
           <Link
             href="/pengajuan"
-            className="px-4 py-2 rounded-xl bg-[#d4af37] text-[#06130D] text-xs font-bold shadow-md hover:bg-[#e0bc46] active:bg-[#c49f2e] transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+            className="px-4 py-2 rounded-xl bg-[#11301B] hover:bg-[#11301B]/90 text-[#E4C588] border border-[#D3BC5F] text-xs font-bold shadow-md transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
           >
             <FileText className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Daftar Pengajuan ({pengajuanMenunggu.length})</span>
@@ -152,24 +152,24 @@ export function DashboardFinance({
       {/* 2. Kartu Ringkasan Finansial Utama (PRD Bagian 9.1) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Total Kas & Bank */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Saldo Kas & Bank
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#fdfbf7] dark:bg-[#123524] text-[#06130D] dark:text-[#d4af37] flex items-center justify-center border border-[#d4af37]/30 dark:border-[#d4af37]/30 shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#ECE4B7]/40 dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] flex items-center justify-center border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/30 shadow-xs">
               <Wallet className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-xl sm:text-2xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] tracking-tight">
+            <div className="text-xl sm:text-2xl font-extrabold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
               {formatRupiah(totalKasBank)}
             </div>
-            <div className="mt-2.5 pt-2.5 border-t border-[#d4af37]/20 dark:border-[#d4af37]/15 space-y-1">
+            <div className="mt-2.5 pt-2.5 border-t border-[#D3BC5F]/20 dark:border-[#D3BC5F]/15 space-y-1">
               {kasBankList.map((kb) => (
                 <div key={kb.id} className="flex justify-between text-[11px] text-gray-700 dark:text-slate-300">
                   <span className="truncate pr-2">{formatTeksPuebi(kb.nama)}</span>
-                  <span className="font-bold text-[#06130D] dark:text-[#f3c853]">{formatRupiah(kb.saldo)}</span>
+                  <span className="font-bold text-[#11301B] dark:text-[#f3c853]">{formatRupiah(kb.saldo)}</span>
                 </div>
               ))}
             </div>
@@ -177,9 +177,9 @@ export function DashboardFinance({
         </div>
 
         {/* Pendapatan Bulan Berjalan */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Pendapatan ({namaBulanAktif})
             </span>
             <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-[#0e3522] text-emerald-800 dark:text-emerald-300 flex items-center justify-center border border-emerald-300 dark:border-emerald-500/30 shadow-xs">
@@ -197,9 +197,9 @@ export function DashboardFinance({
         </div>
 
         {/* Beban Bulan Berjalan */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Beban ({namaBulanAktif})
             </span>
             <div className="w-9 h-9 rounded-xl bg-rose-50 dark:bg-[#321318] text-rose-800 dark:text-rose-300 flex items-center justify-center border border-rose-300 dark:border-rose-500/30 shadow-xs">
@@ -217,15 +217,15 @@ export function DashboardFinance({
         </div>
 
         {/* Laba Bersih Bulan Berjalan */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Laba (Rugi) {namaBulanAktif}
             </span>
             <div
               className={`w-9 h-9 rounded-xl flex items-center justify-center border shadow-xs ${
                 labaBulanIni >= 0
-                  ? 'bg-[#fdfbf7] dark:bg-[#123524] text-[#06130D] dark:text-[#d4af37] border-[#d4af37]/30 dark:border-[#d4af37]/40'
+                  ? 'bg-[#ECE4B7]/40 dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] border-[#D3BC5F]/40 dark:border-[#D3BC5F]/40'
                   : 'bg-rose-50 dark:bg-[#321318] text-rose-700 dark:text-rose-400 border-rose-300 dark:border-rose-500/40'
               }`}
             >
@@ -235,7 +235,7 @@ export function DashboardFinance({
           <div className="mt-4">
             <div
               className={`text-xl sm:text-2xl font-extrabold tracking-tight ${
-                labaBulanIni >= 0 ? 'text-[#06130D] dark:text-[#fdfbf7]' : 'text-rose-700 dark:text-rose-400'
+                labaBulanIni >= 0 ? 'text-[#11301B] dark:text-[#fdfbf7]' : 'text-rose-700 dark:text-rose-400'
               }`}
             >
               {labaBulanIni < 0
@@ -252,18 +252,18 @@ export function DashboardFinance({
       {/* 3. Grid Dua Kolom: Pengajuan Menunggu & Status Periode */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Kolom Kiri: Tabel Pengajuan Menunggu Tindakan (2 Kolom) */}
-        <div className="lg:col-span-2 bg-white dark:bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs p-6 flex flex-col justify-between">
+        <div className="lg:col-span-2 bg-[#F7F7ED] dark:bg-[#0b2419] rounded-2xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 shadow-xs p-6 flex flex-col justify-between">
           <div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#d4af37]/30 dark:border-[#d4af37]/15 gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#D3BC5F]/30 dark:border-[#D3BC5F]/15 gap-2">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#fdfbf7] dark:bg-[#123524] text-[#06130D] dark:text-[#d4af37] flex items-center justify-center border border-[#d4af37]/30 dark:border-[#d4af37]/30 shadow-xs">
+                <div className="w-8 h-8 rounded-xl bg-[#E4C588]/20 dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] flex items-center justify-center border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/30 shadow-xs">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#06130D] dark:text-[#fdfbf7] text-base">
+                  <h3 className="font-bold text-[#11301B] dark:text-[#fdfbf7] text-base">
                     Pengajuan Menunggu Tindakan
                   </h3>
-                  <p className="text-xs text-[#06130D]/70 dark:text-slate-400">
+                  <p className="text-xs text-[#11301B]/75 dark:text-slate-400">
                     {isDirektur
                       ? 'Pengajuan bernilai > Rp1.000.000 atau milik Akuntan'
                       : 'Pengajuan menunggu verifikasi atau siap dibayar'}
@@ -271,7 +271,7 @@ export function DashboardFinance({
                 </div>
               </div>
 
-              <span className="text-xs font-bold bg-[#fdfbf7] dark:bg-[#d4af37]/15 text-[#06130D] dark:text-[#f3c853] px-2.5 py-1 rounded-full border border-[#d4af37]/30 dark:border-[#d4af37]/35 w-fit">
+              <span className="text-xs font-bold bg-[#E4C588]/20 dark:bg-[#D3BC5F]/15 text-[#11301B] dark:text-[#f3c853] px-2.5 py-1 rounded-full border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/35 w-fit">
                 {jumlahMenungguPeran} Perlu Tindakan
               </span>
             </div>
@@ -279,13 +279,13 @@ export function DashboardFinance({
             {/* Filter & Kolom Pencarian Dasbor */}
             <div className="my-3 space-y-2.5">
               <div className="relative">
-                <Search className="w-4 h-4 text-[#06130D]/60 dark:text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <Search className="w-4 h-4 text-[#11301B]/60 dark:text-[#D3BC5F]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Cari nomor dokumen, keperluan, atau nama pengaju..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 bg-white dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#d4af37] dark:focus:ring-[#d4af37] shadow-xs transition-all"
+                  className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 bg-white dark:bg-[#06150f] text-[#11301B] dark:text-slate-100 placeholder:text-[#11301B]/40 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#D3BC5F] dark:focus:ring-[#D3BC5F] shadow-xs transition-all"
                 />
                 {search && (
                   <button
@@ -302,18 +302,18 @@ export function DashboardFinance({
               {/* Date Picker Rentang Tanggal */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <div className="flex items-center gap-1.5 bg-[#fdfbf7] dark:bg-[#06150f] px-2.5 py-1 rounded-lg border border-[#d4af37]/30 dark:border-[#d4af37]/20 text-[11px]">
-                    <Calendar className="w-3.5 h-3.5 text-[#06130D]/70 dark:text-[#d4af37]" />
-                    <span className="text-[#06130D]/70 dark:text-slate-400">Dari:</span>
+                  <div className="flex items-center gap-1.5 bg-[#E4C588]/15 dark:bg-[#06150f] px-2.5 py-1 rounded-lg border border-[#D3BC5F]/35 dark:border-[#D3BC5F]/20 text-[11px]">
+                    <Calendar className="w-3.5 h-3.5 text-[#11301B]/80 dark:text-[#D3BC5F]" />
+                    <span className="text-[#11301B]/75 dark:text-slate-400">Dari:</span>
                     <input
                       type="date"
                       value={tanggalMulai}
                       onChange={(e) => setTanggalMulai(e.target.value)}
-                      className="bg-transparent text-[#06130D] dark:text-slate-200 text-xs focus:outline-none cursor-pointer [color-scheme:light] dark:[color-scheme:dark]"
+                      className="bg-transparent text-[#11301B] dark:text-slate-200 text-xs focus:outline-none cursor-pointer [color-scheme:light] dark:[color-scheme:dark]"
                       title="Tanggal Mulai"
                     />
                     <span className="text-gray-400 dark:text-slate-500">s/d</span>
-                    <span className="text-[#06130D]/70 dark:text-slate-400">Sampai:</span>
+                    <span className="text-[#11301B]/75 dark:text-slate-400">Sampai:</span>
                     <input
                       type="date"
                       value={tanggalSelesai}

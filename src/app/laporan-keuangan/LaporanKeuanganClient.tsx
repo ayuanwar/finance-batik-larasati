@@ -153,7 +153,7 @@ export function LaporanKeuanganClient({
               <FileSpreadsheet className="w-5 h-5 text-[#06130D] dark:text-[#d4af37]" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#f3c853] tracking-tight print:text-black">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight print:text-black">
                 Laporan Keuangan
               </h1>
               <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5 print:text-gray-600">

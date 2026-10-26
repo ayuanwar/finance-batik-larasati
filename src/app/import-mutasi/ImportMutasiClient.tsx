@@ -738,7 +738,7 @@ export function ImportMutasiClient({
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
               Formulir Draf Jurnal Mutasi Bank
             </h1>
             <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">
@@ -1047,7 +1047,7 @@ export function ImportMutasiClient({
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
               Pratinjau Impor Mutasi Bank
             </h1>
             <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">
@@ -1072,7 +1072,7 @@ export function ImportMutasiClient({
               <div className="text-xs text-[#8a6b10] dark:text-[#d4af37] font-bold uppercase tracking-wider">
                 Total Transaksi Terbaca
               </div>
-              <div className="text-2xl font-bold text-[#8a6b10] dark:text-[#d4af37] mt-1 font-serif">
+              <div className="text-2xl font-bold text-[#8a6b10] dark:text-[#d4af37] mt-1">
                 {previewRows.length} baris
               </div>
             </div>
@@ -1175,7 +1175,7 @@ export function ImportMutasiClient({
       {/* 1. Header Judul & Deskripsi Nuansa Mangkunegaran Minimalis */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#d4af37]/30 dark:border-[#d4af37]/25 pb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
             Import Mutasi Bank
           </h1>
           <p className="text-xs sm:text-sm text-[#06130D]/75 dark:text-slate-300 mt-1 max-w-2xl leading-relaxed">
@@ -1228,7 +1228,7 @@ export function ImportMutasiClient({
             </span>
             <Clock className="w-4 h-4 text-amber-500 dark:text-amber-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#06130D] dark:text-amber-300 font-serif">
+          <div className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-amber-300">
             {stats.belumCount}
           </div>
           <span className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">
@@ -1243,7 +1243,7 @@ export function ImportMutasiClient({
             </span>
             <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-[#06130D] dark:text-emerald-300 font-serif">
+          <div className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-emerald-300">
             {stats.sudahCount}
           </div>
           <span className="text-[11px] text-[#06130D]/60 dark:text-slate-400 mt-1">

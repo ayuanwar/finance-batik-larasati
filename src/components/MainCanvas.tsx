@@ -28,11 +28,11 @@ export function MainCanvas({
     >
       <main
         id={id}
-        className={`relative w-full bg-white dark:bg-[#071c15] text-[#06130D] dark:text-[#fdfbf7] border border-[#d4af37]/30 dark:border-[#d4af37]/25 rounded-2xl shadow-sm dark:shadow-2xl overflow-hidden p-4 sm:p-6 lg:p-8 flex-1 flex flex-col overflow-x-hidden transition-colors duration-200 ${className}`}
+        className={`relative w-full bg-[#E9E9E1] dark:bg-[#071c15] text-[#11301B] dark:text-[#fdfbf7] border border-[#D3BC5F] dark:border-[#D3BC5F]/30 rounded-2xl shadow-md dark:shadow-2xl overflow-hidden px-4 sm:px-6 lg:px-8 pt-7 sm:pt-8 pb-6 sm:pb-8 flex-1 flex flex-col overflow-x-hidden transition-colors duration-200 ${className}`}
       >
-        {/* Latar Belakang Motif Batik Parang Mangkunegaran Eksklusif Kanvas */}
+        {/* Latar Belakang Motif Batik Parang Mangkunegaran Eksklusif Kanvas Konten Utama */}
         <div
-          className="absolute inset-0 pointer-events-none z-0 print:hidden invert opacity-[0.03] dark:invert-0 dark:opacity-20 transition-all duration-200"
+          className="absolute inset-0 pointer-events-none z-0 print:hidden opacity-12 dark:opacity-20 transition-all duration-200"
           style={{
             backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
             backgroundRepeat: 'repeat',

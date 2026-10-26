@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import {
@@ -10,6 +10,8 @@ import {
   EyeOff,
   AlertCircle,
   Loader2,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 
@@ -22,11 +24,38 @@ export default function HalamanMasuk() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
-  const setTestAccount = (userEmail: string) => {
-    setEmail(userEmail);
-    setPassword('password123');
-    setErrorMessage(null);
+  // Inisialisasi tema aktif sesuai preferensi sistem / localStorage
+  useEffect(() => {
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        setTheme('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        setTheme('dark');
+        document.documentElement.classList.add('dark');
+      }
+    } catch {
+      // Fallback aman jika localStorage tidak dapat diakses
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (theme === 'dark') {
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
+      try {
+        localStorage.setItem('theme', 'light');
+      } catch {}
+    } else {
+      setTheme('dark');
+      document.documentElement.classList.add('dark');
+      try {
+        localStorage.setItem('theme', 'dark');
+      } catch {}
+    }
   };
 
   const handleMasuk = async (e: React.FormEvent) => {
@@ -97,23 +126,28 @@ export default function HalamanMasuk() {
   };
 
   return (
-    <div className="bg-[#fdfbf7] dark:bg-[#06130D] min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden font-sans text-[#06130D] dark:text-slate-100 antialiased selection:bg-[#d4af37] selection:text-[#06130D] px-4 py-8 transition-colors duration-200">
-      {/* Latar Belakang Motif Batik Parang Mangkunegaran (Watermark) */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 print:hidden invert opacity-[0.03] dark:invert-0 dark:opacity-20 transition-all duration-200"
-        style={{
-          backgroundImage: "url('/batik-parang-gold.png?v=parang_mangkunegaran_v2')",
-          backgroundRepeat: 'repeat',
-          backgroundPosition: 'center',
-          backgroundSize: '360px auto',
-        }}
-        aria-hidden="true"
-      />
-      
+    <div className="bg-[#ECE4B7] dark:bg-[#06130D] min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden font-sans text-[#11301B] dark:text-slate-100 antialiased selection:bg-[#D3BC5F] selection:text-[#11301B] px-4 py-8 transition-colors duration-200">
+      {/* Tombol Toggle Tema (Mode Siang / Malam) di Pojok Kanan Atas */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30">
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="p-2 sm:p-2.5 rounded-xl bg-[#F7F7ED] dark:bg-[#0b281e] border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/50 text-[#11301B] dark:text-[#D3BC5F] hover:bg-[#ECE4B7]/40 dark:hover:bg-[#123524] transition-colors cursor-pointer shadow-xs flex items-center justify-center"
+          title={theme === 'dark' ? 'Beralih ke Mode Siang (Light Mode)' : 'Beralih ke Mode Malam (Dark Mode)'}
+          aria-label="Toggle tema siang/malam"
+        >
+          {theme === 'dark' ? (
+            <Sun className="w-4 h-4 text-[#D3BC5F]" />
+          ) : (
+            <Moon className="w-4 h-4 text-[#11301B]" />
+          )}
+        </button>
+      </div>
+
       {/* =========================================================
            KARTU UTAMA DENGAN ATAP JOGLO KLASIK MINIMALIS & BERSIH
            ========================================================= */}
-      <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center my-auto drop-shadow-[0_15px_35px_rgba(212,175,55,0.12)] dark:drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]">
+      <div className="relative z-10 w-full max-w-[480px] flex flex-col items-center my-auto drop-shadow-[0_15px_35px_rgba(17,48,27,0.18)] dark:drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)]">
         
         {/* SVG ATAP JOGLO MINIMALIS TEGAS (BERSIH TANPA ORNAMEN SUDUT) */}
         <div className="w-full relative -mb-[7px] z-10 pointer-events-none">
@@ -142,7 +176,7 @@ export default function HalamanMasuk() {
                 L 430,82
                 Z
               "
-              className="fill-white dark:fill-[#081a12] stroke-[#d4af37]"
+              className="fill-[#F7F7ED] dark:fill-[#081a12] stroke-[#D3BC5F]"
               strokeWidth="2"
               strokeLinejoin="round"
               strokeLinecap="round"
@@ -161,7 +195,7 @@ export default function HalamanMasuk() {
                 L 460,84
               "
               fill="none"
-              className="stroke-[#d4af37]"
+              className="stroke-[#D3BC5F]"
               strokeWidth="1"
               opacity="0.8"
               strokeLinejoin="round"
@@ -171,12 +205,12 @@ export default function HalamanMasuk() {
         </div>
 
         {/* PAPAN KARTU UTAMA DENGAN BINGKAI BERSIH */}
-        <div className="w-[72%] sm:w-[72%] bg-white dark:bg-[#081a12] border-2 border-[#d4af37] border-t-0 p-2 sm:p-2.5 pb-6 flex flex-col items-center shadow-lg dark:shadow-2xl">
+        <div className="w-[72%] sm:w-[72%] bg-[#F7F7ED] dark:bg-[#081a12] border-2 border-[#D3BC5F] border-t-0 p-2 sm:p-2.5 pb-6 flex flex-col items-center shadow-lg dark:shadow-2xl relative overflow-hidden">
           
           {/* Bingkai Dalam Tipis (Inner Border Line) */}
-          <div className="w-full border border-[#d4af37]/40 dark:border-[#d4af37]/80 p-4 sm:p-5 flex flex-col items-center">
+          <div className="relative z-10 w-full border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/80 p-4 sm:p-5 flex flex-col items-center">
             
-            {/* Header Judul Resmi Keraton dengan Logo Huruf 'B' Murni */}
+            {/* Header Judul Resmi: CV Batik Larasati - Sistem Keuangan dan Akuntansi */}
             <div className="text-center mt-1 mb-5 flex flex-col items-center">
               <Logo
                 variant="transparent-monogram"
@@ -184,16 +218,16 @@ export default function HalamanMasuk() {
                 className="w-12 h-12 mb-2"
                 priority
               />
-              <h1 className="text-lg sm:text-xl font-serif font-bold text-[#06130D] dark:text-[#d4af37] tracking-wide mb-1 drop-shadow-xs">
+              <h1 className="text-xl sm:text-2xl font-bold text-[#11301B] dark:text-[#D3BC5F] tracking-wide mb-1 drop-shadow-xs">
                 CV Batik Larasati
               </h1>
-              <p className="text-[#06130D]/75 dark:text-[#d4af37] text-[9.5px] sm:text-[10px] tracking-[0.22em] font-medium uppercase">
-                Sistem Keuangan & Pembukuan
+              <p className="text-[#11301B]/80 dark:text-[#D3BC5F] text-[9.5px] sm:text-[10px] tracking-[0.2em] font-medium uppercase">
+                Sistem Keuangan dan Akuntansi
               </p>
             </div>
 
             {/* Kotak Formulir Masuk */}
-            <div className="w-full rounded-xl border border-[#d4af37]/35 dark:border-[#d4af37] bg-[#fdfbf7] dark:bg-[#05140d] p-4 sm:p-5 shadow-xs">
+            <div className="w-full rounded-xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F] bg-[#F7F7ED] dark:bg-[#05140d] p-4 sm:p-5 shadow-xs">
               
               {/* Notifikasi Galat Jika Ada */}
               {errorMessage && (
@@ -208,12 +242,12 @@ export default function HalamanMasuk() {
                 <div className="flex flex-col gap-1.5">
                   <label
                     htmlFor="email-input"
-                    className="text-[9px] uppercase tracking-wider text-[#06130D]/80 dark:text-[#d4af37] font-bold"
+                    className="text-[9px] uppercase tracking-wider text-[#11301B]/85 dark:text-[#D3BC5F] font-bold"
                   >
                     Alamat Email
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#06130D]/60 dark:text-[#d4af37]/60">
+                    <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#11301B]/60 dark:text-[#D3BC5F]/60">
                       <Mail className="h-3.5 w-3.5" />
                     </div>
                     <input
@@ -224,7 +258,7 @@ export default function HalamanMasuk() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       disabled={loading}
-                      className="w-full bg-white dark:bg-[#030d08] border border-[#d4af37]/40 dark:border-[#d4af37]/40 rounded-lg pl-8 pr-3 py-1.5 sm:py-2 text-[#06130D] dark:text-slate-100 outline-none focus:border-[#06130D] dark:focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs placeholder:text-[#06130D]/40 dark:placeholder:text-slate-600 disabled:opacity-50"
+                      className="w-full bg-white dark:bg-[#030d08] border border-[#D3BC5F]/50 dark:border-[#D3BC5F]/40 rounded-lg pl-8 pr-3 py-1.5 sm:py-2 text-[#11301B] dark:text-slate-100 outline-none focus:border-[#11301B] dark:focus:border-[#D3BC5F] focus:ring-1 focus:ring-[#D3BC5F] transition-all text-xs placeholder:text-[#11301B]/40 dark:placeholder:text-slate-600 disabled:opacity-50"
                     />
                   </div>
                 </div>
@@ -233,12 +267,12 @@ export default function HalamanMasuk() {
                 <div className="flex flex-col gap-1.5">
                   <label
                     htmlFor="password-input"
-                    className="text-[9px] uppercase tracking-wider text-[#06130D]/80 dark:text-[#d4af37] font-bold"
+                    className="text-[9px] uppercase tracking-wider text-[#11301B]/85 dark:text-[#D3BC5F] font-bold"
                   >
                     Kata Sandi
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#06130D]/60 dark:text-[#d4af37]/60">
+                    <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#11301B]/60 dark:text-[#D3BC5F]/60">
                       <Lock className="h-3.5 w-3.5" />
                     </div>
                     <input
@@ -249,12 +283,12 @@ export default function HalamanMasuk() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={loading}
-                      className="w-full bg-white dark:bg-[#030d08] border border-[#d4af37]/40 dark:border-[#d4af37]/40 rounded-lg pl-8 pr-8 py-1.5 sm:py-2 text-[#06130D] dark:text-slate-100 outline-none focus:border-[#06130D] dark:focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] transition-all text-xs placeholder:text-[#06130D]/40 dark:placeholder:text-slate-600 tracking-wider disabled:opacity-50"
+                      className="w-full bg-white dark:bg-[#030d08] border border-[#D3BC5F]/50 dark:border-[#D3BC5F]/40 rounded-lg pl-8 pr-8 py-1.5 sm:py-2 text-[#11301B] dark:text-slate-100 outline-none focus:border-[#11301B] dark:focus:border-[#D3BC5F] focus:ring-1 focus:ring-[#D3BC5F] transition-all text-xs placeholder:text-[#11301B]/40 dark:placeholder:text-slate-600 tracking-wider disabled:opacity-50"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-2.5 flex items-center cursor-pointer text-[#06130D]/60 dark:text-[#d4af37]/60 hover:text-[#06130D] dark:hover:text-[#d4af37] transition-colors focus:outline-none"
+                      className="absolute inset-y-0 right-0 pr-2.5 flex items-center cursor-pointer text-[#11301B]/60 dark:text-[#D3BC5F]/60 hover:text-[#11301B] dark:hover:text-[#D3BC5F] transition-colors focus:outline-none"
                       aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
                     >
                       {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
@@ -262,15 +296,15 @@ export default function HalamanMasuk() {
                   </div>
                 </div>
 
-                {/* Tombol Masuk Hijau Zamrud Pekat Teks Putih (Sesuai Referensi Portal Mangkunegaran) */}
+                {/* Tombol Masuk Hijau Zamrud Pekat Teks Krem/Emas */}
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-2 w-full flex items-center justify-center gap-2 bg-[#06130D] hover:bg-[#0b2419] active:bg-[#06130D] text-white border border-[#06130D] dark:border-[#d4af37] font-bold text-xs uppercase tracking-widest py-2.5 rounded-lg transition-all shadow-xs disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+                  className="mt-2 w-full flex items-center justify-center gap-2 bg-[#11301B] hover:bg-[#11301B]/90 active:bg-[#11301B] text-[#E4C588] border border-[#D3BC5F] font-bold text-xs uppercase tracking-widest py-2.5 rounded-lg transition-all shadow-xs disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#E4C588]" />
                       <span>Memverifikasi...</span>
                     </>
                   ) : (
@@ -279,43 +313,13 @@ export default function HalamanMasuk() {
                 </button>
               </form>
 
-              {/* Uji Cepat Akun Demo (Discreet) */}
-              <div className="mt-3.5 pt-2.5 border-t border-[#d4af37]/30 dark:border-[#d4af37]/15">
-                <span className="block text-[8px] uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]/70 font-semibold mb-1.5 text-center">
-                  Pilih Akun Uji
-                </span>
-                <div className="grid grid-cols-3 gap-1">
-                  <button
-                    type="button"
-                    onClick={() => setTestAccount('dimas@larasati.test')}
-                    className="px-1.5 py-1 rounded-md bg-white dark:bg-[#030d08] border border-[#d4af37]/30 dark:border-[#d4af37]/25 hover:border-[#d4af37] text-[9px] text-[#06130D] dark:text-slate-300 hover:text-[#06130D] dark:hover:text-[#d4af37] font-medium transition-colors text-center cursor-pointer shadow-2xs"
-                  >
-                    Akuntan
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setTestAccount('laras@larasati.test')}
-                    className="px-1.5 py-1 rounded-md bg-white dark:bg-[#030d08] border border-[#d4af37]/30 dark:border-[#d4af37]/25 hover:border-[#d4af37] text-[9px] text-[#06130D] dark:text-slate-300 hover:text-[#06130D] dark:hover:text-[#d4af37] font-medium transition-colors text-center cursor-pointer shadow-2xs"
-                  >
-                    Direktur
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setTestAccount('retno@larasati.test')}
-                    className="px-1.5 py-1 rounded-md bg-white dark:bg-[#030d08] border border-[#d4af37]/30 dark:border-[#d4af37]/25 hover:border-[#d4af37] text-[9px] text-[#06130D] dark:text-slate-300 hover:text-[#06130D] dark:hover:text-[#d4af37] font-medium transition-colors text-center cursor-pointer shadow-2xs"
-                  >
-                    Staf
-                  </button>
-                </div>
-              </div>
-
             </div>
 
           </div>
         </div>
 
         {/* Footer Hak Cipta Sederhana */}
-        <p className="text-[10px] text-[#06130D]/70 dark:text-[#d4af37]/80 tracking-[0.2em] uppercase font-medium mt-4">
+        <p className="text-[10px] text-[#11301B]/70 dark:text-[#D3BC5F]/80 tracking-[0.2em] uppercase font-medium mt-4">
           © 2026 CV BATIK LARASATI
         </p>
 

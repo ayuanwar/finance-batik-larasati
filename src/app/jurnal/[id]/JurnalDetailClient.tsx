@@ -246,7 +246,7 @@ export function JurnalDetailClient({
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
               Formulir Jurnal Pembalik
             </h1>
             <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">
@@ -424,7 +424,7 @@ export function JurnalDetailClient({
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight font-mono">
+              <h1 className="text-xl sm:text-2xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight font-mono">
                 {jurnal.nomor || 'Draf Jurnal (Belum Bernomor)'}
               </h1>
               <span

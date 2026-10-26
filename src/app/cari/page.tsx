@@ -71,7 +71,7 @@ export default async function CariPage({ searchParams }: CariPageProps) {
               <Search className="w-6 h-6 stroke-[2.2]" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
                 Pencarian Global
               </h1>
               <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">

@@ -182,7 +182,7 @@ export function JurnalListClient({ initialData, profile }: JurnalListClientProps
       {/* 1. Header & Statistik Ringkas */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#d4af37]/30 dark:border-[#d4af37]/20">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
             Daftar Jurnal Umum
           </h1>
           <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-300 mt-1 max-w-xl">

@@ -3,6 +3,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-serif: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
   --color-bg-main: var(--color-bg-main);
   --color-bg-canvas: var(--color-bg-canvas);
   --color-bg-card: var(--color-bg-card);
@@ -13,33 +16,34 @@
   --color-gold-accent: var(--color-gold);
 }
 
-/* Light Mode (Pembalikan Palet Mangkunegaran - Krem Putih Tulang & Emas Elegan) */
+/* Light Mode (Latar Luar #ECE4B7, Kontainer Utama Abu #E9E9E1, Hijau #11301B, Kartu/Tabel/Form #F7F7ED, Emas #D3BC5F) */
 :root {
-  --color-bg-main: #fdfbf7;
-  --color-bg-canvas: #ffffff;
-  --color-bg-card: #ffffff;
-  --color-bg-card-subtle: #f7f4ed;
-  --color-text-main: #06130D;
-  --color-text-muted: #52635a;
-  --color-border-accent: rgba(212, 175, 55, 0.3);
-  --color-gold: #d4af37;
+  --color-bg-main: #ECE4B7;
+  --color-bg-canvas: #E9E9E1;
+  --color-bg-card: #F7F7ED;
+  --color-bg-card-subtle: #F7F7ED;
+  --color-text-main: #11301B;
+  --color-text-muted: #2d5239;
+  --color-border-accent: rgba(211, 188, 95, 0.4);
+  --color-gold: #D3BC5F;
 
   --background: var(--color-bg-main);
   --foreground: var(--color-text-main);
 
-  --keraton-bg: #fdfbf7;
-  --keraton-card: #ffffff;
-  --keraton-gold: #d4af37;
-  --keraton-gold-hover: #b88e22;
-  --keraton-border: rgba(212, 175, 55, 0.3);
-  --gold: #d4af37;
-  --gold-light: #b88e22;
-  --forest-dark: #06130D;
-  --forest-card: #ffffff;
-  --forest-border: rgba(212, 175, 55, 0.3);
+  --keraton-bg: #ECE4B7;
+  --keraton-canvas: #E9E9E1;
+  --keraton-card: #F7F7ED;
+  --keraton-gold: #D3BC5F;
+  --keraton-gold-hover: #bda343;
+  --keraton-border: rgba(211, 188, 95, 0.4);
+  --gold: #D3BC5F;
+  --gold-light: #ECE4B7;
+  --forest-dark: #11301B;
+  --forest-card: #F7F7ED;
+  --forest-border: rgba(211, 188, 95, 0.4);
 }
 
-/* Dark Mode (Hijau Zamrud Pekat Keraton Mangkunegaran) */
+/* Dark Mode (Hijau Zamrud Pekat Keraton Mangkunegaran & Aksen Emas) */
 .dark {
   --color-bg-main: #06130D;
   --color-bg-canvas: #071c15;
@@ -47,22 +51,23 @@
   --color-bg-card-subtle: #06150f;
   --color-text-main: #fdfbf7;
   --color-text-muted: #94a3b8;
-  --color-border-accent: rgba(212, 175, 55, 0.3);
-  --color-gold: #d4af37;
+  --color-border-accent: rgba(211, 188, 95, 0.35);
+  --color-gold: #D3BC5F;
 
   --background: var(--color-bg-main);
   --foreground: var(--color-text-main);
 
   --keraton-bg: #06130D;
+  --keraton-canvas: #071c15;
   --keraton-card: #0A1A12;
-  --keraton-gold: #C79F4B;
-  --keraton-gold-hover: #DAB565;
+  --keraton-gold: #D3BC5F;
+  --keraton-gold-hover: #e4c588;
   --keraton-border: #153022;
-  --gold: #d4af37;
+  --gold: #D3BC5F;
   --gold-light: #f3c853;
   --forest-dark: #06130D;
   --forest-card: #0c2419;
-  --forest-border: rgba(199, 159, 75, 0.25);
+  --forest-border: rgba(211, 188, 95, 0.3);
 }
 
 html {
@@ -74,13 +79,26 @@ html {
 body {
   background-color: var(--color-bg-main);
   color: var(--color-text-main);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   max-width: 100%;
 }
 
 main {
   overflow-x: hidden;
+}
+
+/* Penyesuaian Palet Warna Light Mode: Seluruh elemen kartu (cards), tabel, dan form menggunakan #F7F7ED */
+html:not(.dark) .bg-white,
+html:not(.dark) .bg-\[\#fdfbf7\],
+html:not(.dark) .bg-\[\#ffffff\],
+html:not(.dark) table,
+html:not(.dark) tr.bg-white,
+html:not(.dark) td.bg-white,
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+html:not(.dark) select,
+html:not(.dark) textarea {
+  background-color: #F7F7ED !important;
 }
 
 /* Kursor Kustom Canting Tradisional (Mangkunegaran) */
@@ -90,4 +108,65 @@ html, body {
 
 a, button, [role="button"], select, input[type="submit"], input[type="button"], input[type="reset"], [role="tab"], [role="menuitem"] {
   cursor: url('/canting.svg') 1 30, pointer !important;
+}
+
+/* ==========================================================================
+   Standarisasi Hierarki Font Berdasarkan Posisi & Fungsi Komponen
+   ========================================================================== */
+
+/* 1. Judul Halaman Utama (Page Title) */
+.page-title {
+  font-size: 1.5rem; /* text-2xl */
+  line-height: 2rem;
+  font-weight: 700; /* font-bold */
+  letter-spacing: -0.025em; /* tracking-tight */
+}
+@media (min-width: 640px) {
+  .page-title {
+    font-size: 1.875rem; /* text-3xl */
+    line-height: 2.25rem;
+  }
+}
+
+/* 2. Sub-judul & Judul Kartu (Section/Card Title) */
+.section-title,
+.card-title {
+  font-size: 1.125rem; /* text-lg */
+  line-height: 1.75rem;
+  font-weight: 600; /* font-semibold */
+  letter-spacing: -0.015em;
+}
+
+/* 3. Teks Isi Tabel & Sel (Table Content & Cells) */
+table thead th {
+  font-size: 0.6875rem; /* ~11px / text-xs */
+  font-weight: 600; /* font-semibold */
+  letter-spacing: 0.05em; /* tracking-wider */
+  text-transform: uppercase;
+}
+
+table tbody td {
+  font-size: 0.8125rem; /* text-sm */
+  line-height: 1.25rem;
+}
+
+/* 4. Label Form & Tombol (Form Labels & Buttons) */
+label {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+  letter-spacing: 0.025em;
+}
+
+.btn-action,
+.btn-primary,
+.btn-secondary {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+}
+@media (min-width: 640px) {
+  .btn-action,
+  .btn-primary,
+  .btn-secondary {
+    font-size: 0.875rem; /* text-sm */
+  }
 }

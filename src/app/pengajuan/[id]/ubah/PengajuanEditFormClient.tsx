@@ -234,7 +234,7 @@ export function PengajuanEditFormClient({
         </Link>
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
               Ubah Pengajuan Biaya
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#fdfbf7] dark:bg-[#123524] text-[#06130D] dark:text-[#d4af37] border border-[#d4af37]/30">

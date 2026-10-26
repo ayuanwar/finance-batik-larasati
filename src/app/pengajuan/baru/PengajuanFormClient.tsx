@@ -191,7 +191,7 @@ export function PengajuanFormClient({ profile, akunBebanList }: PengajuanFormCli
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] font-serif tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
             Formulir Pengajuan Biaya
           </h1>
           <p className="text-xs sm:text-sm text-[#06130D]/70 dark:text-slate-400 mt-0.5">

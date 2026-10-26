@@ -102,12 +102,12 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
   return (
     <div className="space-y-6">
       {/* 1. Header Ringkas Dasbor Staf */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#d4af37]/30 dark:border-[#d4af37]/20">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D3BC5F]/30 dark:border-[#D3BC5F]/20">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#06130D] dark:text-[#fdfbf7] font-serif">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#11301B] dark:text-[#fdfbf7]">
             Operasional & Klaim Biaya
           </h1>
-          <p className="text-[#06130D]/70 dark:text-slate-400 text-xs mt-0.5">
+          <p className="text-[#11301B]/75 dark:text-slate-400 text-xs mt-0.5">
             Daftar pengeluaran dan status persetujuan klaim operasional Anda
           </p>
         </div>
@@ -115,7 +115,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
         <div>
           <Link
             href="/pengajuan/baru"
-            className="px-4 py-2 rounded-xl bg-[#06130D] hover:bg-[#0b2419] text-white border border-[#06130D] dark:border-[#d4af37] text-xs font-bold shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+            className="px-4 py-2 rounded-xl bg-[#11301B] hover:bg-[#11301B]/90 text-[#E4C588] border border-[#D3BC5F] text-xs font-bold shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-3.5 h-3.5 stroke-[3]" />
             <span>Buat Pengajuan Baru</span>
@@ -126,37 +126,37 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
       {/* 2. Kartu Statistik Pengajuan Pribadi */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Total Pengajuan */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Total Dokumen
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#fdfbf7] dark:bg-[#123524] text-[#06130D] dark:text-[#d4af37] flex items-center justify-center border border-[#d4af37]/30 dark:border-[#d4af37]/30">
+            <div className="w-9 h-9 rounded-xl bg-[#ECE4B7]/40 dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] flex items-center justify-center border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/30">
               <FileText className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-extrabold text-[#06130D] dark:text-[#fdfbf7] tracking-tight">
+            <div className="text-2xl font-extrabold text-[#11301B] dark:text-[#fdfbf7] tracking-tight">
               {totalPengajuan} <span className="text-xs font-normal text-gray-500 dark:text-slate-400">dokumen</span>
             </div>
             <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-1 font-medium">
-              Total nilai: <span className="text-[#06130D] dark:text-[#f3c853] font-bold">{formatRupiah(totalNominal)}</span>
+              Total nilai: <span className="text-[#11301B] dark:text-[#f3c853] font-bold">{formatRupiah(totalNominal)}</span>
             </p>
           </div>
         </div>
 
         {/* Draf Tersimpan */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-slate-700/60 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-slate-700/60 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-slate-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-slate-400">
               Draf Tersimpan
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#fdfbf7] dark:bg-[#18231e] text-gray-700 dark:text-slate-300 flex items-center justify-center border border-[#d4af37]/30 dark:border-slate-700">
+            <div className="w-9 h-9 rounded-xl bg-[#ECE4B7]/40 dark:bg-[#18231e] text-[#11301B] dark:text-slate-300 flex items-center justify-center border border-[#D3BC5F]/40 dark:border-slate-700">
               <Receipt className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-extrabold text-[#06130D] dark:text-slate-200 tracking-tight">
+            <div className="text-2xl font-extrabold text-[#11301B] dark:text-slate-200 tracking-tight">
               {drafList.length} <span className="text-xs font-normal text-gray-500 dark:text-slate-400">draf</span>
             </div>
             <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-1">
@@ -166,9 +166,9 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
         </div>
 
         {/* Dalam Proses */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-sky-500/30 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-sky-500/30 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Sedang Diproses
             </span>
             <div className="w-9 h-9 rounded-xl bg-sky-50 dark:bg-[#0e2c38] text-sky-700 dark:text-sky-300 flex items-center justify-center border border-sky-200 dark:border-sky-500/30">
@@ -176,7 +176,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-extrabold text-[#06130D] dark:text-sky-400 tracking-tight">
+            <div className="text-2xl font-extrabold text-[#11301B] dark:text-sky-400 tracking-tight">
               {dalamProsesList.length} <span className="text-xs font-normal text-gray-500 dark:text-slate-400">pengajuan</span>
             </div>
             <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-1">
@@ -186,9 +186,9 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
         </div>
 
         {/* Perlu Revisi */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-amber-500/30 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-amber-500/30 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Perlu Revisi
             </span>
             <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-[#322312] text-amber-700 dark:text-amber-300 flex items-center justify-center border border-amber-200 dark:border-amber-500/30">
@@ -196,7 +196,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
             </div>
           </div>
           <div className="mt-4">
-            <div className={`text-2xl font-extrabold tracking-tight ${perluRevisiList.length > 0 ? 'text-amber-700 dark:text-[#f3c853]' : 'text-[#06130D] dark:text-slate-200'}`}>
+            <div className={`text-2xl font-extrabold tracking-tight ${perluRevisiList.length > 0 ? 'text-amber-700 dark:text-[#f3c853]' : 'text-[#11301B] dark:text-slate-200'}`}>
               {perluRevisiList.length} <span className="text-xs font-normal text-gray-500 dark:text-slate-400">pengajuan</span>
             </div>
             <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-1">
@@ -206,9 +206,9 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
         </div>
 
         {/* Selesai Dibayar */}
-        <div className="bg-white dark:bg-[#0b2419] p-5 rounded-2xl border border-[#d4af37]/30 dark:border-emerald-500/30 shadow-xs flex flex-col justify-between">
+        <div className="bg-[#F7F7ED] dark:bg-[#0b2419] p-5 rounded-2xl border border-[#D3BC5F]/40 dark:border-emerald-500/30 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#06130D]/70 dark:text-[#d4af37]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Selesai Dibayar
             </span>
             <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-[#0e3522] text-emerald-700 dark:text-emerald-300 flex items-center justify-center border border-emerald-200 dark:border-emerald-500/30">
@@ -216,7 +216,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
             </div>
           </div>
           <div className="mt-4">
-            <div className="text-2xl font-extrabold text-[#06130D] dark:text-emerald-400 tracking-tight">
+            <div className="text-2xl font-extrabold text-[#11301B] dark:text-emerald-400 tracking-tight">
               {dibayarList.length} <span className="text-xs font-normal text-gray-500 dark:text-slate-400">pengajuan</span>
             </div>
             <p className="text-[11px] text-gray-500 dark:text-slate-400 mt-1">
@@ -227,12 +227,12 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
       </div>
 
       {/* 3. Banner Panduan Aturan Pengajuan Nuansa Keraton */}
-      <div className="bg-[#fdfbf7] dark:bg-[#0b2419] border border-[#d4af37]/30 dark:border-[#d4af37]/35 rounded-2xl p-4 sm:p-5 text-[#06130D] dark:text-slate-200 flex items-start gap-3.5 shadow-xs">
-        <Info className="w-5 h-5 shrink-0 text-[#06130D] dark:text-[#d4af37] mt-0.5" />
+      <div className="bg-[#F7F7ED] dark:bg-[#0b2419] border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/35 rounded-2xl p-4 sm:p-5 text-[#11301B] dark:text-slate-200 flex items-start gap-3.5 shadow-xs">
+        <Info className="w-5 h-5 shrink-0 text-[#11301B] dark:text-[#D3BC5F] mt-0.5" />
         <div className="text-xs leading-relaxed">
-          <span className="font-bold text-[#06130D] dark:text-[#d4af37]">Ketentuan Pengajuan Biaya:</span>
+          <span className="font-bold text-[#11301B] dark:text-[#D3BC5F]">Ketentuan Pengajuan Biaya:</span>
           <ul className="list-disc list-inside mt-1 space-y-0.5 text-gray-600 dark:text-slate-300">
-            <li>Nominal pengajuan antara <strong className="text-[#06130D] dark:text-[#fdfbf7]">Rp10.000</strong> sampai <strong className="text-[#06130D] dark:text-[#fdfbf7]">Rp25.000.000</strong> (rupiah bulat).</li>
+            <li>Nominal pengajuan antara <strong className="text-[#11301B] dark:text-[#fdfbf7]">Rp10.000</strong> sampai <strong className="text-[#11301B] dark:text-[#fdfbf7]">Rp25.000.000</strong> (rupiah bulat).</li>
             <li>Wajib mengunggah foto nota fisik asli (format JPG, PNG, atau PDF, maksimal 5 MB).</li>
             <li>Tanggal nota tidak boleh di masa depan dan maksimal 30 hari ke belakang.</li>
           </ul>
@@ -240,21 +240,21 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
       </div>
 
       {/* 4. Tabel Riwayat Pengajuan Milik Staf */}
-      <div className="bg-white dark:bg-[#0b2419] rounded-2xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 shadow-xs p-6 flex flex-col justify-between">
+      <div className="bg-[#F7F7ED] dark:bg-[#0b2419] rounded-2xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 shadow-xs p-6 flex flex-col justify-between">
         <div>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#d4af37]/30 dark:border-[#d4af37]/15 gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#D3BC5F]/30 dark:border-[#D3BC5F]/15 gap-2">
             <div>
-              <h3 className="font-bold text-[#06130D] dark:text-[#fdfbf7] text-base">
+              <h3 className="font-bold text-[#11301B] dark:text-[#fdfbf7] text-base">
                 Riwayat Pengajuan Pribadi Anda
               </h3>
-              <p className="text-xs text-[#06130D]/70 dark:text-slate-400">
+              <p className="text-xs text-[#11301B]/75 dark:text-slate-400">
                 Daftar seluruh klaim reimburse & pengeluaran yang pernah Anda buat
               </p>
             </div>
 
             <Link
               href="/pengajuan/baru"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#06130D] hover:bg-[#0b2419] border border-[#06130D] dark:border-[#d4af37] px-3.5 py-1.5 rounded-xl shadow-xs transition-all w-fit cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E4C588] bg-[#11301B] hover:bg-[#11301B]/90 border border-[#D3BC5F] px-3.5 py-1.5 rounded-xl shadow-xs transition-all w-fit cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5 stroke-[3]" />
               <span>Pengajuan Baru</span>
@@ -264,13 +264,13 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
           {/* Filter & Kolom Pencarian Dasbor Staf */}
           <div className="my-3 space-y-2.5">
             <div className="relative">
-              <Search className="w-4 h-4 text-[#06130D]/40 dark:text-[#d4af37]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#11301B]/50 dark:text-[#D3BC5F]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Cari nomor dokumen pengajuan atau keperluan..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-[#d4af37]/30 dark:border-[#d4af37]/25 bg-[#fdfbf7] dark:bg-[#06150f] text-[#06130D] dark:text-slate-100 placeholder:text-[#06130D]/40 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#06130D] dark:focus:ring-[#d4af37] shadow-xs transition-all"
+                className="w-full pl-9 pr-8 py-2 text-xs rounded-xl border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/25 bg-white dark:bg-[#06150f] text-[#11301B] dark:text-slate-100 placeholder:text-[#11301B]/40 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#D3BC5F] dark:focus:ring-[#D3BC5F] shadow-xs transition-all"
               />
               {search && (
                 <button
