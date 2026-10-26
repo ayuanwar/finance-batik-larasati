@@ -2,6 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { MainCanvas } from '@/components/MainCanvas';
 import { PengajuanDetailClient } from './PengajuanDetailClient';
 
 export const dynamic = 'force-dynamic';
@@ -106,7 +107,7 @@ export default async function DetailPengajuanPage({ params }: PageProps) {
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <MainCanvas maxWidth="max-w-5xl">
         <PengajuanDetailClient
           profile={profile}
           pengajuan={pengajuan}
@@ -114,7 +115,7 @@ export default async function DetailPengajuanPage({ params }: PageProps) {
           akunKasList={akunKasList || []}
           jurnalPembayaran={jurnalPembayaran}
         />
-      </main>
+      </MainCanvas>
 
       <Footer />
     </div>

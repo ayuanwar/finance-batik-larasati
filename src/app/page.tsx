@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { MainCanvas } from '@/components/MainCanvas';
 import { DashboardFinance, KasBankBreakdown, PengajuanItem, PeriodeItem } from '@/components/DashboardFinance';
 import { DashboardStaf, StafPengajuanItem } from '@/components/DashboardStaf';
 import { Profile } from '@/types/database';
@@ -152,7 +153,7 @@ export default async function BerandaPage() {
     return (
       <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
         <Navbar profile={profile} onLogout={handleKeluar} />
-        <main className="flex-1 max-w-[1100px] w-full mx-auto px-4 sm:px-6 py-8 sm:py-10">
+        <MainCanvas>
           <DashboardFinance
             profile={profile}
             totalKasBank={totalKasBank}
@@ -164,7 +165,7 @@ export default async function BerandaPage() {
             pengajuanMenunggu={(rawPengajuanMenunggu as unknown as PengajuanItem[]) || []}
             periodeList={(rawPeriodeList as unknown as PeriodeItem[]) || []}
           />
-        </main>
+        </MainCanvas>
         <Footer />
       </div>
     );
@@ -193,12 +194,12 @@ export default async function BerandaPage() {
   return (
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col">
       <Navbar profile={profile} onLogout={handleKeluar} />
-      <main className="flex-1 max-w-[1100px] w-full mx-auto px-4 sm:px-6 py-8 sm:py-10">
+      <MainCanvas>
         <DashboardStaf
           profile={profile}
           pengajuanList={(stafPengajuanRaw as unknown as StafPengajuanItem[]) || []}
         />
-      </main>
+      </MainCanvas>
       <Footer />
     </div>
   );

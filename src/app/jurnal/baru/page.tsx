@@ -1,6 +1,8 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+import { MainCanvas } from '@/components/MainCanvas';
 import { JurnalFormClient, AkunOption, PeriodeOption } from './JurnalFormClient';
 
 export const dynamic = 'force-dynamic';
@@ -73,9 +75,10 @@ export default async function JurnalBaruPage() {
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
-      <main className="flex-1 max-w-[1100px] w-full mx-auto px-4 sm:px-6 py-8 sm:py-10">
+      <MainCanvas>
         <JurnalFormClient akunList={akunList} openPeriods={openPeriods} />
-      </main>
+      </MainCanvas>
+      <Footer />
     </div>
   );
 }

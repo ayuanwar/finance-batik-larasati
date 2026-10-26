@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { MainCanvas } from '@/components/MainCanvas';
 import { LaporanKeuanganClient } from './LaporanKeuanganClient';
 import {
   getLabaRugiAction,
@@ -118,14 +119,17 @@ export default async function LaporanKeuanganPage() {
         <Navbar profile={profile} onLogout={handleKeluar} />
       </div>
 
-      <main className="flex-1 max-w-[1100px] mx-auto w-full px-4 sm:px-6 py-8 sm:py-10 print:py-0 print:px-0 print:max-w-none">
+      <MainCanvas
+        className="print:bg-white print:border-none print:shadow-none print:p-0 print:m-0"
+        wrapperClassName="print:max-w-none print:px-0 print:py-0"
+      >
         <LaporanKeuanganClient
           initialLabaRugi={initialLabaRugi}
           initialNeraca={initialNeraca}
           initialNeracaSaldo={initialNeracaSaldo}
           profile={profile}
         />
-      </main>
+      </MainCanvas>
 
       <div className="print:hidden">
         <Footer />

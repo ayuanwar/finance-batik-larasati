@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { MainCanvas } from '@/components/MainCanvas';
 import { keluarAction } from '@/lib/actions/auth';
 import { AkunPeriodeClient, AkunItem, PeriodeItem } from './AkunPeriodeClient';
 
@@ -101,14 +102,13 @@ export default async function AkunPeriodePage() {
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
       <Navbar profile={profile} onLogout={keluarAction} />
 
-      {/* Kontainer Terpusat: max-w-[1100px] mx-auto w-full px-4 sm:px-6 */}
-      <main className="flex-1 max-w-[1100px] mx-auto w-full px-4 sm:px-6 py-8 sm:py-10">
+      <MainCanvas>
         <AkunPeriodeClient
           initialAkun={akunList}
           initialPeriode={periodeList}
           profile={profile}
         />
-      </main>
+      </MainCanvas>
 
       <Footer />
     </div>

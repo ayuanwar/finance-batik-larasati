@@ -4,6 +4,7 @@ import { Search, ArrowLeft, FileText, BookOpen, Clock } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import { MainCanvas } from '@/components/MainCanvas';
 
 export const dynamic = 'force-dynamic';
 
@@ -50,7 +51,7 @@ export default async function CariPage({ searchParams }: CariPageProps) {
     <div className="min-h-screen bg-transparent text-slate-100 flex flex-col font-sans">
       <Navbar profile={profile} onLogout={handleKeluar} />
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <MainCanvas maxWidth="max-w-5xl">
         {/* Tombol Kembali */}
         <div className="mb-6">
           <Link
@@ -160,7 +161,7 @@ export default async function CariPage({ searchParams }: CariPageProps) {
             </div>
           </div>
         </div>
-      </main>
+      </MainCanvas>
       <Footer />
     </div>
   );
