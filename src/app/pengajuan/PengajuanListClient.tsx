@@ -19,9 +19,9 @@ import {
   SquarePen,
   ArrowUpDown,
   User,
-  Sparkles
+  X
 } from 'lucide-react';
-import { formatRupiah, formatTanggalIndo } from '@/lib/utils';
+import { formatRupiah, formatTanggalIndo, formatTeksPuebi } from '@/lib/utils';
 import { Profile } from '@/types/database';
 
 export interface PengajuanRow {
@@ -159,10 +159,6 @@ export function PengajuanListClient({
       {/* 1. Header Banner & Tombol Aksi */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#d4af37]/20">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#123524] text-[#d4af37] border border-[#d4af37]/30 mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>{isFinance ? 'Manajemen Pengajuan Finansial' : 'Klaim & Pengajuan Saya'}</span>
-          </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
             Daftar Pengajuan Biaya
           </h1>
@@ -302,7 +298,7 @@ export function PengajuanListClient({
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1"
                 title="Hapus pencarian"
               >
-                ✕
+                <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
@@ -375,7 +371,8 @@ export function PengajuanListClient({
                 className="px-2.5 py-1.5 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-300 hover:text-white text-xs font-semibold flex items-center gap-1 cursor-pointer transition-colors"
                 title="Hapus filter rentang tanggal"
               >
-                ✕ Hapus Tanggal
+                <X className="w-3.5 h-3.5" />
+                <span>Hapus Tanggal</span>
               </button>
             )}
           </div>
@@ -474,8 +471,8 @@ export function PengajuanListClient({
                           <div className="font-semibold text-slate-200">
                             {item.pengaju?.nama_lengkap || '-'}
                           </div>
-                          <div className="text-[10px] text-slate-400 capitalize">
-                            {item.pengaju?.peran || ''}
+                          <div className="text-[10px] text-slate-400">
+                            {formatTeksPuebi(item.pengaju?.peran || '')}
                           </div>
                         </td>
                       )}

@@ -20,7 +20,7 @@ import {
   Info,
   X,
 } from 'lucide-react';
-import { formatTanggalIndo } from '@/lib/utils';
+import { formatTanggalIndo, formatTeksPuebi } from '@/lib/utils';
 import {
   simpanAkunAction,
   toggleStatusAkunAction,
@@ -488,7 +488,7 @@ export function AkunPeriodeClient({
             onClick={() => setNotification(null)}
             className="text-slate-400 hover:text-white font-bold ml-4"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -654,7 +654,7 @@ export function AkunPeriodeClient({
 
                         {/* Nama */}
                         <td className="px-4 py-3.5">
-                          <div className="font-semibold text-slate-100">{ak.nama}</div>
+                          <div className="font-semibold text-slate-100">{formatTeksPuebi(ak.nama)}</div>
                           {ak.keterangan && (
                             <div className="text-[11px] text-slate-400 mt-0.5">{ak.keterangan}</div>
                           )}

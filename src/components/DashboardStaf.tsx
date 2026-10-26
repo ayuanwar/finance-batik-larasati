@@ -18,8 +18,9 @@ import {
   RotateCcw,
   Eye,
   SquarePen,
+  X,
 } from 'lucide-react';
-import { formatRupiah, formatTanggalIndo } from '@/lib/utils';
+import { formatRupiah, formatTanggalIndo, formatTeksPuebi } from '@/lib/utils';
 import { Profile } from '@/types/database';
 
 export interface StafPengajuanItem {
@@ -278,7 +279,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
                     className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1"
                     title="Hapus pencarian"
                   >
-                    ✕
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 )}
               </div>
@@ -314,9 +315,10 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
                         setTanggalMulai('');
                         setTanggalSelesai('');
                       }}
-                      className="px-2 py-1 rounded-lg bg-rose-950/40 border border-rose-500/40 text-rose-300 hover:text-white text-[11px] font-semibold cursor-pointer"
+                      className="px-2 py-1 rounded-lg bg-rose-950/40 border border-rose-500/40 text-rose-300 hover:text-white text-[11px] font-semibold cursor-pointer flex items-center gap-1"
                     >
-                      ✕ Hapus Tanggal
+                      <X className="w-3 h-3" />
+                      <span>Hapus Tanggal</span>
                     </button>
                   )}
                 </div>

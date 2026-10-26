@@ -23,7 +23,7 @@ import {
   Code,
   FileText,
 } from 'lucide-react';
-import { formatTanggalIndo, formatTanggalWaktuIndo } from '@/lib/utils';
+import { formatTanggalIndo, formatTanggalWaktuIndo, formatTeksPuebi } from '@/lib/utils';
 import {
   AuditLogItem,
   updateUserAction,
@@ -472,7 +472,7 @@ export function PenggunaAuditClient({
                               )}
                             </div>
                             {u.jabatan && (
-                              <div className="text-[11px] text-slate-400 mt-0.5">{u.jabatan}</div>
+                              <div className="text-[11px] text-slate-400 mt-0.5">{formatTeksPuebi(u.jabatan)}</div>
                             )}
                           </td>
 
@@ -860,7 +860,7 @@ export function PenggunaAuditClient({
                 </div>
                 <div className="text-xs font-mono text-slate-400">{selectedUser.email}</div>
                 {selectedUser.jabatan && (
-                  <div className="text-[11px] text-[#f3c853] mt-1">{selectedUser.jabatan}</div>
+                  <div className="text-[11px] text-[#f3c853] mt-1">{formatTeksPuebi(selectedUser.jabatan)}</div>
                 )}
               </div>
 

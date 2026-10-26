@@ -33,7 +33,7 @@ import {
   Wallet,
   Receipt
 } from 'lucide-react';
-import { formatRupiah, formatTanggalIndo, formatTanggalWaktuIndo } from '@/lib/utils';
+import { formatRupiah, formatTanggalIndo, formatTanggalWaktuIndo, formatTeksPuebi } from '@/lib/utils';
 import { Profile } from '@/types/database';
 
 interface PengajuanDetailClientProps {
@@ -430,8 +430,8 @@ export function PengajuanDetailClient({
                 <div className="text-xs font-bold text-slate-200 mt-1">
                   {doc.pengaju?.nama_lengkap || '-'}
                 </div>
-                <div className="text-[11px] text-slate-400 capitalize">
-                  {doc.pengaju?.jabatan || doc.pengaju?.peran} ({doc.pengaju?.email})
+                <div className="text-[11px] text-slate-400">
+                  {formatTeksPuebi(doc.pengaju?.jabatan || doc.pengaju?.peran)} ({doc.pengaju?.email})
                 </div>
               </div>
 
@@ -798,7 +798,7 @@ export function PengajuanDetailClient({
 
                   {saldoKasTerpilih !== null && saldoKasTerpilih < Number(doc.jumlah) && (
                     <div className="text-[10px] text-rose-300 mt-1 bg-rose-950/50 p-1.5 rounded border border-rose-500/30">
-                      ⚠️ Saldo akun ini tidak cukup untuk membayar Rp{Number(doc.jumlah).toLocaleString('id-ID')}. Pilih rekening lain.
+                      Saldo akun ini tidak cukup untuk membayar Rp{Number(doc.jumlah).toLocaleString('id-ID')}. Pilih rekening lain.
                     </div>
                   )}
                 </div>
@@ -873,7 +873,7 @@ export function PengajuanDetailClient({
             {/* CASE 6: PERINGATAN SELF-APPROVAL */}
             {isAkuntan && isOwner && doc.status === 'menunggu_direktur' && (
               <div className="p-3 bg-[#06150f] rounded-xl border border-amber-500/40 text-xs text-slate-300">
-                🔒 <strong>Pemberitahuan:</strong> Pengajuan yang Anda buat wajib disetujui oleh Direktur.
+                <strong>Pemberitahuan:</strong> Pengajuan yang Anda buat wajib disetujui oleh Direktur.
               </div>
             )}
           </div>

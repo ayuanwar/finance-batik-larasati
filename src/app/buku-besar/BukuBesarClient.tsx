@@ -15,8 +15,9 @@ import {
   ChevronDown,
   Clock,
   Sparkles,
+  X,
 } from 'lucide-react';
-import { formatRupiah, formatTanggalIndo } from '@/lib/utils';
+import { formatRupiah, formatTanggalIndo, formatTeksPuebi } from '@/lib/utils';
 import {
   AkunDetail,
   BukuBesarResponseData,
@@ -219,7 +220,7 @@ export function BukuBesarClient({
             onClick={() => setErrorMessage(null)}
             className="text-rose-400 hover:text-rose-200 font-bold ml-4"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -244,7 +245,7 @@ export function BukuBesarClient({
               >
                 {akunList.map((ak) => (
                   <option key={ak.id} value={ak.id} className="bg-[#071c15] text-slate-100 py-1">
-                    {ak.kode} - {ak.nama} ({ak.tipe.toUpperCase()})
+                    {ak.kode} - {formatTeksPuebi(ak.nama)} ({ak.tipe.toUpperCase()})
                   </option>
                 ))}
               </select>
@@ -442,7 +443,7 @@ export function BukuBesarClient({
               {formatSaldo(ledgerData.saldo_akhir)}
             </div>
             <div className="text-[11px] text-slate-300 mt-1 truncate">
-              {currentAkun.kode} - {currentAkun.nama}
+              {currentAkun.kode} - {formatTeksPuebi(currentAkun.nama)}
             </div>
           </div>
         </div>
@@ -457,7 +458,7 @@ export function BukuBesarClient({
               {currentAkun.kode}
             </span>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-100">{currentAkun.nama}</h2>
+              <h2 className="text-base sm:text-lg font-bold text-slate-100">{formatTeksPuebi(currentAkun.nama)}</h2>
               <div className="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
                 <span>Kategori: {currentAkun.tipe.toUpperCase()}</span>
                 <span>•</span>

@@ -13,8 +13,9 @@ import {
   Sparkles,
   ArrowRight,
   FileSpreadsheet,
+  X,
 } from 'lucide-react';
-import { formatRupiah, formatTanggalIndo } from '@/lib/utils';
+import { formatRupiah, formatTanggalIndo, formatTeksPuebi } from '@/lib/utils';
 import {
   LabaRugiData,
   NeracaData,
@@ -185,7 +186,7 @@ export function LaporanKeuanganClient({
             onClick={() => setErrorMessage(null)}
             className="text-rose-400 hover:text-rose-200 font-bold ml-4"
           >
-            ✕
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -440,7 +441,7 @@ export function LaporanKeuanganClient({
                           {item.kode}
                         </span>
                         <span className="font-medium text-slate-200 print:text-black">
-                          {item.nama}
+                          {formatTeksPuebi(item.nama)}
                         </span>
                       </div>
                       <div className="font-mono font-semibold text-slate-100 print:text-black">
@@ -476,7 +477,7 @@ export function LaporanKeuanganClient({
                           {item.kode}
                         </span>
                         <span className="font-medium text-slate-200 print:text-black">
-                          {item.nama}
+                          {formatTeksPuebi(item.nama)}
                         </span>
                       </div>
                       <div className="font-mono font-semibold text-slate-100 print:text-black">
@@ -659,7 +660,7 @@ export function LaporanKeuanganClient({
                           {item.kode}
                         </span>
                         <span className="font-medium text-slate-200 print:text-black">
-                          {item.nama}
+                          {formatTeksPuebi(item.nama)}
                         </span>
                       </div>
                       <div className="font-mono font-semibold text-slate-100 print:text-black">
@@ -701,7 +702,7 @@ export function LaporanKeuanganClient({
                           {item.kode}
                         </span>
                         <span className="font-medium text-slate-200 print:text-black">
-                          {item.nama}
+                          {formatTeksPuebi(item.nama)}
                         </span>
                       </div>
                       <div className="font-mono font-semibold text-slate-100 print:text-black">
@@ -735,7 +736,7 @@ export function LaporanKeuanganClient({
                           {item.kode}
                         </span>
                         <span className="font-medium text-slate-200 print:text-black">
-                          {item.nama}
+                          {formatTeksPuebi(item.nama)}
                         </span>
                       </div>
                       <div className="font-mono font-semibold text-slate-100 print:text-black">
@@ -915,7 +916,7 @@ export function LaporanKeuanganClient({
                         {item.kode}
                       </td>
                       <td className="px-4 py-3 font-medium text-slate-100 print:text-black">
-                        {item.nama}
+                        {formatTeksPuebi(item.nama)}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#06150f] text-[#d4af37] border border-[#d4af37]/30 print:border-gray-400 print:text-black">

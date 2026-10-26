@@ -22,6 +22,7 @@ import { Profile } from '@/types/database';
 import { createClient } from '@/lib/supabase/client';
 import { keluarAction } from '@/lib/actions/auth';
 import { Logo } from '@/components/Logo';
+import { formatTeksPuebi } from '@/lib/utils';
 
 interface NavbarProps {
   profile: Profile;
@@ -171,8 +172,8 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                 <span className="text-xs font-bold text-[#fdfbf7] leading-tight whitespace-nowrap">
                   {profile.nama_lengkap}
                 </span>
-                <span className="text-[10px] text-[#d4af37] capitalize leading-tight whitespace-nowrap mt-0.5 font-medium">
-                  {profile.jabatan || profile.peran}
+                <span className="text-[10px] text-[#d4af37] leading-tight whitespace-nowrap mt-0.5 font-medium">
+                  {formatTeksPuebi(profile.jabatan || profile.peran)}
                 </span>
               </div>
 
@@ -378,8 +379,8 @@ export function Navbar({ profile, onLogout }: NavbarProps) {
                 <span className="text-xs font-bold text-[#fdfbf7] truncate">
                   {profile.nama_lengkap}
                 </span>
-                <span className="text-[10px] text-[#d4af37] capitalize truncate font-medium">
-                  {profile.jabatan || profile.peran}
+                <span className="text-[10px] text-[#d4af37] truncate font-medium">
+                  {formatTeksPuebi(profile.jabatan || profile.peran)}
                 </span>
               </div>
               <span

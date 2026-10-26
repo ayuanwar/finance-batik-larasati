@@ -15,7 +15,10 @@ import {
   Save,
   Scale,
   BookOpen,
+  Check,
+  AlertTriangle,
 } from 'lucide-react';
+import { formatTeksPuebi } from '@/lib/utils';
 import { simpanJurnalAction } from '../actions';
 
 export interface AkunOption {
@@ -341,11 +344,13 @@ export function JurnalFormClient({
               {statusPeriodeTanggal ? (
                 statusPeriodeTanggal.status === 'terbuka' ? (
                   <span className="text-emerald-400 flex items-center gap-1">
-                    ✓ Periode {statusPeriodeTanggal.bulan}/{statusPeriodeTanggal.tahun} Terbuka
+                    <Check className="w-3.5 h-3.5" />
+                    <span>Periode {statusPeriodeTanggal.bulan}/{statusPeriodeTanggal.tahun} Terbuka</span>
                   </span>
                 ) : (
-                  <span className="text-rose-400 font-bold">
-                    ⚠️ Periode {statusPeriodeTanggal.bulan}/{statusPeriodeTanggal.tahun} Sudah Ditutup
+                  <span className="text-rose-400 font-bold flex items-center gap-1">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    <span>Periode {statusPeriodeTanggal.bulan}/{statusPeriodeTanggal.tahun} Sudah Ditutup</span>
                   </span>
                 )
               ) : (
@@ -440,7 +445,7 @@ export function JurnalFormClient({
                     >
                       {akunList.map((ak) => (
                         <option key={ak.id} value={ak.id}>
-                          {ak.kode} — {ak.nama} ({ak.tipe})
+                          {ak.kode} — {formatTeksPuebi(ak.nama)} ({ak.tipe})
                         </option>
                       ))}
                     </select>

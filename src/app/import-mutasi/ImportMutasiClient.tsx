@@ -725,15 +725,7 @@ export function ImportMutasiClient({
       {/* 1. Header Judul & Deskripsi Nuansa Keraton */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#d4af37]/25 pb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-[#0b2419] border border-[#d4af37]/40 text-[#d4af37]">
-              <Building2 className="w-5 h-5 text-[#d4af37]" />
-            </span>
-            <span className="text-xs uppercase tracking-widest text-[#d4af37] font-bold">
-              Rekonsiliasi Kas & Bank
-            </span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight mt-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#fdfbf7] font-serif tracking-tight">
             Import Mutasi Bank
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
