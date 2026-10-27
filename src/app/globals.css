@@ -16,9 +16,9 @@
   --color-gold-accent: var(--color-gold);
 }
 
-/* Light Mode (Latar Luar #ECE4B7, Kontainer Utama Abu #E9E9E1, Hijau #11301B, Kartu/Tabel/Form #F7F7ED, Emas #D3BC5F) */
+/* Light Mode (Latar Global Abu Terang #E9E9E1, Kontainer Utama Abu #E9E9E1, Hijau #11301B, Kartu/Tabel/Form #F7F7ED, Emas #D3BC5F) */
 :root {
-  --color-bg-main: #ECE4B7;
+  --color-bg-main: #E9E9E1;
   --color-bg-canvas: #E9E9E1;
   --color-bg-card: #F7F7ED;
   --color-bg-card-subtle: #F7F7ED;
@@ -30,14 +30,14 @@
   --background: var(--color-bg-main);
   --foreground: var(--color-text-main);
 
-  --keraton-bg: #ECE4B7;
+  --keraton-bg: #E9E9E1;
   --keraton-canvas: #E9E9E1;
   --keraton-card: #F7F7ED;
   --keraton-gold: #D3BC5F;
   --keraton-gold-hover: #bda343;
   --keraton-border: rgba(211, 188, 95, 0.4);
   --gold: #D3BC5F;
-  --gold-light: #ECE4B7;
+  --gold-light: #F7F7ED;
   --forest-dark: #11301B;
   --forest-card: #F7F7ED;
   --forest-border: rgba(211, 188, 95, 0.4);

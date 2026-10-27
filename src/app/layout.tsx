@@ -34,7 +34,7 @@ export default function RootLayout({
     <html
       lang="id"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} font-sans dark h-full antialiased bg-[#ECE4B7] dark:bg-[#06130D] overflow-x-hidden`}
+      className={`${geistSans.variable} ${geistMono.variable} font-sans dark h-full antialiased bg-[#E9E9E1] dark:bg-[#06130D] overflow-x-hidden`}
     >
       <head>
         <script
@@ -43,7 +43,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#ECE4B7] dark:bg-[#06130D] text-[#11301B] dark:text-[#fdfbf7] relative selection:bg-[#D3BC5F] selection:text-[#11301B] overflow-x-hidden w-full max-w-full transition-colors duration-200">
+      <body className="min-h-full flex flex-col font-sans bg-[#E9E9E1] dark:bg-[#06130D] text-[#11301B] dark:text-[#fdfbf7] relative selection:bg-[#D3BC5F] selection:text-[#11301B] overflow-x-hidden w-full max-w-full transition-colors duration-200">
         {/* Konten Utama Aplikasi */}
         <div className="relative z-10 flex-1 flex flex-col w-full overflow-x-hidden font-sans">
           {children}

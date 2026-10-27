@@ -157,7 +157,7 @@ export function DashboardFinance({
             <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Saldo Kas & Bank
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#ECE4B7]/40 dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] flex items-center justify-center border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/30 shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#E9E9E1] dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] flex items-center justify-center border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/30 shadow-xs">
               <Wallet className="w-5 h-5" />
             </div>
           </div>
@@ -225,7 +225,7 @@ export function DashboardFinance({
             <div
               className={`w-9 h-9 rounded-xl flex items-center justify-center border shadow-xs ${
                 labaBulanIni >= 0
-                  ? 'bg-[#ECE4B7]/40 dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] border-[#D3BC5F]/40 dark:border-[#D3BC5F]/40'
+                  ? 'bg-[#E9E9E1] dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] border-[#D3BC5F]/40 dark:border-[#D3BC5F]/40'
                   : 'bg-rose-50 dark:bg-[#321318] text-rose-700 dark:text-rose-400 border-rose-300 dark:border-rose-500/40'
               }`}
             >

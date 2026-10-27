@@ -130,7 +130,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
             <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-[#D3BC5F]">
               Total Dokumen
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#ECE4B7]/40 dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] flex items-center justify-center border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/30">
+            <div className="w-9 h-9 rounded-xl bg-[#E9E9E1] dark:bg-[#123524] text-[#11301B] dark:text-[#D3BC5F] flex items-center justify-center border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/30">
               <FileText className="w-5 h-5" />
             </div>
           </div>
@@ -150,7 +150,7 @@ export function DashboardStaf({ profile, pengajuanList }: DashboardStafProps) {
             <span className="text-xs font-bold uppercase tracking-wider text-[#11301B]/80 dark:text-slate-400">
               Draf Tersimpan
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#ECE4B7]/40 dark:bg-[#18231e] text-[#11301B] dark:text-slate-300 flex items-center justify-center border border-[#D3BC5F]/40 dark:border-slate-700">
+            <div className="w-9 h-9 rounded-xl bg-[#E9E9E1] dark:bg-[#18231e] text-[#11301B] dark:text-slate-300 flex items-center justify-center border border-[#D3BC5F]/40 dark:border-slate-700">
               <Receipt className="w-5 h-5" />
             </div>
           </div>

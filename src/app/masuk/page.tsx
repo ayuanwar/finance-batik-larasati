@@ -255,13 +255,13 @@ export default function HalamanMasuk() {
   };
 
   return (
-    <div className="bg-[#ECE4B7] dark:bg-[#06130D] min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden font-sans text-[#11301B] dark:text-slate-100 antialiased selection:bg-[#D3BC5F] selection:text-[#11301B] px-4 py-8 transition-colors duration-200">
+    <div className="bg-[#E9E9E1] dark:bg-[#06130D] min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden font-sans text-[#11301B] dark:text-slate-100 antialiased selection:bg-[#D3BC5F] selection:text-[#11301B] px-4 py-8 transition-colors duration-200">
       {/* Tombol Toggle Tema (Mode Siang / Malam) di Pojok Kanan Atas */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30">
         <button
           type="button"
           onClick={toggleTheme}
-          className="p-2 sm:p-2.5 rounded-xl bg-[#F7F7ED] dark:bg-[#0b281e] border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/50 text-[#11301B] dark:text-[#D3BC5F] hover:bg-[#ECE4B7]/40 dark:hover:bg-[#123524] transition-colors cursor-pointer shadow-none flex items-center justify-center"
+          className="p-2 sm:p-2.5 rounded-xl bg-[#F7F7ED] dark:bg-[#0b281e] border border-[#D3BC5F]/40 dark:border-[#D3BC5F]/50 text-[#11301B] dark:text-[#D3BC5F] hover:bg-[#E9E9E1] dark:hover:bg-[#123524] transition-colors cursor-pointer shadow-none flex items-center justify-center"
           title={theme === 'dark' ? 'Beralih ke Mode Siang (Light Mode)' : 'Beralih ke Mode Malam (Dark Mode)'}
           aria-label="Toggle tema siang/malam"
         >
@@ -356,7 +356,7 @@ export default function HalamanMasuk() {
             </div>
 
             {/* Tab Pilihan: Masuk / Daftar Akun */}
-            <div className="w-full flex p-1 mb-3 rounded-lg bg-[#ECE4B7]/40 dark:bg-[#05140d] border border-[#D3BC5F]/35">
+            <div className="w-full flex p-1 mb-3 rounded-lg bg-[#E9E9E1] dark:bg-[#05140d] border border-[#D3BC5F]/35">
               <button
                 type="button"
                 onClick={() => {
