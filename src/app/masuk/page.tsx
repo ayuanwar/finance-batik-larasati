@@ -11,6 +11,7 @@ import {
   EyeOff,
   AlertCircle,
   CheckCircle2,
+  HelpCircle,
   Loader2,
   Sun,
   Moon,
@@ -48,6 +49,7 @@ export default function HalamanMasuk() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   // Inisialisasi tema aktif sesuai preferensi sistem / localStorage
@@ -86,11 +88,24 @@ export default function HalamanMasuk() {
   const isPasswordValid = PASSWORD_REGEX.test(regPassword);
   const showPasswordWarning = regPasswordTouched && regPassword.length > 0 && !isPasswordValid;
 
+  // Handler Lupa Kata Sandi (Mockup Notifikasi / Alert)
+  const handleLupaPassword = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    const pesan = 'Silakan hubungi Administrator (Direktur) untuk mengatur ulang kata sandi Anda.';
+    setInfoMessage(pesan);
+    if (typeof window !== 'undefined') {
+      alert(pesan);
+    }
+  };
+
   // Handler Masuk (Login)
   const handleMasuk = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
     setSuccessMessage(null);
+    setInfoMessage(null);
 
     const emailTrim = email.trim();
     if (!emailTrim || !password) {
@@ -160,6 +175,7 @@ export default function HalamanMasuk() {
     e.preventDefault();
     setErrorMessage(null);
     setSuccessMessage(null);
+    setInfoMessage(null);
 
     const emailTrim = regEmail.trim();
     const namaTrim = regNamaLengkap.trim();
@@ -363,6 +379,7 @@ export default function HalamanMasuk() {
                   setMode('masuk');
                   setErrorMessage(null);
                   setSuccessMessage(null);
+                  setInfoMessage(null);
                 }}
                 className={`flex-1 py-1.5 px-3 rounded-md text-xs font-bold transition-all cursor-pointer ${
                   mode === 'masuk'
@@ -378,6 +395,7 @@ export default function HalamanMasuk() {
                   setMode('daftar');
                   setErrorMessage(null);
                   setSuccessMessage(null);
+                  setInfoMessage(null);
                 }}
                 className={`flex-1 py-1.5 px-3 rounded-md text-xs font-bold transition-all cursor-pointer ${
                   mode === 'daftar'
@@ -402,6 +420,14 @@ export default function HalamanMasuk() {
               <div className="w-full mb-3.5 p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-500/40 flex items-start gap-2 text-emerald-800 dark:text-emerald-200 text-xs animate-in fade-in duration-200">
                 <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-600 dark:text-emerald-400" />
                 <span className="leading-snug">{successMessage}</span>
+              </div>
+            )}
+
+            {/* Notifikasi Informasi Jika Ada */}
+            {infoMessage && (
+              <div className="w-full mb-3.5 p-2.5 rounded-lg bg-amber-50 dark:bg-[#12281b] border border-[#D3BC5F] dark:border-[#D3BC5F]/60 flex items-start gap-2 text-[#11301B] dark:text-[#E4C588] text-xs animate-in fade-in duration-200">
+                <HelpCircle className="w-4 h-4 shrink-0 mt-0.5 text-[#bda343] dark:text-[#D3BC5F]" />
+                <span className="leading-snug">{infoMessage}</span>
               </div>
             )}
 
@@ -467,6 +493,17 @@ export default function HalamanMasuk() {
                         {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                       </button>
                     </div>
+                  </div>
+
+                  {/* Tombol / Tautan Lupa Kata Sandi */}
+                  <div className="flex justify-end -mt-1.5">
+                    <button
+                      type="button"
+                      onClick={handleLupaPassword}
+                      className="text-[11px] font-semibold text-[#11301B]/80 dark:text-[#D3BC5F] hover:text-[#11301B] dark:hover:text-[#E4C588] hover:underline transition-colors cursor-pointer focus:outline-none"
+                    >
+                      Lupa Kata Sandi?
+                    </button>
                   </div>
 
                   {/* Tombol Masuk */}
